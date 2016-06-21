@@ -1,4 +1,4 @@
-test text 1 
-
+\xea\xb0\x80
+AC00
 test text 3
 test text 4

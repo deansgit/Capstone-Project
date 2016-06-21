@@ -135,8 +135,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 InputStream dictionary = assetManager.open("dictionaries/testdict.txt");
                 List<String> testLines = dictReader(dictionary);
-                String testString = testLines.get(0);
-                textView.setText(testString);
+                int hex = Integer.parseInt(testLines.get(1), 16);
+                textView.setText(String.valueOf((char)hex));
             } catch (Exception e) {
                 Log.e(LOG_TAG, "string is broken");
             }
