@@ -20,12 +20,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.raizlabs.android.dbflow.config.DatabaseDefinition;
+import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
+import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
+import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -45,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     // TODO: 6/13/2016 add string keys and map out to fonts' paths
+    ArrayList<String> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +79,39 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        // load database for the first time
+        // TODO: add logic to check for changes in db. if not changed, do not do this.
+        DatabaseDefinition databaseDefinition = FlowManager.getDatabase(BodaDatabase.class);
+        Transaction transaction = databaseDefinition.beginTransactionAsync(new ITransaction() {
+            @Override
+            public void execute(DatabaseWrapper databaseWrapper) {
+//                Log.v(LOG_TAG, "execute for database-async-transaction called");
+                AssetManager assetManager = getApplicationContext().getAssets();
+                try {
+                    InputStream dictionary = assetManager.open("dictionaries/testdict.txt");
+                    mList = dictReader(dictionary);
+                    for (int i = 0; i <= mList.size(); i++){
+                        String testString = "# HANGUL SYLLABLE KIYEOK-A,AC00,ga";
+                        String[] tokens = testString.split(",");
+                        Syllable syllable = new Syllable();
+                        syllable.setsId(i);
+                        syllable.setUnicode_name(tokens[0]);
+                        syllable.setSyllable(tokens[1]);
+                        syllable.setRomanization(tokens[2]);
+                        syllable.save(databaseWrapper);
+//                        Log.v(LOG_TAG, syllable.getSyllable());
+                    }
+
+                } catch (Exception e) {
+                    Log.e(LOG_TAG, "string is broken");
+                }
+            }
+        }).build();
+        transaction.execute();
+
+        Log.v(LOG_TAG, SQLite.select().from(Syllable.class).where(Syllable_Table.sId.eq(4)).querySingle().toString() + "new");
+
     }
 
 
@@ -131,12 +171,12 @@ public class MainActivity extends AppCompatActivity {
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setTypeface(darae);
             textView.setText("다래");
-            AssetManager assetManager = getActivity().getAssets();
+
             try {
-                InputStream dictionary = assetManager.open("dictionaries/testdict.txt");
-                List<String> testLines = dictReader(dictionary);
-                int hex = Integer.parseInt(testLines.get(1), 16);
-                textView.setText(String.valueOf((char)hex));
+                //db items should have format ==> [sId, unicode_name, hex, romanization]
+                int hex = Integer.parseInt(SQLite.select().from(Syllable.class).where(Syllable_Table.sId.eq(4)).querySingle().getSyllable(), 16);
+                textView.setText(String.valueOf((char) hex));
+
             } catch (Exception e) {
                 Log.e(LOG_TAG, "string is broken");
             }
@@ -144,31 +184,7 @@ public class MainActivity extends AppCompatActivity {
 //            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
-
-        public ArrayList<String> dictReader(InputStream inputStream) {
-            ArrayList<String> stringArray = new ArrayList<>();
-            try {
-                BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
-                try {
-                    while ((line = br.readLine()) != null) {
-                        stringArray.add(line);
-                        Log.e(LOG_TAG, line);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.e(LOG_TAG, "IO error for StringBuilder");
-                } finally {
-                    br.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e(LOG_TAG, "file not found");
-            }
-            return stringArray;
-        }
     }
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -205,5 +221,31 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    /**
+    * Helper method for iterating through each line in a file.
+    */
+    public ArrayList<String> dictReader(InputStream inputStream) {
+        ArrayList<String> stringArray = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+            try {
+                while ((line = br.readLine()) != null) {
+                    stringArray.add(line);
+//                    Log.e(LOG_TAG, line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+//                Log.e(LOG_TAG, "IO error for StringBuilder");
+            } finally {
+                br.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+//            Log.e(LOG_TAG, "file not found");
+        }
+        return stringArray;
     }
 }

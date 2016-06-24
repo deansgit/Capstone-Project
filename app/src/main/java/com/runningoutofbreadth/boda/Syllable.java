@@ -13,7 +13,7 @@ public class Syllable extends BaseModel{
 
     // identifier int within the db
     @PrimaryKey
-    String sId;
+    int sId;
 
     @Column
     String unicode_name;
@@ -26,7 +26,14 @@ public class Syllable extends BaseModel{
     @Column
     String romanization;
 
-    public void setsId(String sId) {
+//    public Syllable(int sId, String unicode_name, String syllable, String romanization){
+//        this.sId = sId;
+//        this.unicode_name = unicode_name;
+//        this.syllable = syllable;
+//        this.romanization = romanization;
+//    }
+
+    public void setsId(int sId) {
         this.sId = sId;
     }
 
@@ -42,7 +49,7 @@ public class Syllable extends BaseModel{
         this.romanization = romanization;
     }
 
-    public String getsId() {
+    public int getsId() {
         return sId;
     }
 
