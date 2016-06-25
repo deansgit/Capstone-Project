@@ -1,5 +1,6 @@
 package com.runningoutofbreadth.boda;
 
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final String PREFS_FILENAME = "BodaPrefsFile";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -52,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO: 6/13/2016 add string keys and map out to fonts' paths
     ArrayList<String> mList;
+
+    // boolean for checking sharedPref to see if database was already loaded
+    private static boolean mDBUpdated;
+    private static final String DB_UPDATE_STATUS = "DB_UPDATE_STATUS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,36 +88,38 @@ public class MainActivity extends AppCompatActivity {
 
         // load database for the first time
         // TODO: add logic to check for changes in db. if not changed, do not do this.
-        DatabaseDefinition databaseDefinition = FlowManager.getDatabase(BodaDatabase.class);
-        Transaction transaction = databaseDefinition.beginTransactionAsync(new ITransaction() {
-            @Override
-            public void execute(DatabaseWrapper databaseWrapper) {
+        SharedPreferences settings = getSharedPreferences(PREFS_FILENAME, 0);
+        mDBUpdated = settings.getBoolean(DB_UPDATE_STATUS, false);
+        if (!mDBUpdated) {
+            DatabaseDefinition databaseDefinition = FlowManager.getDatabase(BodaDatabase.class);
+            Transaction transaction = databaseDefinition.beginTransactionAsync(new ITransaction() {
+                @Override
+                public void execute(DatabaseWrapper databaseWrapper) {
 //                Log.v(LOG_TAG, "execute for database-async-transaction called");
-                AssetManager assetManager = getApplicationContext().getAssets();
-                try {
-                    InputStream dictionary = assetManager.open("dictionaries/testdict.txt");
-                    mList = dictReader(dictionary);
-                    for (int i = 0; i <= mList.size(); i++){
-                        String testString = "# HANGUL SYLLABLE KIYEOK-A,AC00,ga";
-                        String[] tokens = testString.split(",");
-                        Syllable syllable = new Syllable();
-                        syllable.setsId(i);
-                        syllable.setUnicode_name(tokens[0]);
-                        syllable.setSyllable(tokens[1]);
-                        syllable.setRomanization(tokens[2]);
-                        syllable.save(databaseWrapper);
-//                        Log.v(LOG_TAG, syllable.getSyllable());
+                    AssetManager assetManager = getApplicationContext().getAssets();
+                    try {
+                        InputStream dictionary = assetManager.open("dictionaries/testdict.txt");
+                        mList = dictReader(dictionary);
+                        for (int i = 0; i <= mList.size(); i++) {
+                            String[] tokens = mList.get(i).split(",");
+                            Syllable syllable = new Syllable();
+                            syllable.setsId(i);
+                            syllable.setUnicode_name(tokens[0]);
+                            syllable.setSyllable(tokens[1]);
+                            syllable.setRomanization(tokens[2]);
+                            syllable.save(databaseWrapper);
+                        Log.v(LOG_TAG, syllable.getSyllable());
+                        }
+
+                    } catch (Exception e) {
+                        Log.e(LOG_TAG, "string is broken");
                     }
-
-                } catch (Exception e) {
-                    Log.e(LOG_TAG, "string is broken");
                 }
-            }
-        }).build();
-        transaction.execute();
-
-        Log.v(LOG_TAG, SQLite.select().from(Syllable.class).where(Syllable_Table.sId.eq(4)).querySingle().toString() + "new");
-
+            }).build();
+            transaction.execute();
+            mDBUpdated = true;
+        }
+        Log.v(LOG_TAG, SQLite.select().from(Syllable.class).where(Syllable_Table.sId.eq(5)).querySingle().toString() + "new");
     }
 
 
@@ -172,9 +180,11 @@ public class MainActivity extends AppCompatActivity {
             textView.setTypeface(darae);
             textView.setText("다래");
 
+            // todo: generate random number between 1 and dbtable.size, return int into SQLite.where clause
+
             try {
                 //db items should have format ==> [sId, unicode_name, hex, romanization]
-                int hex = Integer.parseInt(SQLite.select().from(Syllable.class).where(Syllable_Table.sId.eq(4)).querySingle().getSyllable(), 16);
+                int hex = Integer.parseInt(SQLite.select().from(Syllable.class).where(Syllable_Table.sId.eq(6)).querySingle().getSyllable(), 16);
                 textView.setText(String.valueOf((char) hex));
 
             } catch (Exception e) {
@@ -183,6 +193,16 @@ public class MainActivity extends AppCompatActivity {
 //            textView.setText(testLine);
 //            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
+        }
+
+        @Override
+        public void onStop() {
+            super.onStop();
+
+            SharedPreferences settings = getActivity().getSharedPreferences(PREFS_FILENAME, 0);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean(DB_UPDATE_STATUS, mDBUpdated);
+            editor.commit();
         }
     }
 
@@ -222,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
+
 
     /**
     * Helper method for iterating through each line in a file.
