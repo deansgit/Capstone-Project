@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -176,17 +177,21 @@ public class MainActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             Typeface darae = Typeface
                     .createFromAsset(getActivity().getAssets(), "fonts/darae_handwritten.ttf");
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            final TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setTypeface(darae);
+            textView.setTextSize(30);
             textView.setText("다래");
-
             // todo: generate random number between 1 and dbtable.size, return int into SQLite.where clause
 
             try {
                 //db items should have format ==> [sId, unicode_name, hex, romanization]
-                int hex = Integer.parseInt(SQLite.select().from(Syllable.class).where(Syllable_Table.sId.eq(6)).querySingle().getSyllable(), 16);
-                textView.setText(String.valueOf((char) hex));
-
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int randPos = (int) SQLite.selectCountOf().from(Syllable.class).count();
+                        textView.setText(syllableSelector(randInt(0, randPos)));
+                    }
+                });
             } catch (Exception e) {
                 Log.e(LOG_TAG, "string is broken");
             }
@@ -268,5 +273,23 @@ public class MainActivity extends AppCompatActivity {
 //            Log.e(LOG_TAG, "file not found");
         }
         return stringArray;
+    }
+
+    /**
+     * Randomizer
+     */
+    public static int randInt(int min, int max){
+        return new Random().nextInt(max - min) + min;
+    }
+
+    /**
+     * Syllable Selector
+     */
+    public static String syllableSelector(int position){
+        return String.valueOf((char) Integer.parseInt(SQLite.select()
+                .from(Syllable.class)
+                .where(Syllable_Table.sId.eq(position))
+                .querySingle()
+                .getSyllable(), 16));
     }
 }
