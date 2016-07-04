@@ -46,10 +46,7 @@ public class Syllable extends BaseModel implements Word {
         return syllable;
     }
 
-    public String getSyllable() {
-        return syllable;
-    }
-
+    @Override
     public String getRomanization() {
         return romanization;
     }

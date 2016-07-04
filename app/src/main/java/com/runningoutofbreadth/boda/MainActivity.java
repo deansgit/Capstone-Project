@@ -28,11 +28,6 @@ import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
 import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Random;
-
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final String PREFS_FILENAME = "BodaPrefsFile";
@@ -55,11 +50,10 @@ public class MainActivity extends AppCompatActivity {
     private final String SYLLABLES_DICT_PATH = "dictionaries/syllables_dict.txt";
     private final String ANIMALS_DICT_PATH = "dictionaries/animals_dict.txt";
 
-    ArrayList<String> mList;
-
     // boolean for checking sharedPref to see if database was already loaded
     private static boolean mDBUpdated;
     private static final String DB_UPDATE_STATUS = "DB_UPDATE_STATUS";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
 //                Log.v(LOG_TAG, "execute for database-async-transaction called");
                     AssetManager assetManager = getApplicationContext().getAssets();
                     try {
-                        insertDatabaseObjects(databaseWrapper, assetManager, SYLLABLES_DICT_PATH, Syllable.class);
-                        insertDatabaseObjects(databaseWrapper, assetManager, ANIMALS_DICT_PATH, Animal.class);
+                        Utility.insertDatabaseObjects(databaseWrapper, assetManager, SYLLABLES_DICT_PATH, Syllable.class);
+                        Utility.insertDatabaseObjects(databaseWrapper, assetManager, ANIMALS_DICT_PATH, Animal.class);
                     } catch (Exception e) {
                         Log.e(LOG_TAG, "string is broken");
                     } finally {
@@ -116,38 +110,6 @@ public class MainActivity extends AppCompatActivity {
         Log.v(LOG_TAG, SQLite.select().from(Animal.class).where(Animal_Table.sId.eq(5)).querySingle().getName().toString() + " new");
 //            Log.v(LOG_TAG, SQLite.selectCountOf().from(Animal.class) + " new");
     }
-
-
-    // add some kind of nullable param in case there is no image data.
-    public void insertDatabaseObjects(DatabaseWrapper databaseWrapper,
-                                      AssetManager assetManager, String assetPath, Class model) {
-        try {
-            InputStream dictionary = assetManager.open(assetPath);
-            mList = Utility.dictReader(dictionary);
-            String[] tokens;
-            Word dbObject;
-            for (int i = 0; i < mList.size(); i++) {
-                tokens = mList.get(i).split(",");
-                try {
-                    dbObject = WordFactory.getWord(model);
-                    dbObject.setsId(i);
-                    dbObject.setName(tokens[0]);
-                    dbObject.setHangeul(tokens[1]);
-                    dbObject.setRomanization(tokens[2]);
-                    if (tokens.length > 3) {
-                        dbObject.setImageId(tokens[3]);
-                    }
-                    dbObject.save(databaseWrapper);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            dictionary.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -206,15 +168,15 @@ public class MainActivity extends AppCompatActivity {
             textView.setTypeface(darae);
             textView.setTextSize(30);
             textView.setText("다래");
-            // todo: generate random number between 1 and dbtable.size, return int into SQLite.where clause
 
             try {
                 //db items should have format ==> [sId, unicode_name, hex, romanization]
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int randPos = (int) SQLite.selectCountOf().from(Syllable.class).count();
-                        textView.setText(syllableSelector(randInt(0, randPos)));
+                        Class model = Syllable.class;
+                        int randPos = (int) SQLite.selectCountOf().from(model).count();
+                        textView.setText(Utility.wordSelector(Utility.randInt(0, randPos), model));
                     }
                 });
             } catch (Exception e) {
@@ -271,22 +233,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    /**
-     * Randomizer
-     */
-    public static int randInt(int min, int max) {
-        return new Random().nextInt(max - min) + min;
-    }
-
-    /**
-     * Syllable Selector
-     */
-    public static String syllableSelector(int position) {
-        return String.valueOf((char) Integer.parseInt(SQLite.select()
-                .from(Syllable.class)
-                .where(Syllable_Table.sId.eq(position))
-                .querySingle()
-                .getSyllable(), 16));
-    }
 }
