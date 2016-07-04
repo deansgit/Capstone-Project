@@ -28,10 +28,8 @@ import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
 import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -54,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     // TODO: 6/13/2016 add string keys and map out to fonts' paths
+    private final String SYLLABLES_DICT_PATH = "dictionaries/syllables_dict.txt";
+    private final String ANIMALS_DICT_PATH = "dictionaries/animals_dict.txt";
+
     ArrayList<String> mList;
 
     // boolean for checking sharedPref to see if database was already loaded
@@ -99,28 +100,52 @@ public class MainActivity extends AppCompatActivity {
 //                Log.v(LOG_TAG, "execute for database-async-transaction called");
                     AssetManager assetManager = getApplicationContext().getAssets();
                     try {
-                        InputStream dictionary = assetManager.open("dictionaries/testdict.txt");
-                        mList = dictReader(dictionary);
-                        for (int i = 0; i <= mList.size(); i++) {
-                            String[] tokens = mList.get(i).split(",");
-                            Syllable syllable = new Syllable();
-                            syllable.setsId(i);
-                            syllable.setUnicode_name(tokens[0]);
-                            syllable.setSyllable(tokens[1]);
-                            syllable.setRomanization(tokens[2]);
-                            syllable.save(databaseWrapper);
-                        Log.v(LOG_TAG, syllable.getSyllable());
-                        }
-
+                        insertDatabaseObjects(databaseWrapper, assetManager, SYLLABLES_DICT_PATH, Syllable.class);
+                        insertDatabaseObjects(databaseWrapper, assetManager, ANIMALS_DICT_PATH, Animal.class);
                     } catch (Exception e) {
                         Log.e(LOG_TAG, "string is broken");
+                    } finally {
+                        assetManager.close();
                     }
                 }
             }).build();
             transaction.execute();
             mDBUpdated = true;
         }
-        Log.v(LOG_TAG, SQLite.select().from(Syllable.class).where(Syllable_Table.sId.eq(5)).querySingle().toString() + "new");
+        Log.v(LOG_TAG, SQLite.select().from(Syllable.class).where(Syllable_Table.sId.eq(5)).querySingle().getName() + " new");
+        Log.v(LOG_TAG, SQLite.select().from(Animal.class).where(Animal_Table.sId.eq(5)).querySingle().getName().toString() + " new");
+//            Log.v(LOG_TAG, SQLite.selectCountOf().from(Animal.class) + " new");
+    }
+
+
+    // add some kind of nullable param in case there is no image data.
+    public void insertDatabaseObjects(DatabaseWrapper databaseWrapper,
+                                      AssetManager assetManager, String assetPath, Class model) {
+        try {
+            InputStream dictionary = assetManager.open(assetPath);
+            mList = Utility.dictReader(dictionary);
+            String[] tokens;
+            Word dbObject;
+            for (int i = 0; i < mList.size(); i++) {
+                tokens = mList.get(i).split(",");
+                try {
+                    dbObject = WordFactory.getWord(model);
+                    dbObject.setsId(i);
+                    dbObject.setName(tokens[0]);
+                    dbObject.setHangeul(tokens[1]);
+                    dbObject.setRomanization(tokens[2]);
+                    if (tokens.length > 3) {
+                        dbObject.setImageId(tokens[3]);
+                    }
+                    dbObject.save(databaseWrapper);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            dictionary.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -195,8 +220,6 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.e(LOG_TAG, "string is broken");
             }
-//            textView.setText(testLine);
-//            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
 
@@ -250,42 +273,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-    * Helper method for iterating through each line in a file.
-    */
-    public ArrayList<String> dictReader(InputStream inputStream) {
-        ArrayList<String> stringArray = new ArrayList<>();
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            try {
-                while ((line = br.readLine()) != null) {
-                    stringArray.add(line);
-//                    Log.e(LOG_TAG, line);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-//                Log.e(LOG_TAG, "IO error for StringBuilder");
-            } finally {
-                br.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-//            Log.e(LOG_TAG, "file not found");
-        }
-        return stringArray;
-    }
-
-    /**
      * Randomizer
      */
-    public static int randInt(int min, int max){
+    public static int randInt(int min, int max) {
         return new Random().nextInt(max - min) + min;
     }
 
     /**
      * Syllable Selector
      */
-    public static String syllableSelector(int position){
+    public static String syllableSelector(int position) {
         return String.valueOf((char) Integer.parseInt(SQLite.select()
                 .from(Syllable.class)
                 .where(Syllable_Table.sId.eq(position))
