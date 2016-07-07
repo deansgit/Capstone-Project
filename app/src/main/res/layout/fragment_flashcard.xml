@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.runningoutofbreadth.boda.sections.FlashcardFragment">
+
+    <!--todo: background image with giant lightning. colored bg-->
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <ImageButton
+            android:id="@+id/animals"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@android:drawable/btn_star_big_on"
+            app:layout_aspectRatio="100%"
+            app:layout_widthPercent="40%"
+            app:layout_marginPercent="2%"
+            android:contentDescription="@string/animals" />
+
+        <ImageButton
+            android:id="@+id/syllables"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_toRightOf="@id/animals"
+            android:layout_toEndOf="@id/animals"
+            android:src="@android:drawable/btn_star_big_on"
+            app:layout_aspectRatio="100%"
+            app:layout_widthPercent="40%"
+            app:layout_marginPercent="2%"
+            android:contentDescription="@string/syllables" />
+
+        <ImageButton
+            android:id="@+id/nations"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_below="@id/animals"
+            android:src="@android:drawable/btn_star_big_on"
+            app:layout_aspectRatio="100%"
+            app:layout_widthPercent="40%"
+            app:layout_marginPercent="2%"
+            android:contentDescription="@string/nations" />
+
+        <ImageButton
+            android:id="@+id/idioms"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_below="@id/syllables"
+            android:layout_toRightOf="@id/nations"
+            android:layout_toEndOf="@id/nations"
+            android:src="@android:drawable/btn_star_big_on"
+            app:layout_aspectRatio="100%"
+            app:layout_widthPercent="40%"
+            app:layout_marginPercent="2%"
+            android:contentDescription="@string/idioms" />
+
+    </android.support.percent.PercentRelativeLayout>
+
+</ScrollView>

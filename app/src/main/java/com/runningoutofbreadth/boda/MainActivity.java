@@ -4,15 +4,12 @@ import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,6 +24,13 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
 import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
+import com.runningoutofbreadth.boda.db.Animal;
+import com.runningoutofbreadth.boda.db.BodaDatabase;
+import com.runningoutofbreadth.boda.db.Syllable;
+import com.runningoutofbreadth.boda.sections.FlashcardFragment;
+import com.runningoutofbreadth.boda.sections.ProfileFragment;
+import com.runningoutofbreadth.boda.sections.QuizFragment;
+import com.runningoutofbreadth.boda.sections.SpeedReaderFragment;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -60,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -73,14 +77,14 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         // load database for the first time
         // TODO: add logic to check for changes in db. if not changed, do not do this.
@@ -98,17 +102,14 @@ public class MainActivity extends AppCompatActivity {
                         Utility.insertDatabaseObjects(databaseWrapper, assetManager, ANIMALS_DICT_PATH, Animal.class);
                     } catch (Exception e) {
                         Log.e(LOG_TAG, "string is broken");
-                    } finally {
-                        assetManager.close();
                     }
                 }
             }).build();
             transaction.execute();
             mDBUpdated = true;
         }
-        Log.v(LOG_TAG, SQLite.select().from(Syllable.class).where(Syllable_Table.sId.eq(5)).querySingle().getName() + " new");
-        Log.v(LOG_TAG, SQLite.select().from(Animal.class).where(Animal_Table.sId.eq(5)).querySingle().getName().toString() + " new");
-//            Log.v(LOG_TAG, SQLite.selectCountOf().from(Animal.class) + " new");
+//        Log.v(LOG_TAG, SQLite.select().from(Syllable.class).where(Syllable_Table.sId.eq(5)).querySingle().getName() + " new");
+//        Log.v(LOG_TAG, SQLite.select().from(Animal.class).where(Animal_Table.sId.eq(5)).querySingle().getName() + " new");
     }
 
     @Override
@@ -188,7 +189,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onStop() {
             super.onStop();
-
             SharedPreferences settings = getActivity().getSharedPreferences(PREFS_FILENAME, 0);
             SharedPreferences.Editor editor = settings.edit();
             editor.putBoolean(DB_UPDATE_STATUS, mDBUpdated);
@@ -201,6 +201,10 @@ public class MainActivity extends AppCompatActivity {
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private static final int FLASHCARDS = 0;
+        private static final int QUIZ = 1;
+        private static final int SPEEDREAD = 2;
+        private static final int PROFILE = 3;
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -210,24 +214,43 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            Fragment fragment;
+            switch (position) {
+                case FLASHCARDS:
+                    fragment = FlashcardFragment.newInstance("test1", "test2");
+                    break;
+                case QUIZ:
+                    fragment = QuizFragment.newInstance("test1", "test2");
+                    break;
+                case SPEEDREAD:
+                    fragment = SpeedReaderFragment.newInstance("test1", "test2");
+                    break;
+                case PROFILE:
+                    fragment = ProfileFragment.newInstance("test1", "test2");
+                    break;
+                default:
+                    throw new RuntimeException("Can't create fragment. Number doesn't exist.");
+            }
+            return fragment;
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "FLASH CARDS";
                 case 1:
-                    return "SECTION 2";
+                    return "QUIZ";
                 case 2:
-                    return "SECTION 3";
+                    return "SPEED READ";
+                case 3:
+                    return "PROFILE";
             }
             return null;
         }

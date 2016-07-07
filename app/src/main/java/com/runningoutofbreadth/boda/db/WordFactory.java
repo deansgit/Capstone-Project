@@ -1,4 +1,4 @@
-package com.runningoutofbreadth.boda;
+package com.runningoutofbreadth.boda.db;
 
 /**
  * Created by SandD on 7/3/2016.

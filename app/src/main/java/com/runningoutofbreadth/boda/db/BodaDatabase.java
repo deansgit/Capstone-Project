@@ -1,4 +1,4 @@
-package com.runningoutofbreadth.boda;
+package com.runningoutofbreadth.boda.db;
 
 import com.raizlabs.android.dbflow.annotation.Database;
 
@@ -9,6 +9,6 @@ import com.raizlabs.android.dbflow.annotation.Database;
 public class BodaDatabase{
     public static final String NAME = "BodaDatabase";
 
-    public static final int VERSION = 3;
+    public static final int VERSION = 4;
 
 }

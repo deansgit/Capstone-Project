@@ -1,4 +1,4 @@
-package com.runningoutofbreadth.boda;
+package com.runningoutofbreadth.boda.db;
 
 import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
 

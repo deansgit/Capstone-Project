@@ -2,4 +2,15 @@
     <string name="app_name">Boda</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="animals">animals</string>
+    <string name="syllables">syllables</string>
+    <string name="nations">nations</string>
+    <string name="idioms">idioms</string>
+
+    <string name="title_activity_flashcard">FlashcardActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

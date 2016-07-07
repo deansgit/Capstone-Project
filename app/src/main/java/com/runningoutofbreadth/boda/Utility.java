@@ -7,11 +7,14 @@ import com.raizlabs.android.dbflow.sql.language.NameAlias;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.Model;
 import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
+import com.runningoutofbreadth.boda.db.Word;
+import com.runningoutofbreadth.boda.db.WordFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Random;
@@ -80,7 +83,7 @@ public class Utility {
     }
 
     /**
-     * Randomizer
+     * Randomizer predominantly used with wordSelector to spit out random words in range
      */
     public static int randInt(int min, int max) {
         return new Random().nextInt(max - min) + min;
@@ -89,33 +92,42 @@ public class Utility {
     /**
      * Dynamically select a database item based on the type of data (model) requested
      */
-    @SuppressWarnings("ConstantConditions")
     public static String wordSelector(final int position, Class model) {
-//        String tableName = model.getName() + "_Table";
-        // get reference to table.
+        // final String output for test
         String word = "";
+        // return generic model class (Animal, Syllable, Nation, etc.)
+        Model unicodeString = null;
+        Method getHangeul = null;
+        Method getsID = null;
         try {
+            // Create a 'Condition' for DBFlow to use in the SQLite query's WHERE clause
+            String[] elements;
             NameAlias alias = NameAlias.builder("sId").build();
             Condition randomIdCondition = Condition.column(alias).eq(position);
-            Model unicodeString = null;
             try {
                 // get string: format should be hex values with spaces e.g. "XXXX XXXX XXXX"
                 unicodeString = SQLite.select()
                         .from(model)
                         .where(randomIdCondition)
                         .querySingle();
+                if (unicodeString != null) {
+                    getHangeul = unicodeString.getClass().getMethod("getHangeul");
+                    getsID = unicodeString.getClass().getMethod("getsId");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            Method getHangeul = unicodeString.getClass().getMethod("getHangeul");
-            Method getsID = unicodeString.getClass().getMethod("getsId");
 //            Log.v(LOG_TAG, getHangeul.invoke(unicodeString, null).toString() + " invokemethod");
 //            Log.v(LOG_TAG, getsID.invoke(unicodeString, null).toString() + " versus " + position);
-            String[] tokens = getHangeul.invoke(unicodeString, null).toString().split(" ");
-            for (String s : tokens) {
-                word = word + String.valueOf((char) Integer.parseInt(s, 16));
+            if (getHangeul != null) {
+                elements = getHangeul.invoke(unicodeString).toString().split(" ");
+                for (String s : elements) {
+                    word = word + String.valueOf((char) Integer.parseInt(s, 16));
+                }
             }
-        } catch (Exception e) {
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         return word;
