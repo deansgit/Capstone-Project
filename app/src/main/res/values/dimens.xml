@@ -5,4 +5,13 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="tablayout_height">72dp</dimen>
+
+    <!-- Flashcard standard font sizes. -->
+    <dimen name="hangeul_font_size">48sp</dimen>
+    <dimen name="romanization_font_size">28sp</dimen>
+    <dimen name="standalone_syllable_size">100sp</dimen>
+
+    <!-- Image sizes-->
+    <dimen name="max_image_height">200dp</dimen>
+    <dimen name="max_image_width">300dp</dimen>
 </resources>

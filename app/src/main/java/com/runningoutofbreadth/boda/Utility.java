@@ -1,6 +1,8 @@
 package com.runningoutofbreadth.boda;
 
+import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Typeface;
 
 import com.raizlabs.android.dbflow.sql.language.Condition;
 import com.raizlabs.android.dbflow.sql.language.NameAlias;
@@ -25,6 +27,18 @@ import java.util.Random;
 public class Utility {
 
     private static final String LOG_TAG = Utility.class.getSimpleName();
+
+    public static final String[] FONT_MAP = {
+            "fonts/210sulamjuui_bold_handwritten.ttf",
+            "fonts/210sulamjuui_light_handwritten.ttf",
+            "fonts/210sulamjuui_reg_handwritten.ttf",
+            "fonts/cuteshinminsang_handwritten.ttf",
+            "fonts/darae_handwritten.ttf",
+            "fonts/hamchorongbatang_typed.ttf",
+            "fonts/hoonwhitecat_handwritten.ttf",
+            "fonts/nanumpen_handwritten.ttf",
+            "fonts/oseunghaneum_bold_typed.ttf"
+    };
 
     // add some kind of nullable param in case there is no image data.
     public static void insertDatabaseObjects(DatabaseWrapper databaseWrapper,
@@ -131,6 +145,14 @@ public class Utility {
             e.printStackTrace();
         }
         return word;
+    }
+
+    /**
+     * Returns a different typeface from the assets folder.
+     */
+    public static Typeface diffFont(Context context){
+        int fontIndex = randInt(0, FONT_MAP.length - 1); // index always off by one from array length
+        return Typeface.createFromAsset(context.getAssets(), FONT_MAP[fontIndex]);
     }
 
 }
