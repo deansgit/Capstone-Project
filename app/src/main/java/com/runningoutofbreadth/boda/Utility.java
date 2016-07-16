@@ -106,50 +106,60 @@ public class Utility {
     /**
      * Dynamically select a database item based on the type of data (model) requested
      */
-    public static String wordSelector(final int position, Class model) {
+    public static String[] wordSelector(final int position, Class model) {
         // final String output for test
         String word = "";
+        String romanization = "";
+        String imageId = "";
         // return generic model class (Animal, Syllable, Nation, etc.)
-        Model unicodeString = null;
+        Model wordItem = null;
         Method getHangeul = null;
-        Method getsID = null;
+        Method getRomanization = null;
+        Method getImageId = null;
         try {
             // Create a 'Condition' for DBFlow to use in the SQLite query's WHERE clause
-            String[] elements;
+
             NameAlias alias = NameAlias.builder("sId").build();
             Condition randomIdCondition = Condition.column(alias).eq(position);
             try {
                 // get string: format should be hex values with spaces e.g. "XXXX XXXX XXXX"
-                unicodeString = SQLite.select()
+                wordItem = SQLite.select()
                         .from(model)
                         .where(randomIdCondition)
                         .querySingle();
-                if (unicodeString != null) {
-                    getHangeul = unicodeString.getClass().getMethod("getHangeul");
-                    getsID = unicodeString.getClass().getMethod("getsId");
+                if (wordItem != null) {
+                    getHangeul = wordItem.getClass().getMethod("getHangeul");
+                    getRomanization = wordItem.getClass().getMethod("getRomanization");
+                    getImageId = wordItem.getClass().getMethod("getImageId");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-//            Log.v(LOG_TAG, getHangeul.invoke(unicodeString, null).toString() + " invokemethod");
-//            Log.v(LOG_TAG, getsID.invoke(unicodeString, null).toString() + " versus " + position);
-            if (getHangeul != null) {
-                elements = getHangeul.invoke(unicodeString).toString().split(" ");
+//            Log.v(LOG_TAG, getHangeul.invoke(wordItem, null).toString() + " invokemethod");
+//            Log.v(LOG_TAG, getRomanization.invoke(wordItem, null).toString() + " versus " + position);
+//            Log.v(LOG_TAG, getImageId.invoke(wordItem, null).toString() + " versus " + position);
+            if (getHangeul != null && getRomanization != null) {
+                String[] elements = getHangeul.invoke(wordItem).toString().split(" ");
                 for (String s : elements) {
                     word = word + String.valueOf((char) Integer.parseInt(s, 16));
                 }
+                romanization = getRomanization.invoke(wordItem).toString();
+            }
+            if (getImageId != null){
+                imageId = (String) getImageId.invoke(wordItem);
             }
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        return word;
+        return (new String[]{word, romanization, imageId});
     }
 
     /**
      * Returns a different typeface from the assets folder.
      */
+    //// TODO: 7/16/2016 make sure it returns a different number from previous
     public static Typeface diffFont(Context context){
         int fontIndex = randInt(0, FONT_MAP.length - 1); // index always off by one from array length
         return Typeface.createFromAsset(context.getAssets(), FONT_MAP[fontIndex]);

@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Class model = Syllable.class;
                         int randPos = (int) SQLite.selectCountOf().from(model).count();
-                        textView.setText(Utility.wordSelector(Utility.randInt(0, randPos), model));
+                        textView.setText(Utility.wordSelector(Utility.randInt(0, randPos), model)[0]);
                     }
                 });
             } catch (Exception e) {
