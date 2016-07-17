@@ -1,0 +1,167 @@
+Afghanistan,c544 d504 ac00 b2c8 c2a4 d0c4,apeuganiseutan
+Albania,c54c bc14 b2c8 c544,albania
+Algeria,c54c c81c b9ac,aljeli
+Andorra,c548 b3c4 b77c,andola
+Angola,c559 ace8 b77c,ang-golla
+Argentina,c544 b974 d5e8 d2f0 b098,aleuhentina
+Armenia,c544 b974 ba54 b2c8 c544,aleumenia
+Australia,d638 c8fc,hoju
+Austria,c624 c2a4 d2b8 b9ac c544,oseuteulia
+Azerbaijan,c544 c81c b974 bc14 c774 c794,ajeleubaijan
+Bahamas,bc14 d558 b9c8,bahama
+Bahrain,bc14 b808 c778,balein
+Bangladesh,bc29 ae00 b77c b370 c2dc,bang-geulladesi
+Barbados,bc14 bca0 c774 b3c4 c2a4,babeidoseu
+Belarus,bca8 b77c b8e8 c2a4,bellaluseu
+Belgium,bca8 ae30 c5d0,belgie
+Bhutan,bd80 d0c4,butan
+Bosnia and Herzegovina,bcf4 c2a4 b2c8 c544 d5e4 b974 ccb4 ace0 be44 b098,boseuniaheleuchegobina
+Botswana,bcf4 ce20 c640 b098,bocheuwana
+Brazil,be0c b77c c9c8,beulajil
+Brunei,be0c b8e8 b098 c774,beulunai
+Bulgaria,bd88 ac00 b9ac c544,bulgalia
+Burma (Myanmar),bc84 b9c8 0028 bbf8 c580 b9c8 0029,beoma(miyanma)
+Cambodia,ce84 bcf4 b514 c544,kambodia
+Canada,ce90 b098 b2e4,kaenada
+Cape Verde,ce74 bcf4 bca0 b974 b370,kabobeleude
+Central African Republic,b0a8 c544 d504 b9ac ce74 acf5 d654 ad6d,nam-apeulika gonghwagug
+Chile,ce60 b808,chille
+China,c911 ad6d,jung-gug
+Colombia,cf5c b86c be44 c544,kollombia
+Comoros,cf54 baa8 b85c,komolo
+Cook Islands,cfe1 c81c b3c4,kugjedo
+Costa Rica,cf54 c2a4 d0c0 b9ac ce74,koseutalika
+Croatia,d06c b85c c544 d2f0 c544,keuloatia
+Cuba,cfe0 bc14,kuba
+Cyprus,d0a4 d504 b85c c2a4,kipeuloseu
+Czech Republic,ccb4 cf54,cheko
+Democratic Republic of the Congo,cf69 ace0 bbfc c8fc acf5 d654 ad6d,kong-go minju gonghwagug
+Denmark,b374 b9c8 d06c,denmakeu
+Djibouti,c9c0 bd80 d2f0,jibuti
+Dominican Republic,b3c4 bbf8 b2c8 ce74 acf5 d654 ad6d,dominika gonghwagug
+East Timor,b3d9 d2f0 baa8 b974,dongtimoleu
+Ecuador,c5d0 cf70 b3c4 b974,ekwadoleu
+Egypt,c774 c9d1 d2b8,ijibteu
+Equatorial Guinea,c801 b3c4 ae30 b2c8,jeogdo gini
+Estonia,c5d0 c2a4 d1a0 b2c8 c544,eseutonia
+Ethiopia,c5d0 d2f0 c624 d53c c544,etiopia
+Fiji,d53c c9c0,piji
+Finland,d540 b780 b4dc,pinlandeu
+France,d504 b791 c2a4,peulangseu
+Gabon,ac00 bd09,gabong
+Gambia,ac10 be44 c544,gambia
+Georgia,c870 c9c0 c544,jojia
+Germany,b3c5 c77c,dog-il
+Ghana,ac00 b098,gana
+Greece,adf8 b9ac c2a4,geuliseu
+Greenland,adf8 b9b0 b780 b4dc,geulinlandeu
+Grenada,adf8 b808 b098 b2e4,geulenada
+Guatemala,acfc d14c b9d0 b77c,gwatemalla
+Guinea,ae30 b2c8,gini
+Guinea-Bissau,ae30 b2c8 be44 c0ac c6b0,ginibisau
+Hungary,d5dd ac00 b9ac,heong-gali
+Iceland,c544 c774 c2ac b780 b4dc,aiseullandeu
+India,c778 b3c4,indo
+Indonesia,c778 b3c4 b124 c2dc c544,indonesia
+Iran,c774 b780,ilan
+Iraq,c774 b77c d06c,ilakeu
+Israel,c774 c2a4 b77c c5d8,iseula-el
+Italy,c774 d0c8 b9ac c544,itallia
+Japan,c77c bcf8,ilbon
+Jordan,c694 b974 b2e8,yoleudan
+Kazakhstan,ce74 c790 d750 c2a4 d0c4,kajaheuseutan
+Kenya,cf00 b0d0,kenya
+Kiribati,d0a4 b9ac bc14 c2dc,kilibasi
+Kuwait,cfe0 c6e8 c774 d2b8,kuweiteu
+Kyrgyzstan,d0a4 b974 ae30 c2a4 c2a4 d0c4,kileugiseuseutan
+Laos,b77c c624 c2a4,laoseu
+Lativa,b77c d2b8 be44 c544,lateubia
+Lebanon,b808 bc14 b17c,lebanon
+Lesotho,b808 c18c d1a0,lesoto
+Libya,b9ac be44 c544,libia
+Liechtenstein,b9ac d788 d150 c288 d0c0 c778,lihitensyutain
+Lithuania,b9ac d22c c544 b2c8 c544,lituania
+Luxembourg,b8e9 c148 bd80 b974 d06c,lugsembuleukeu
+Macedonia,b9c8 cf00 b3c4 b2c8 c544,makedonia
+Madagascar,b9c8 b2e4 ac00 c2a4 ce74 b974,madagaseukaleu
+Malawi,b9d0 b77c c704,mallawi
+Malaysia,b9d0 b808 c774 c2dc c544,malleisia
+Maldives,bab0 b514 be0c,moldibeu
+Mali,b9d0 b9ac,malli
+Malta,bab0 d0c0,molta
+Marshall Islands,b9c8 c15c,masyeol
+Mauritania,baa8 b9ac d0c0 b2c8,molitani
+Mauritius,baa8 b9ac c154 c2a4,molisyeoseu
+Mexico,ba55 c2dc cf54,megsiko
+Micronesia,bbf8 d06c b85c b124 c2dc c544,mikeulonesia
+Moldova,bab0 b3c4 bc14,moldoba
+Monaco,baa8 b098 cf54,monako
+Mongolia,babd ace8,mong-gol
+Montenegro,baac d14c b124 adf8 b85c,montenegeulo
+Morocco,baa8 b85c cf54,moloko
+Mozambique,baa8 c7a0 be44 d06c,mojambikeu
+Namibia,b098 bbf8 be44 c544,namibia
+Nauru,b098 c6b0 b8e8,naulu
+Nepal,b124 d314,nepal
+Netherlands (Holland),b124 b35c b780 b4dc,nedeollandeu
+New Zealand,b274 c9c8 b79c b4dc,nyujillaendeu
+Nicaragua,b2c8 ce74 b77c acfc,nikalagwa
+Niger,b2c8 c81c b974,nijeleu
+Nigeria,b098 c774 c9c0 b9ac c544,naijilia
+Norway,b178 b974 c6e8 c774,noleuwei
+Oman,c624 b9cc,oman
+Pakistan,d30c d0a4 c2a4 d0c4,pakiseutan
+Palau,d314 b77c c6b0,pallau
+Panama,d30c b098 b9c8,panama
+Papua New Guinea,d30c d478 c544 b274 ae30 b2c8,papuanyugini
+Paraguay,d30c b77c acfc c774,palagwai
+Peru,d398 b8e8,pelu
+Philippines,d544 b9ac d540,pillipin
+Poland,d3f4 b780 b4dc,pollandeu
+Portugal,d3ec b974 d22c ac08,poleutugal
+Puerto Rico,d478 c5d0 b974 d1a0 b9ac cf54,pueleutoliko
+Qatar,ce74 d0c0 b974,kataleu
+Republic Ireland,c544 c77c b79c b4dc,aillaendeu
+Republic Suriname,c218 b9ac b0a8,sulinam
+Rumania,b8e8 b9c8 b2c8 c544,lumania
+Russia,b7ec c2dc c544,leosia
+Rwanda,b974 c644 b2e4,leuwanda
+Saint Lucia,c138 c778 d2b8 b8e8 c2dc c544,seinteulusia
+Saint Vincent and the Grenadines,c138 c778 d2b8 be48 c13c d2b8 adf8 b808 b098 b518,seinteubinsenteugeulenadin
+Samoa,c0ac baa8 c544,samoa
+San Marino,c0b0 b9c8 b9ac b178,sanmalino
+Sao Tome and Principe,c0c1 d22c ba54 d504 b9b0 c2dc d398,sangtumepeulinsipe
+Saudi Arabia,c0ac c6b0 b514 c544 b77c be44 c544,saudialabia
+Serbia/Kosovo,c138 b974 be44 c544 002f cf54 c18c bcf4,seleubia/kosobo
+Singapore,c2f1 ac00 d3f4,sing-gapol
+Slovakia,c2ac b85c bc14 d0a4 c544,seullobakia
+Slovenia,c2ac b85c bca0 b2c8 c544,seullobenia
+Somalia,c18c b9d0 b9ac c544,somallia
+South Africa,b0a8 c544 d504 b9ac ce74 acf5 d654 ad6d,nam-apeulika gonghwagug
+Spain,c2a4 d398 c778,seupein
+Sri Lanka,c2a4 b9ac b791 ce74,seulilangka
+Sudan,c218 b2e8,sudan
+Swaziland,c2a4 c640 c9c8 b780 b4dc,seuwajillandeu
+Sweden,c2a4 c6e8 b374,seuweden
+Switzerland,c2a4 c704 c2a4,seuwiseu
+Syria,c2dc b9ac c544,silia
+Tadjikistan,d0c0 c9c0 d0a4 c2a4 d0c4,tajikiseutan
+Taiwan,b300 b9cc,daeman
+Tanzania,d0c4 c790 b2c8 c544,tanjania
+Thailand,d0dc ad6d,taegug
+Tonga,d1b5 ac00,tong-ga
+Trinidad and Tobago,d2b8 b9ac b2c8 b2e4 b4dc d1a0 bc14 ace0,teulinidadeutobago
+Tunisia,d280 b2c8 c9c0,twiniji
+Turkey,d130 d0a4,teoki
+Turkmenistan,d22c b974 d06c ba54 b2c8 c2a4 d0c4,tuleukeumeniseutan
+Tuvalu,d22c bc1c b8e8,tuballu
+UAE,c544 b78d c5d0 bbf8 b9ac d2b8,alab-emiliteu
+UK,c601 ad6d,yeong-gug
+Ukraine,c6b0 d06c b77c c774 b098,ukeulaina
+USA,bbf8 ad6d,migug
+Uzbekistan,c6b0 c988 bca0 d0a4 c2a4 d0c4,ujeubekiseutan
+Vanuatu,be44 b204 c544 d22c,binuatu
+Vatican City,bc14 d2f0 ce78 c2dc ad6d,batikansigug
+Venezuela,bca0 b124 c8fc c5d8 b77c,benejuella
+Vietnam,bca0 d2b8 b0a8,beteunam
+Zambia,c7a0 be44 c544,jambia

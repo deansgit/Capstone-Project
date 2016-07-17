@@ -37,7 +37,7 @@ public class Syllable extends BaseModel implements Word {
     }
 
     @Override
-    public String getName() {
+    public String getTranslation() {
         return unicode_name;
     }
 
@@ -57,7 +57,7 @@ public class Syllable extends BaseModel implements Word {
     }
 
     @Override
-    public void setName(String unicode_name) {
+    public void setTranslation(String unicode_name) {
         this.unicode_name = unicode_name;
     }
 

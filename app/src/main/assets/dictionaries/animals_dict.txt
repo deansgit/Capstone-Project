@@ -1,62 +1,62 @@
-Fox,c5ec c6b0,yeou,001_fox.jpg
-Wolf,b291 b300,neugdae,002_wolf.jpg
-Deer,c0ac c2b4,saseum,003_deer.jpg
-Camel,b099 d0c0,nagta,004_camel.jpg
-Ostrich,d0c0 c870,tajo,005_ostrich.jpg
-Giraffe,ae30 b9b0,girin,006_giraffe.jpg
-Elephant,cf54 b07c b9ac,kokkiri,007_elephant.jpg
-Zebra,c5bc b8e9 b9d0,eolrukmal,008_zebra.jpg
-Lion,c0ac c790,saja,009_lion.jpg
-Tiger,d638 b791 c774,horang-i,010_tiger.jpg
-Bear,acf0,gom,011_bear.jpg
-Panda,d310 b2e4,panda,012_panda.jpg
-Gorilla,ace0 b9b4 b77c,gorilra,013_gorilla.jpg
-Kangaroo,cea5 ac70 b8e8,kaenggeoru,014_kangaroo.jpg
-Monkey,c6d0 c22d c774,wonsung-i,015_monkey.jpg
-Snake,bc40,baem,016_snake.jpg
-Cheetah,ce58 d0c0,chita,017_cheetah.jpg
-Leopard,d45c bc94,pyobeom,018_leopard.jpg
-Rabbit,d1a0 b07c,tokki,019_rabbit.jpg
-Hamster,d584 c2a4 d130,haemseuteo,020_hamster.jpg
-Horse,b9d0,mal,021_horse.jpg
-Pig,b3fc c9c0,dwaeji,022_pig.jpg
-Sheep,c591,yang,023_sheep.jpg
-Goat,c5fc c18c,yeomso,024_goat.jpg
-Bird,c0c8,sae,025_bird.jpg
-Bat,bc15 c950,bagjwi,026_bat.jpg
-Crow,ae4c b9c8 adc0,kkamagwi,027_crow.jpg
-Parrot,c575 bb34 c0c8,aengmusae,028_parrot.jpg
-Swan,bc31 c870,baegjo,029_swan.jpg
-Pigeon,be44 b458 ae30,bidulgi,030_pigeon.jpg
-Duck,c624 b9ac,ori,031_duck.jpg
-Hen,c554 d0c9,amtarg,032_hen.jpg
-Rooster,c218 d0c9,sutarg,033_rooster.jpg
-Chicken,bcd1 c544 b9ac,byeongari,034_chicken.jpg
-Dog,ac1c,gae,035_dog.jpg
-Cow,c18c,so,036_cow.jpg
-Puppy,ac15 c544 c9c0,gangaji,037_puppy.jpg
-Cat,ace0 c591 c774,goyang-i,038_cat.jpg
-Kitten,c0c8 b07c ace0 c591 c774,saekki goyang-i,039_kitten.jpg
-Mouse,c0dd c950,saengjwi,040_mouse.jpg
-Rat,c950,jwi,041_rat.jpg
-Butterfly,b098 be44,nabi,042_butterfly.jpg
-Ant,ac1c bbf8,gaemi,043_ant.jpg
-Spider,ac70 bbf8,geomi,044_spider.jpg
-Dragonfly,c7a0 c790 b9ac,jamjari,045_dragonfly.jpg
-Caterpillar,c1c4 ae30 c560 bc8c b808,soaegi aebeorre,046_caterpillar.jpg
-Bee,bc8c,beor,047_bee.jpg
-Ladybug,bb34 b2f9 bc8c b808,mudangbeorre,048_ladybug.jpg
-Worm,c9c0 b801 c774,jireong-i,049_worm.jpg
-Frog,ac1c ad6c b9ac,gaeguri,050_frog.jpg
-Whale,ace0 b798,gorae,051_whale.jpg
-Dolphin,b3cc ace0 b798,dolgorae,052_dolphin.jpg
-Turtle,ac70 bd81 c774,geobuk-i,053_turtle.jpg
-Penguin,d3ad adc4,penggwin,054_penguin.jpg
-Seal,bb3c ac1c,mulgae,055_seal.jpg
-Crab,ac8c,gae,056_crab.jpg
-Shark,c0c1 c5b4,sang-eo,057_shark.jpg
-Octopus,bb38 c5b4,muneo,058_octopus.jpg
-Squid,c624 c9d5 c5b4,ojing-eo,059_squid.jpg
-Lobster,bc14 b2e4 ac00 c7ac,badagajae,060_lobster.jpg
-Shrimp,c0c8 c6b0,saeu,061_shrimp.jpg
-goral,c0b0 c591,sanyang,062_goral.jpg
+Fox,c5ec c6b0,yeou,img001_fox
+Wolf,b291 b300,neugdae,img002_wolf
+Deer,c0ac c2b4,saseum,img003_deer
+Camel,b099 d0c0,nagta,img004_camel
+Ostrich,d0c0 c870,tajo,img005_ostrich
+Giraffe,ae30 b9b0,girin,img006_giraffe
+Elephant,cf54 b07c b9ac,kokkiri,img007_elephant
+Zebra,c5bc b8e9 b9d0,eolrukmal,img008_zebra
+Lion,c0ac c790,saja,img009_lion
+Tiger,d638 b791 c774,horang-i,img010_tiger
+Bear,acf0,gom,img011_bear
+Panda,d310 b2e4,panda,img012_panda
+Gorilla,ace0 b9b4 b77c,gorilra,img013_gorilla
+Kangaroo,cea5 ac70 b8e8,kaenggeoru,img014_kangaroo
+Monkey,c6d0 c22d c774,wonsung-i,img015_monkey
+Snake,bc40,baem,img016_snake
+Cheetah,ce58 d0c0,chita,img017_cheetah
+Leopard,d45c bc94,pyobeom,img018_leopard
+Rabbit,d1a0 b07c,tokki,img019_rabbit
+Hamster,d584 c2a4 d130,haemseuteo,img020_hamster
+Horse,b9d0,mal,img021_horse
+Pig,b3fc c9c0,dwaeji,img022_pig
+Sheep,c591,yang,img023_sheep
+Goat,c5fc c18c,yeomso,img024_goat
+Bird,c0c8,sae,img025_bird
+Bat,bc15 c950,bagjwi,img026_bat
+Crow,ae4c b9c8 adc0,kkamagwi,img027_crow
+Parrot,c575 bb34 c0c8,aengmusae,img028_parrot
+Swan,bc31 c870,baegjo,img029_swan
+Pigeon,be44 b458 ae30,bidulgi,img030_pigeon
+Duck,c624 b9ac,ori,img031_duck
+Hen,c554 d0c9,amtarg,img032_hen
+Rooster,c218 d0c9,sutarg,img033_rooster
+Chicken,bcd1 c544 b9ac,byeongari,img034_chicken
+Dog,ac1c,gae,img035_dog
+Cow,c18c,so,img036_cow
+Puppy,ac15 c544 c9c0,gangaji,img037_puppy
+Cat,ace0 c591 c774,goyang-i,img038_cat
+Kitten,c0c8 b07c ace0 c591 c774,saekki goyang-i,img039_kitten
+Mouse,c0dd c950,saengjwi,img040_mouse
+Rat,c950,jwi,img041_rat
+Butterfly,b098 be44,nabi,img042_butterfly
+Ant,ac1c bbf8,gaemi,img043_ant
+Spider,ac70 bbf8,geomi,img044_spider
+Dragonfly,c7a0 c790 b9ac,jamjari,img045_dragonfly
+Caterpillar,c1c4 ae30 c560 bc8c b808,soaegi aebeorre,img046_caterpillar
+Bee,bc8c,beor,img047_bee
+Ladybug,bb34 b2f9 bc8c b808,mudangbeorre,img048_ladybug
+Worm,c9c0 b801 c774,jireong-i,img049_worm
+Frog,ac1c ad6c b9ac,gaeguri,img050_frog
+Whale,ace0 b798,gorae,img051_whale
+Dolphin,b3cc ace0 b798,dolgorae,img052_dolphin
+Turtle,ac70 bd81 c774,geobuk-i,img053_turtle
+Penguin,d3ad adc4,penggwin,img054_penguin
+Seal,bb3c ac1c,mulgae,img055_seal
+Crab,ac8c,gae,img056_crab
+Shark,c0c1 c5b4,sang-eo,img057_shark
+Octopus,bb38 c5b4,muneo,img058_octopus
+Squid,c624 c9d5 c5b4,ojing-eo,img059_squid
+Lobster,bc14 b2e4 ac00 c7ac,badagajae,img060_lobster
+Shrimp,c0c8 c6b0,saeu,img061_shrimp
+Goral,c0b0 c591,sanyang,img062_goral

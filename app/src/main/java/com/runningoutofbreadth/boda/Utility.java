@@ -40,7 +40,7 @@ public class Utility {
             "fonts/oseunghaneum_bold_typed.ttf"
     };
 
-    // add some kind of nullable param in case there is no image data.
+    // TODO: 7/17/2016 end the loop if it sucks
     public static void insertDatabaseObjects(DatabaseWrapper databaseWrapper,
                                              AssetManager assetManager, String assetPath, Class model) {
         try {
@@ -51,9 +51,9 @@ public class Utility {
             for (int i = 0; i < mList.size(); i++) {
                 tokens = mList.get(i).split(",");
                 try {
-                    dbObject = WordFactory.getWord(model);
+                    dbObject = WordFactory.build(model);
                     dbObject.setsId(i);
-                    dbObject.setName(tokens[0]);
+                    dbObject.setTranslation(tokens[0]);
                     dbObject.setHangeul(tokens[1]);
                     dbObject.setRomanization(tokens[2]);
                     if (tokens.length > 3) {
@@ -62,6 +62,7 @@ public class Utility {
                     dbObject.save(databaseWrapper);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    break;
                 }
             }
             dictionary.close();

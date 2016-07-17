@@ -9,6 +9,8 @@ import com.raizlabs.android.dbflow.annotation.Database;
 public class BodaDatabase{
     public static final String NAME = "BodaDatabase";
 
-    public static final int VERSION = 4;
+    public static final int VERSION = 5;
+
+    // Version 5 -- added Nations. Renamed some columns. Added pictures.
 
 }

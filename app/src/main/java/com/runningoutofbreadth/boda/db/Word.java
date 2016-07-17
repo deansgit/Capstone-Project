@@ -11,7 +11,7 @@ public interface Word {
 
     void setsId(int sId);
 
-    void setName(String name);
+    void setTranslation(String name);
 
     void setHangeul(String hangeul);
 
@@ -23,7 +23,7 @@ public interface Word {
 
     int getsId();
 
-    String getName();
+    String getTranslation();
 
     String getHangeul();
 

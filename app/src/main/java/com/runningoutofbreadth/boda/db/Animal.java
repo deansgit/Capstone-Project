@@ -40,7 +40,7 @@ public class Animal extends BaseModel implements Word {
     }
 
     @Override
-    public void setName(String animal_name) {
+    public void setTranslation(String animal_name) {
         this.animal_name = animal_name;
     }
 
@@ -70,7 +70,7 @@ public class Animal extends BaseModel implements Word {
     }
 
     @Override
-    public String getName() {
+    public String getTranslation() {
         return animal_name;
     }
 

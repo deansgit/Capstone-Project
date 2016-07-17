@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.runningoutofbreadth.boda.R;
 import com.runningoutofbreadth.boda.Utility;
@@ -80,9 +81,8 @@ public class FlashcardActivity extends AppCompatActivity {
             mImageView.setVisibility(View.INVISIBLE);
             mHangeulView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                     getResources().getDimension(R.dimen.standalone_syllable_size));
-        } else {
-            // set image.
-            // TODO: 7/16/2016 implement Glide to load pics from drawables
+        } else{
+
         }
 
         try {
@@ -98,6 +98,11 @@ public class FlashcardActivity extends AppCompatActivity {
 //            Log.v(LOG_TAG, wordItem[WORDSELECTOR_HANGEUL] + " " + wordItem[WORDSELECTOR_ROMANIZATION]);
             mHangeulView.setText(wordItem[WORDSELECTOR_HANGEUL]);
             mRomanizationView.setText(wordItem[WORDSELECTOR_ROMANIZATION]);
+            int resId = getResources().getIdentifier(wordItem[WORDSELECTOR_IMAGEID], "drawable", getPackageName());
+            Glide.with(this)
+                    .load(resId).error(android.R.drawable.picture_frame)
+                    .fitCenter()
+                    .into(mImageView);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,6 +119,11 @@ public class FlashcardActivity extends AppCompatActivity {
         String[] newWordItem = Utility.wordSelector(Utility.randInt(0, newRandPosMax), model);
         mHangeulView.setText(newWordItem[WORDSELECTOR_HANGEUL]);
         mRomanizationView.setText(newWordItem[WORDSELECTOR_ROMANIZATION]);
+        int resId = getResources().getIdentifier(newWordItem[WORDSELECTOR_IMAGEID], "drawable", getPackageName());
+        Glide.with(this)
+                .load(resId).error(android.R.drawable.picture_frame)
+                .fitCenter()
+                .into(mImageView);
     }
 
 }
