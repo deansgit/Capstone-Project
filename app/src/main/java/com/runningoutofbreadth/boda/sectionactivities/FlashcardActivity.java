@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.runningoutofbreadth.boda.R;
 import com.runningoutofbreadth.boda.Utility;
+import com.runningoutofbreadth.boda.db.Syllable;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -53,7 +54,8 @@ public class FlashcardActivity extends AppCompatActivity {
             case (MotionEvent.ACTION_UP):
                 float finalX = event.getX();
                 Log.v(LOG_TAG, Float.toString(finalX));
-                if (initialX - finalX > 50) {
+                // TODO: 7/19/2016 retain list as it is generated, allow scroll back
+                if (Math.abs(initialX - finalX) > 50) {
                     changeWord(mModel);
                     changeFont();
                 } else {
@@ -81,7 +83,7 @@ public class FlashcardActivity extends AppCompatActivity {
             mImageView.setVisibility(View.INVISIBLE);
             mHangeulView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                     getResources().getDimension(R.dimen.standalone_syllable_size));
-        } else{
+        } else {
 
         }
 
@@ -119,11 +121,13 @@ public class FlashcardActivity extends AppCompatActivity {
         String[] newWordItem = Utility.wordSelector(Utility.randInt(0, newRandPosMax), model);
         mHangeulView.setText(newWordItem[WORDSELECTOR_HANGEUL]);
         mRomanizationView.setText(newWordItem[WORDSELECTOR_ROMANIZATION]);
-        int resId = getResources().getIdentifier(newWordItem[WORDSELECTOR_IMAGEID], "drawable", getPackageName());
-        Glide.with(this)
-                .load(resId).error(android.R.drawable.picture_frame)
-                .fitCenter()
-                .into(mImageView);
+        if (model != Syllable.class) {
+            int resId = getResources().getIdentifier(newWordItem[WORDSELECTOR_IMAGEID], "drawable", getPackageName());
+            Glide.with(this)
+                    .load(resId).error(android.R.drawable.picture_frame)
+                    .fitCenter()
+                    .into(mImageView);
+        }
     }
 
 }

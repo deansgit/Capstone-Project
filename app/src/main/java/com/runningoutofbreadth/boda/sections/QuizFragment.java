@@ -1,20 +1,23 @@
 package com.runningoutofbreadth.boda.sections;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.runningoutofbreadth.boda.R;
+import com.runningoutofbreadth.boda.sectionactivities.QuizActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link QuizFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class QuizFragment extends Fragment {
+public class QuizFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -60,7 +63,39 @@ public class QuizFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_quiz, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_quiz, container, false);
+
+        ImageButton animalsImgBtn = (ImageButton) rootView.findViewById(R.id.animals);
+        ImageButton syllablesImgBtn = (ImageButton) rootView.findViewById(R.id.syllables);
+        ImageButton nationsImgBtn = (ImageButton) rootView.findViewById(R.id.nations);
+        ImageButton idiomsImgBtn = (ImageButton) rootView.findViewById(R.id.idioms);
+
+        animalsImgBtn.setOnClickListener(this);
+        syllablesImgBtn.setOnClickListener(this);
+        nationsImgBtn.setOnClickListener(this);
+        idiomsImgBtn.setOnClickListener(this);
+
+        return rootView;
     }
 
+    @Override
+    public void onClick(View v) {
+        int id  = v.getId();
+        Intent intent = new Intent(getActivity(), QuizActivity.class);
+        switch (id){
+            case R.id.animals:
+                intent.putExtra(QuizActivity.CATEGORY, QuizActivity.CATEGORY_ANIMALS);
+                break;
+            case R.id.syllables:
+                intent.putExtra(QuizActivity.CATEGORY, QuizActivity.CATEGORY_SYLLABLES);
+                break;
+            case R.id.nations:
+                intent.putExtra(QuizActivity.CATEGORY, QuizActivity.CATEGORY_NATIONS);
+                break;
+            case R.id.idioms:
+                intent.putExtra(QuizActivity.CATEGORY, QuizActivity.CATEGORY_IDIOMS);
+                break;
+        }
+        startActivity(intent);
+    }
 }

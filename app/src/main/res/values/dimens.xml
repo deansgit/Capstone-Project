@@ -14,4 +14,7 @@
     <!-- Image sizes-->
     <dimen name="max_image_height">200dp</dimen>
     <dimen name="max_image_width">300dp</dimen>
+    <dimen name="quiz_choice_font_size">26sp</dimen>
+
+
 </resources>

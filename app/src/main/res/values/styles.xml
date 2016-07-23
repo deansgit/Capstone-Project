@@ -29,4 +29,21 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="QuizButtonStyle" parent="AppTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_rowSpan">1</item>
+        <item name="android:layout_columnSpan">1</item>
+        <item name="android:text">CHOICE</item>
+        <item name="android:textSize">@dimen/quiz_choice_font_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:padding">@dimen/quiz_choice_padding</item>
+        <item name="android:layout_margin">@dimen/quiz_choice_margin</item>
+        <item name="android:clickable">true</item>
+        <item name="android:onClick">"onClick"</item>
+    </style>
+
+    <dimen name="quiz_choice_padding">4dp</dimen>
+    <dimen name="quiz_choice_margin">8dp</dimen>
 </resources>
