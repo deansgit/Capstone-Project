@@ -20,22 +20,26 @@
     <Button
         android:id="@+id/slow"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:onClick="onClick"/>
 
     <Button
         android:id="@+id/normal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:onClick="onClick"/>
 
     <Button
         android:id="@+id/fast"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:onClick="onClick"/>
 
     <Button
         android:id="@+id/ludicrous"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:onClick="onClick"/>
 
 </LinearLayout>
 

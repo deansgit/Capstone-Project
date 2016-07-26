@@ -24,7 +24,12 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_flashcard"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".sectionactivities.QuizActivity"></activity>
+        <activity android:name=".sectionactivities.QuizActivity" />
+        <activity
+            android:name=".sectionactivities.SpeedReaderActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_speed_reader"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

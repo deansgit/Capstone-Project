@@ -1,20 +1,27 @@
 package com.runningoutofbreadth.boda.sections;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.runningoutofbreadth.boda.R;
+import com.runningoutofbreadth.boda.sectionactivities.SpeedReaderActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SpeedReaderFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SpeedReaderFragment extends Fragment {
+public class SpeedReaderFragment extends Fragment implements View.OnClickListener{
+    private static final String LOG_TAG = SpeedReaderFragment.class.getSimpleName();
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -24,6 +31,15 @@ public class SpeedReaderFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private Button mSlowButton;
+    private Button mNormalButton;
+    private Button mFastButton;
+    private Button mLudicrousButton;
+
+    public static final long DELAY_SLOW = 3000;
+    public static final long DELAY_NORMAL = 2000;
+    public static final long DELAY_FAST = 1000;
+    public static final long DELAY_LUDICROUS = 500;
 
     public SpeedReaderFragment() {
         // Required empty public constructor
@@ -59,8 +75,42 @@ public class SpeedReaderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_speed_reader, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_speed_reader, container, false);
+
+        mSlowButton = (Button) rootView.findViewById(R.id.slow);
+        mNormalButton = (Button) rootView.findViewById(R.id.normal);
+        mFastButton = (Button) rootView.findViewById(R.id.fast);
+        mLudicrousButton = (Button) rootView.findViewById(R.id.ludicrous);
+
+        mSlowButton.setOnClickListener(this);
+        mNormalButton.setOnClickListener(this);
+        mFastButton.setOnClickListener(this);
+        mLudicrousButton.setOnClickListener(this);
+
+        return rootView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id  = v.getId();
+        Log.v(LOG_TAG, Integer.toString(v.getId()));
+        Intent intent = new Intent(getActivity(), SpeedReaderActivity.class);
+        switch (id){
+            case R.id.slow:
+                intent.putExtra(SpeedReaderActivity.DIFFICULTY, DELAY_SLOW);
+                Log.v(LOG_TAG, "slow was clicked");
+                break;
+            case R.id.normal:
+                intent.putExtra(SpeedReaderActivity.DIFFICULTY, DELAY_NORMAL);
+                break;
+            case R.id.fast:
+                intent.putExtra(SpeedReaderActivity.DIFFICULTY, DELAY_FAST);
+                break;
+            case R.id.ludicrous:
+                intent.putExtra(SpeedReaderActivity.DIFFICULTY, DELAY_LUDICROUS);
+                break;
+        }
+        startActivity(intent);
     }
 
 }

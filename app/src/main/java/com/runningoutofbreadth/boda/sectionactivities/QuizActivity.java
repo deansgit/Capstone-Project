@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,6 +50,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         mChoiceThree = (TextView) findViewById(R.id.choice_three);
         mChoiceFour = (TextView) findViewById(R.id.choice_four);
 
+        // TODO: 7/23/2016 add one more view that tracks correct/incorrect.
+
         Intent intent = getIntent();
         mModelName = intent.getStringExtra(CATEGORY);
 
@@ -59,7 +60,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             // param becomes String "com.runningoutofbreadth.boda.db.DBMODEL"
             mModel = Class.forName(getPackageName() + ".db." + mModelName);
 
-            Log.v(LOG_TAG, mModel.toString());
+//            Log.v(LOG_TAG, mModel.toString());
             // get size of db table
             int randPosMax = (int) SQLite.selectCountOf().from(mModel).count();
             String[] wordItem = Utility.wordSelector(Utility.randInt(0, randPosMax), mModel);
@@ -80,12 +81,13 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Log.v(LOG_TAG, v.getClass().toString());
+//        Log.v(LOG_TAG, v.getClass().toString());
         if (v.getClass() == TextView.class || v.getClass() == AppCompatTextView.class){
             TextView temp = (TextView) v;
             if (temp.getText() == mAnswer){
-                changeWord(mModel);
+                // increment correct/incorrect counter by one.
             }
+            changeWord(mModel);
         }
     }
 
@@ -121,9 +123,9 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             choices[2] = tweakAnswer(answer);
             choices[3] = tweakAnswer(answer);
         }
-        for (String choice : choices) {
-            Log.v(LOG_TAG, choice);
-        }
+//        for (String choice : choices) {
+//            Log.v(LOG_TAG, choice);
+//        }
         shuffleArray(choices);
         return choices;
     }
@@ -134,7 +136,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     private String tweakAnswer(String answer) {
         String[] syllables = answer.split("");
-        syllables[syllables.length - 1] = randomSyllable();
+        syllables[syllables.length - 1] = Utility.randomSyllable();
         StringBuilder builder = new StringBuilder();
         for (String s : syllables) {
             builder.append(s);
@@ -162,14 +164,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             return mixUpAnswer(answer);
         }
-    }
-
-    /**
-     * Generate a random syllable to be used as a replacement for one of the wrong answers in quiz
-     **/
-    private String randomSyllable() {
-        int randPosMax = (int) SQLite.selectCountOf().from(Syllable.class).count();
-        return Utility.wordSelector(Utility.randInt(0, randPosMax), Syllable.class)[WORDSELECTOR_HANGEUL];
     }
 
     /**

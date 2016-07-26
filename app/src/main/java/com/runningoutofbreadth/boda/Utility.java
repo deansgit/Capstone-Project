@@ -9,6 +9,7 @@ import com.raizlabs.android.dbflow.sql.language.NameAlias;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.Model;
 import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
+import com.runningoutofbreadth.boda.db.Syllable;
 import com.runningoutofbreadth.boda.db.Word;
 import com.runningoutofbreadth.boda.db.WordFactory;
 
@@ -39,6 +40,10 @@ public class Utility {
             "fonts/nanumpen_handwritten.ttf",
             "fonts/oseunghaneum_bold_typed.ttf"
     };
+
+    private static final int WORDSELECTOR_HANGEUL = 0;
+    private static final int WORDSELECTOR_ROMANIZATION = 1;
+    private static final int WORDSELECTOR_IMAGEID = 2;
 
     // TODO: 7/17/2016 end the loop if it sucks
     public static void insertDatabaseObjects(DatabaseWrapper databaseWrapper,
@@ -164,6 +169,14 @@ public class Utility {
     public static Typeface diffFont(Context context){
         int fontIndex = randInt(0, FONT_MAP.length - 1); // index always off by one from array length
         return Typeface.createFromAsset(context.getAssets(), FONT_MAP[fontIndex]);
+    }
+
+    /**
+     * Generate a random syllable
+     **/
+    public static String randomSyllable() {
+        int randPosMax = (int) SQLite.selectCountOf().from(Syllable.class).count();
+        return Utility.wordSelector(Utility.randInt(0, randPosMax), Syllable.class)[WORDSELECTOR_HANGEUL];
     }
 
 }
