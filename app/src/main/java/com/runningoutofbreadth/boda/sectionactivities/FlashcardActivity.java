@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.runningoutofbreadth.boda.R;
 import com.runningoutofbreadth.boda.Utility;
+import com.runningoutofbreadth.boda.db.Idiom;
 import com.runningoutofbreadth.boda.db.Syllable;
 
 /**
@@ -78,8 +79,9 @@ public class FlashcardActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         mModelName = intent.getStringExtra(CATEGORY);
-        if (intent.getStringExtra(CATEGORY).equals(CATEGORY_SYLLABLES)) {
-            // hide image, make syllables bigger
+        if (intent.getStringExtra(CATEGORY).equals(CATEGORY_SYLLABLES)
+                || intent.getStringExtra(CATEGORY).equals(CATEGORY_IDIOMS)) {
+            // hide image, make syllables/words bigger
             mImageView.setVisibility(View.INVISIBLE);
             mHangeulView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                     getResources().getDimension(R.dimen.standalone_syllable_size));
@@ -101,10 +103,7 @@ public class FlashcardActivity extends AppCompatActivity {
             mHangeulView.setText(wordItem[WORDSELECTOR_HANGEUL]);
             mRomanizationView.setText(wordItem[WORDSELECTOR_ROMANIZATION]);
             int resId = getResources().getIdentifier(wordItem[WORDSELECTOR_IMAGEID], "drawable", getPackageName());
-            Glide.with(this)
-                    .load(resId).error(android.R.drawable.picture_frame)
-                    .fitCenter()
-                    .into(mImageView);
+            Utility.glideLoadImage(this, resId, mImageView);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,7 +120,7 @@ public class FlashcardActivity extends AppCompatActivity {
         String[] newWordItem = Utility.wordSelector(Utility.randInt(0, newRandPosMax), model);
         mHangeulView.setText(newWordItem[WORDSELECTOR_HANGEUL]);
         mRomanizationView.setText(newWordItem[WORDSELECTOR_ROMANIZATION]);
-        if (model != Syllable.class) {
+        if (model != Syllable.class && model != Idiom.class) {
             int resId = getResources().getIdentifier(newWordItem[WORDSELECTOR_IMAGEID], "drawable", getPackageName());
             Glide.with(this)
                     .load(resId).error(android.R.drawable.picture_frame)

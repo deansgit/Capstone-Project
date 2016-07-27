@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private final String[][] DICTIONARY_PATHS = {
             {"dictionaries/syllables_dict.txt", "Syllable"},
             {"dictionaries/animals_dict.txt", "Animal"},
-            {"dictionaries/nations_dict.txt", "Nation"}
+            {"dictionaries/nations_dict.txt", "Nation"},
+            {"dictionaries/idioms_dict.txt", "Idiom"}
     };
 
     // boolean for checking sharedPref to see if database was already loaded
@@ -119,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
 //        Log.v(LOG_TAG, SQLite.select().from(Syllable.class).where(Syllable_Table.sId.eq(5)).querySingle().getTranslation() + " new");
 //        Log.v(LOG_TAG, SQLite.select().from(Animal.class).where(Animal_Table.sId.eq(5)).querySingle().getTranslation() + " new");
 //        Log.v(LOG_TAG, SQLite.select().from(Nation.class).where(Nation_Table.sId.eq(5)).querySingle().getTranslation() + " new");
+//        Log.v(LOG_TAG, SQLite.select().from(Idiom.class).where(Idiom_Table.sId.eq(5)).querySingle().getTranslation() + " new");
     }
 
     @Override
@@ -214,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
         // if setting doesn't exist or if the version number has changed, update number and set bool
         // to false to kickstart db updating.
         if (!settings.contains(DB_VERSION_NUMBER) || settings.getInt(DB_VERSION_NUMBER, 0) != BodaDatabase.VERSION) {
+            Log.v(LOG_TAG, Integer.toString(settings.getInt(DB_VERSION_NUMBER, 0)));
             editor.putInt(DB_VERSION_NUMBER, BodaDatabase.VERSION);
             mDBUpdated = false;
         }

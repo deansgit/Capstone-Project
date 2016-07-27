@@ -3,7 +3,9 @@ package com.runningoutofbreadth.boda;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.raizlabs.android.dbflow.sql.language.Condition;
 import com.raizlabs.android.dbflow.sql.language.NameAlias;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
@@ -177,6 +179,16 @@ public class Utility {
     public static String randomSyllable() {
         int randPosMax = (int) SQLite.selectCountOf().from(Syllable.class).count();
         return Utility.wordSelector(Utility.randInt(0, randPosMax), Syllable.class)[WORDSELECTOR_HANGEUL];
+    }
+
+    /**
+     * Helper image loader
+     **/
+    public static void glideLoadImage(Context context, int resId, ImageView imageView) {
+        Glide.with(context)
+                .load(resId).error(android.R.drawable.picture_frame)
+                .fitCenter()
+                .into(imageView);
     }
 
 }

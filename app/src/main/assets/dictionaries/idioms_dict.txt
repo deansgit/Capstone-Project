@@ -1,14 +1,14 @@
 Glasses in my eyes;Meaning: Beauty is in the eye of the beholder,c81c 0020 b208 c5d0 0020 c548 acbd c774 b2e4,je nun-e angyeong-ida
-If you eat a pheasant, you also eat the egg;Meaning: Kill 2 birds with 1 stone,afe9 0020 ba39 ace0 0020 c54c 0020 ba39 b294 b2e4,kkwong meoggo al meogneunda
+If you eat a pheasant you also eat the egg;Meaning: Kill 2 birds with 1 stone,afe9 0020 ba39 ace0 0020 c54c 0020 ba39 b294 b2e4,kkwong meoggo al meogneunda
 Rome wasn’t made in one morning;Meaning: Rome wasn’t built in a day,b85c b9c8 b294 0020 d558 b8e8 c544 ce68 c5d0 0020 c774 b8e8 c5b4 c9c4 0020 ac83 c774 0020 c544 b2c8 b2e4,romaneun haluachim-e ilueojin geos-i anida
 Good looking ddeok (rice cake) tastes good;Meaning: What looks good tastes good,bcf4 ae30 0020 c88b c740 0020 b5a1 c774 0020 ba39 ae30 b3c4 0020 c88b b2e4,bogi joh-eun tteog-i meoggido johda
 A widower knows a widow’s sorrow;Meaning: Misery loves company,acfc bd80 0020 c124 c6c0 c740 0020 d640 c544 be44 ac00 0020 c548 b2e4,gwabu seol-um-eun hol-abiga anda
-Birds hear the words spoken in the day, and mice hear the words spoken at night;Meaning: The walls have ears,b0ae b9d0 c740 0020 c0c8 ac00 0020 b4e3 ace0 0020 bc24 b9d0 c740 0020 c950 ac00 0020 b4e3 b294 b2e4,najmal-eun saega deudgo bammal-eun jwiga deudneunda
-If it becomes distant from your eyes, it also becomes distant from your mind (heart);Meaning: Out of sight, out of mind,b208 c5d0 c11c 0020 ba40 c5b4 c9c0 ba74 002c 0020 b9c8 c74c c5d0 c11c b3c4 0020 ba40 c5b4 c9c4 b2e4,nun-eseo meol-eojimyeon, ma-eum-eseodo meol-eojinda
-You can lead a horse and go to a stream but you can’t make it drink water through its own will;Meaning: You can lead a horse to water, but you can’t make him drink,b9d0 c744 0020 b0c7 ac00 c5d0 0020 b04c ace0 0020 ac08 0020 c218 b294 0020 c788 c5b4 b3c4 0020 c5b5 c9c0 b85c 0020 bb3c c744 0020 ba39 c77c 0020 c218 b294 0020 c5c6 b2e4,mal-eul naesga-e kkeulgo gal suneun iss-eodo eogjilo mul-eul meog-il suneun eobsda
- If you lift together, it’s better – even if it’s a sheet of paper;Meaning: Two heads are better than one,bc31 c9c0 c7a5 b3c4 0020 b9de b4e4 ba74 0020 b0ab b2e4,baegjijangdo majdeulmyeon nasda
-If you are hard up for something, it will open up;Meaning: There is always a way out,ad81 d558 ba74 0020 d1b5 d55c b2e4,gunghamyeon tonghanda
-In the place there is a will, there is a way;Meaning: Where there’s a will, there’s a way,b73b c774 0020 c788 b294 0020 acf3 c5d0 0020 ae38 c774 0020 c788 b2e4,tteus-i issneun gos-e gil-i issda
+Birds hear the words spoken in the day and mice hear the words spoken at night;Meaning: The walls have ears,b0ae b9d0 c740 0020 c0c8 ac00 0020 b4e3 ace0 0020 bc24 b9d0 c740 0020 c950 ac00 0020 b4e3 b294 b2e4,najmal-eun saega deudgo bammal-eun jwiga deudneunda
+If it becomes distant from your eyes it also becomes distant from your mind (heart);Meaning: Out of sight out of mind,b208 c5d0 c11c 0020 ba40 c5b4 c9c0 ba74 002c 0020 b9c8 c74c c5d0 c11c b3c4 0020 ba40 c5b4 c9c4 b2e4,nun-eseo meol-eojimyeon, ma-eum-eseodo meol-eojinda
+You can lead a horse and go to a stream but you can’t make it drink water through its own will;Meaning: You can lead a horse to water but you can’t make him drink,b9d0 c744 0020 b0c7 ac00 c5d0 0020 b04c ace0 0020 ac08 0020 c218 b294 0020 c788 c5b4 b3c4 0020 c5b5 c9c0 b85c 0020 bb3c c744 0020 ba39 c77c 0020 c218 b294 0020 c5c6 b2e4,mal-eul naesga-e kkeulgo gal suneun iss-eodo eogjilo mul-eul meog-il suneun eobsda
+ If you lift together it’s better – even if it’s a sheet of paper;Meaning: Two heads are better than one,bc31 c9c0 c7a5 b3c4 0020 b9de b4e4 ba74 0020 b0ab b2e4,baegjijangdo majdeulmyeon nasda
+If you are hard up for something it will open up;Meaning: There is always a way out,ad81 d558 ba74 0020 d1b5 d55c b2e4,gunghamyeon tonghanda
+In the place there is a will there is a way;Meaning: Where there’s a will there’s a way,b73b c774 0020 c788 b294 0020 acf3 c5d0 0020 ae38 c774 0020 c788 b2e4,tteus-i issneun gos-e gil-i issda
 It is spilt water;Meaning: There is no use in crying over spilt milk,c5ce c9c8 b7ec c9c4 0020 bb3c c774 b2e4,eopjilleojin mul-ida
 It is like a blind man touching an elephant.;Meaning: It is like a blind man describing an elephant,c7a5 b2d8 c774 0020 cf54 b07c b9ac 0020 b9cc c9c0 b294 0020 aca9 c774 b2e4,jangnim-i kokkili manjineun gyeog-ida
 Don’t spread ashes on cooked rice;Meaning: Don’t rain on someone’s parade,b2e4 0020 b41c 0020 bc25 c5d0 0020 c7ac 0020 bfcc b9ac c9c0 0020 b9c8 b77c,da doen bab-e jae ppuliji mala
@@ -20,10 +20,10 @@ The crayfish sides with the crab;Meaning: Birds of a feather flock together,ac00
 There is a time when even a monkey falls from a tree;Meaning: Even a monkey sometimes falls from the tree,c6d0 c22d c774 b3c4 0020 b098 bb34 c5d0 c11c 0020 b5a8 c5b4 c9c8 0020 b54c ac00 0020 c787 b2e4,wonsung-ido namueseo tteol-eojil ttaega isda
 The frog can’t remember the times when he was a tadpole;Meaning: The parish priest forgets that he was once a parish clerk,ac1c ad6c b9ac 0020 c62c cc59 c774 0020 c801 0020 c0dd ac01 b3c4 0020 babb 0020 d55c b2e4,gaeguli olchaeng-i jeog saeng-gagdo mos handa
 A rolling stone extracts a stone that is embedded.;Meaning: The new replaces the old,ad74 b7ec c628 0020 b3cc c774 0020 bc15 d78c 0020 b3cc 0020 be7c b0b8 b2e4,gulleoon dol-i baghin dol ppaenaenda
-Ask first then go, even if it’s a road you know;Meaning: Better to ask the way than to go astray,c544 b294 0020 ae38 b3c4 0020 bb3c c5b4 ac00 b77c,aneun gildo mul-eogala
+Ask first then go even if it’s a road you know;Meaning: Better to ask the way than to go astray,c544 b294 0020 ae38 b3c4 0020 bb3c c5b4 ac00 b77c,aneun gildo mul-eogala
 Clothes are your wings;Meaning: Clothes make the man,c637 c774 0020 b0a0 ac1c b2e4,os-i nalgaeda
 A picture of ddeok (rice cake);Meaning: A pie in the sky,adf8 b9bc c758 0020 b5a1,geulim-ui tteog
-If going words are beautiful, coming words will be beautiful;Meaning: One good turn deserves another,ac00 b294 0020 b9d0 c774 0020 ace0 c640 c57c c624 b294 0020 b9d0 c774 0020 acf1 b2e4,ganeun mal-i gowayaoneun mal-i gobda
+If going words are beautiful coming words will be beautiful;Meaning: One good turn deserves another,ac00 b294 0020 b9d0 c774 0020 ace0 c640 c57c c624 b294 0020 b9d0 c774 0020 acf1 b2e4,ganeun mal-i gowayaoneun mal-i gobda
 Going day is the fair day;Meaning: Bad timing,ac00 b294 0020 b0a0 c774 0020 c7a5 b0a0,ganeun nal-i jangnal
 The bottom of the lamp is dark;Meaning: It’s often difficult to see what is right in front of you,b4f1 c794 0020 bc11 c774 0020 c5b4 b461 b2e4,deungjan mit-i eodubda
 Write hanja in front of Confucius;Meaning: Don’t try to teach a fish how to swim,acf5 c790 0020 c55e c5d0 c11c 0020 bb38 c790 0020 c4f4 b2e4,gongja ap-eseo munja sseunda
@@ -39,17 +39,17 @@ You can’t spit in a smiling face;Meaning: It is hard to get angry at a smiling
 Cold water is at the top and bottom;Meaning: There is a proper order for everything,cc2c bb3c b3c4 0020 c704 c544 b798 ac00 0020 c788 b2e4,chanmuldo wialaega issda
 Give a scratch to the itchy place;Meaning: You scratch where it itches,ac00 b824 c6b4 0020 acf3 c744 0020 ae01 c5b4 0020 c8fc b2e4,galyeoun gos-eul geulg-eo juda
 First knock on the stone bridge before crossing;Meaning: Look before you leap,b3cc b2e4 b9ac b3c4 0020 b450 b4e4 aca8 0020 bcf4 ace0 0020 ac74 b108 b77c,doldalido dudeulgyeo bogo geonneola
-Even though a tiger is biting you, if you gain consciousness, (you can) live;Meaning: Keep your cool even in the face of despair,d638 b791 c774 c5d0 ac8c 0020 bb3c b824 ac00 b3c4 0020 c815 c2e0 b9cc 0020 cc28 b9ac ba74 0020 c0b0 b2e4,holang-iege mullyeogado jeongsinman chalimyeon sanda
+Even though a tiger is biting you if you gain consciousness (you can) live;Meaning: Keep your cool even in the face of despair,d638 b791 c774 c5d0 ac8c 0020 bb3c b824 ac00 b3c4 0020 c815 c2e0 b9cc 0020 cc28 b9ac ba74 0020 c0b0 b2e4,holang-iege mullyeogado jeongsinman chalimyeon sanda
 Entrust the fish to the cat;Meaning: Let the fox guard the sheep,ace0 c591 c774 c5d0 ac8c 0020 c0dd c120 c744 0020 b9e1 ae30 b2e4,goyang-iege saengseon-eul matgida
-A bean grows where you plant a bean, and a red bean grows where you plant a red bean;Meaning: You reap what you sow,cf69 0020 c2ec c740 0020 b370 0020 cf69 0020 b098 ace0 0020 d325 0020 c2ec c740 0020 b370 0020 d325 0020 b09c b2e4,kong sim-eun de kong nago pat sim-eun de pat nanda
-Cheap things are dreg cakes (rice cakes made from remains of bean curd);Meaning: If you buy cheap, you waste your money,c2fc 0020 ac8c 0020 be44 c9c0 b5a1 c774 b2e4,ssan ge bijitteog-ida
+A bean grows where you plant a bean and a red bean grows where you plant a red bean;Meaning: You reap what you sow,cf69 0020 c2ec c740 0020 b370 0020 cf69 0020 b098 ace0 0020 d325 0020 c2ec c740 0020 b370 0020 d325 0020 b09c b2e4,kong sim-eun de kong nago pat sim-eun de pat nanda
+Cheap things are dreg cakes (rice cakes made from remains of bean curd);Meaning: If you buy cheap you waste your money,c2fc 0020 ac8c 0020 be44 c9c0 b5a1 c774 b2e4,ssan ge bijitteog-ida
 There is no shortcut to learning;Meaning: There is no shortcut to learning,bc30 c6c0 c5d0 b294 0020 c655 b3c4 ac00 0020 c5c6 b2e4,baeum-eneun wangdoga eobsda
 You can only dance when the jangu (drum) is played;Meaning: Help is needed at times,c7a5 ad6c b97c 0020 ccd0 c57c 0020 cda4 c744 0020 cd94 c9c0,jang-guleul chyeoya chum-eul chuji
-Delight comes at the end of difficulty;Meaning: No pain, no gain,ace0 c0dd 0020 b05d c5d0 0020 b099 c774 0020 c628 b2e4,gosaeng kkeut-e nag-i onda
+Delight comes at the end of difficulty;Meaning: No pain no gain,ace0 c0dd 0020 b05d c5d0 0020 b099 c774 0020 c628 b2e4,gosaeng kkeut-e nag-i onda
 One word pays back a debt of a thousand nyang;Meaning: A soft answer turns away wrath,b9d0 0020 d55c b9c8 b514 c5d0 0020 cc9c b0e5 0020 be5a c744 0020 ac1a b294 b2e4,mal hanmadie cheonnyang bij-eul gapneunda
 Even a worm will wiggle if you step on it;Meaning: Even gentle people can lose their tempers,c9c0 b801 c774 b3c4 0020 bc1f c73c ba74 0020 afc8 d2c0 d55c b2e4,jileong-ido balb-eumyeon kkumteulhanda
-Even if the sky collapses, there is a hole to escape out of;Meaning: There is a way out of every situation,d558 b298 c774 0020 bb34 b108 c838 b3c4 0020 c19f c544 b0a0 0020 ad6c ba4d c774 0020 c788 b2e4,haneul-i muneojyeodo sos-anal gumeong-i issda
-When you want to find even dog dung to use as medicine, you can’t find it;Meaning: Things are never where you want them,ac1c b625 b3c4 0020 c57d c5d0 0020 c4f0 b824 ba74 0020 c5c6 b2e4,gaettongdo yag-e sseulyeomyeon eobsda
-Will smoke come out of a chimney if there is no fire?;Meaning: Where there’s smoke, there’s fire,c544 b2c8 0020 b550 0020 ad74 b69d c5d0 0020 c5f0 ae30 0020 b0a0 ae4c,ani ttaen gulttug-e yeongi nalkka
+Even if the sky collapses there is a hole to escape out of;Meaning: There is a way out of every situation,d558 b298 c774 0020 bb34 b108 c838 b3c4 0020 c19f c544 b0a0 0020 ad6c ba4d c774 0020 c788 b2e4,haneul-i muneojyeodo sos-anal gumeong-i issda
+When you want to find even dog dung to use as medicine you can’t find it;Meaning: Things are never where you want them,ac1c b625 b3c4 0020 c57d c5d0 0020 c4f0 b824 ba74 0020 c5c6 b2e4,gaettongdo yag-e sseulyeomyeon eobsda
+Will smoke come out of a chimney if there is no fire?;Meaning: Where there’s smoke there’s fire,c544 b2c8 0020 b550 0020 ad74 b69d c5d0 0020 c5f0 ae30 0020 b0a0 ae4c,ani ttaen gulttug-e yeongi nalkka
 What goes up must come down;Meaning: What goes up must come down,c62c b77c ac04 0020 ac83 c740 0020 bc18 b4dc c2dc 0020 b0b4 b824 c640 c57c 0020 d55c b2e4,ollagan geos-eun bandeusi naelyeowaya handa
 Fix the barn after losing the cow;Meaning: Hindsight is 20/20,c18c 0020 c783 ace0 0020 c678 c591 ac04 0020 ace0 ce58 ae30,so ilhgo oeyang-gan gochigi

@@ -186,10 +186,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         updateViewsForMultipleChoice(createChoices(mAnswer));
         if (model != Syllable.class) {
             int resId = getResources().getIdentifier(newWordItem[WORDSELECTOR_IMAGEID], "drawable", getPackageName());
-            Glide.with(this)
-                    .load(resId).error(android.R.drawable.picture_frame)
-                    .fitCenter()
-                    .into(mImageView);
+            Utility.glideLoadImage(this, resId, mImageView);
         }
     }
 }
