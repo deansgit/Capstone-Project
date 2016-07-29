@@ -25,6 +25,8 @@ import com.runningoutofbreadth.boda.sections.ProfileFragment;
 import com.runningoutofbreadth.boda.sections.QuizFragment;
 import com.runningoutofbreadth.boda.sections.SpeedReaderFragment;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final String PREFS_FILENAME = "BodaPrefsFile";
@@ -42,16 +44,16 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-//
-//    private final String SYLLABLES_DICT_PATH = "dictionaries/syllables_dict.txt";
-//    private final String ANIMALS_DICT_PATH = "dictionaries/animals_dict.txt";
 
-    private final String[][] DICTIONARY_PATHS = {
+    private final String[][] ASSET_REFERENCES = {
             {"dictionaries/syllables_dict.txt", "Syllable"},
             {"dictionaries/animals_dict.txt", "Animal"},
             {"dictionaries/nations_dict.txt", "Nation"},
-            {"dictionaries/idioms_dict.txt", "Idiom"}
+            {"dictionaries/idioms_dict.txt", "Idiom"},
+            {"dictionaries/vocabulary_dict.txt", "Vocabulary"}
     };
+    private static final int DICTIONARY_PATH_INDEX = 0;
+    private static final int CATEGORY_INDEX = 1;
 
     // boolean for checking sharedPref to see if database was already loaded
     private static boolean mDBUpdated;
@@ -74,8 +76,10 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        // TODO: 7/29/2016 make profile tab smaller
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -98,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(LOG_TAG, "execute for database-async-transaction called");
                     AssetManager assetManager = getApplicationContext().getAssets();
                     try {
-                        for (String[] path : DICTIONARY_PATHS) {
-                            Class model = Class.forName(getPackageName() + ".db." + path[1]);
-                            Utility.insertDatabaseObjects(databaseWrapper, assetManager, path[0], model);
+                        for (String[] path : ASSET_REFERENCES) {
+                            Class model = Class.forName(getPackageName() + ".db." + path[CATEGORY_INDEX]);
+                            Utility.insertDatabaseObjects(databaseWrapper, assetManager, path[DICTIONARY_PATH_INDEX], model);
                             if (SQLite.selectCountOf().from(model).count() == 0) {
                                 mDBUpdated = false;
                                 break;
@@ -233,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
         private static final int QUIZ = 1;
         private static final int SPEEDREAD = 2;
         private static final int PROFILE = 3;
+        private ArrayList<String> mCategories;
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -254,7 +259,11 @@ public class MainActivity extends AppCompatActivity {
                     fragment = SpeedReaderFragment.newInstance("test1", "test2");
                     break;
                 case PROFILE:
-                    fragment = ProfileFragment.newInstance("test1", "test2");
+                    mCategories = new ArrayList<>();
+                    for(int i = 0; i < ASSET_REFERENCES.length; i++){
+                        mCategories.add(ASSET_REFERENCES[i][CATEGORY_INDEX]);
+                    }
+                    fragment = ProfileFragment.newInstance(mCategories, "test2");
                     break;
                 default:
                     throw new RuntimeException("Can't create fragment. Number doesn't exist.");

@@ -96,7 +96,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
      * Takes the randomized choices and places them in view
      **/
     private void updateViewsForMultipleChoice(String[] choices) {
-        // TODO: 7/19/2016 update views
         mChoiceOne.setText(choices[0]);
         mChoiceTwo.setText(choices[1]);
         mChoiceThree.setText(choices[2]);
