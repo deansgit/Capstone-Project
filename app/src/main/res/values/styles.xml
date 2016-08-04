@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/textColor</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -44,6 +45,11 @@
         <item name="android:onClick">"onClick"</item>
     </style>
 
+    <style name = "SpeedButtonStyle" parent="QuizButtonStyle">
+        <item name="android:padding">8dp</item>
+    </style>
+
     <dimen name="quiz_choice_padding">4dp</dimen>
     <dimen name="quiz_choice_margin">8dp</dimen>
+    <color name="textColor">#FFFFFF</color>
 </resources>

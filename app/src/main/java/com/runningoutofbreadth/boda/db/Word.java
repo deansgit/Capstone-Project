@@ -21,6 +21,8 @@ public interface Word {
 
     void save(DatabaseWrapper wrapper);
 
+    void setRead(boolean read);
+
     int getsId();
 
     String getTranslation();
@@ -31,5 +33,5 @@ public interface Word {
 
     String getImageId();
 
-
+    boolean isRead();
 }

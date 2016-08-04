@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme.NoActionBar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
+    android:weightSum="2"
+    tools:context="com.runningoutofbreadth.boda.sectionactivities.FlashcardActivity">
+
+    <FrameLayout
+        android:id="@+id/flashcard_top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <me.grantland.widget.AutofitTextView
+            android:id="@+id/hangeul"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:ellipsize="none"
+            android:gravity="center"
+            android:paddingEnd="@dimen/left_keyline"
+            android:paddingLeft="@dimen/left_keyline"
+            android:paddingRight="@dimen/left_keyline"
+            android:paddingStart="@dimen/left_keyline"
+            android:text="@string/dummy_content"
+            android:textSize="@dimen/standalone_syllable_size"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+
+    <include
+        layout="@layout/word_definition"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!--<FrameLayout-->
+    <!--android:id="@+id/flashcard_bottom"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1">-->
+
+    <!--<me.grantland.widget.AutofitTextView-->
+    <!--android:id="@+id/romanization"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:maxLines="1"-->
+    <!--android:gravity="center"-->
+    <!--android:textColor="#33b5e5"-->
+    <!--android:textSize="@dimen/romanization_font_size"-->
+    <!--android:textStyle="bold" />-->
+
+    <!--</FrameLayout>-->
+
+
+</LinearLayout>

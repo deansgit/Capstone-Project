@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.runningoutofbreadth.boda.R;
 import com.runningoutofbreadth.boda.sectionactivities.SpeedReaderActivity;
@@ -40,6 +41,7 @@ public class SpeedReaderFragment extends Fragment implements View.OnClickListene
     public static final long DELAY_NORMAL = 2000;
     public static final long DELAY_FAST = 1000;
     public static final long DELAY_LUDICROUS = 500;
+    private EditText mSyllableCount;
 
     public SpeedReaderFragment() {
         // Required empty public constructor
@@ -77,6 +79,8 @@ public class SpeedReaderFragment extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_speed_reader, container, false);
 
+        mSyllableCount = (EditText) rootView.findViewById(R.id.syllable_count_input);
+
         mSlowButton = (Button) rootView.findViewById(R.id.slow);
         mNormalButton = (Button) rootView.findViewById(R.id.normal);
         mFastButton = (Button) rootView.findViewById(R.id.fast);
@@ -95,10 +99,10 @@ public class SpeedReaderFragment extends Fragment implements View.OnClickListene
         int id  = v.getId();
         Log.v(LOG_TAG, Integer.toString(v.getId()));
         Intent intent = new Intent(getActivity(), SpeedReaderActivity.class);
+        intent.putExtra(SpeedReaderActivity.SYLLABLE_COUNT, mSyllableCount.getText());
         switch (id){
             case R.id.slow:
                 intent.putExtra(SpeedReaderActivity.DIFFICULTY, DELAY_SLOW);
-                Log.v(LOG_TAG, "slow was clicked");
                 break;
             case R.id.normal:
                 intent.putExtra(SpeedReaderActivity.DIFFICULTY, DELAY_NORMAL);

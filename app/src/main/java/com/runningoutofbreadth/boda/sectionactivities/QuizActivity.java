@@ -13,6 +13,7 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.runningoutofbreadth.boda.R;
 import com.runningoutofbreadth.boda.Utility;
 import com.runningoutofbreadth.boda.db.Syllable;
+import com.runningoutofbreadth.boda.db.Word;
 
 import java.util.Random;
 
@@ -63,13 +64,13 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 //            Log.v(LOG_TAG, mModel.toString());
             // get size of db table
             int randPosMax = (int) SQLite.selectCountOf().from(mModel).count();
-            String[] wordItem = Utility.wordSelector(Utility.randInt(0, randPosMax), mModel);
+            Word newWord = Utility.wordSelector(Utility.randInt(0, randPosMax), mModel);
 
-//            Log.v(LOG_TAG, wordItem[WORDSELECTOR_HANGEUL] + " " + wordItem[WORDSELECTOR_ROMANIZATION]);
-            mAnswer = wordItem[WORDSELECTOR_HANGEUL];
+//            Log.v(LOG_TAG, newWord[WORDSELECTOR_HANGEUL] + " " + newWord[WORDSELECTOR_ROMANIZATION]);
+            mAnswer = newWord.getHangeul();
             String[] choices = createChoices(mAnswer);
             updateViewsForMultipleChoice(choices);
-            int resId = getResources().getIdentifier(wordItem[WORDSELECTOR_IMAGEID], "drawable", getPackageName());
+            int resId = getResources().getIdentifier(newWord.getImageId(), "drawable", getPackageName());
             Glide.with(this)
                     .load(resId).error(android.R.drawable.picture_frame)
                     .fitCenter()
@@ -180,11 +181,11 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     public void changeWord(Class model) {
         int newRandPosMax = (int) SQLite.selectCountOf().from(model).count();
-        String[] newWordItem = Utility.wordSelector(Utility.randInt(0, newRandPosMax), model);
-        mAnswer = newWordItem[WORDSELECTOR_HANGEUL];
+        Word newWord = Utility.wordSelector(Utility.randInt(0, newRandPosMax), model);
+        mAnswer = newWord.getHangeul();
         updateViewsForMultipleChoice(createChoices(mAnswer));
         if (model != Syllable.class) {
-            int resId = getResources().getIdentifier(newWordItem[WORDSELECTOR_IMAGEID], "drawable", getPackageName());
+            int resId = getResources().getIdentifier(newWord.getImageId(), "drawable", getPackageName());
             Utility.glideLoadImage(this, resId, mImageView);
         }
     }

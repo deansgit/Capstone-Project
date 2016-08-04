@@ -9,13 +9,23 @@ public class WordFactory {
         if (category == null){
             return null;
         }
-//
-//        if (category.getSimpleName().equalsIgnoreCase("SYLLABLE")){
-//            return new Syllable();
-//        }else if (category.getSimpleName().equalsIgnoreCase("ANIMAL")){
-//            return new Animal();
-//        }else if
         return (Word) category.newInstance();
     }
+
+//    public static Word build(Class category, int position) throws IllegalAccessException, InstantiationException {
+//        if (category == null){
+//            return null;
+//        }
+//        NameAlias alias = NameAlias.builder("sId").build();
+//        Condition randomIdCondition = Condition.column(alias).eq(position);
+//        Model wordItem = SQLite.select()
+//                    .from(category)
+//                    .where(randomIdCondition)
+//                    .querySingle();
+//        Word newWord = (Word) category.newInstance();
+//        newWord.setsId(position);
+//        newWord.setTranslation(wordItem.);
+//        return newWord;
+//    }
 
 }

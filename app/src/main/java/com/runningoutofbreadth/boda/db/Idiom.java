@@ -30,6 +30,19 @@ public class Idiom extends BaseModel implements Word {
     @Column
     String imageId;
 
+    @Column
+    boolean read;
+
+    @Override
+    public void setRead(boolean read) {
+        this.read = read;
+    }
+
+    @Override
+    public boolean isRead() {
+        return read;
+    }
+
     @Override
     public String getImageId() {
         return imageId;

@@ -3,18 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/category_badge_imageview"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="@dimen/category_button_padding"
-        android:background="@color/colorPrimaryDark"/>
+        android:layout_marginBottom="@dimen/category_button_margin"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha=".5"
-        android:background="@color/colorPrimaryDark" />
+        <ImageView
+            android:id="@+id/category_badge_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimaryDark"
+            android:minHeight="@dimen/badge_min_height"
+            android:padding="@dimen/category_button_padding" />
+
+        <TextView
+            android:id="@+id/category_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:textSize="@dimen/badge_description_textsize" />
+    </LinearLayout>
 
 </FrameLayout>

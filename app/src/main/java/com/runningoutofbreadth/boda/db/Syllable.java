@@ -27,6 +27,9 @@ public class Syllable extends BaseModel implements Word {
     @Column
     String romanization;
 
+    @Column
+    boolean read;
+
     @Override
     public void makeObject() {
     }
@@ -87,6 +90,13 @@ public class Syllable extends BaseModel implements Word {
         return null;
     }
 
+    @Override
+    public boolean isRead() {
+        return read;
+    }
 
-
+    @Override
+    public void setRead(boolean read) {
+        this.read = read;
+    }
 }

@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
@@ -16,6 +13,13 @@ import com.runningoutofbreadth.boda.R;
 import com.runningoutofbreadth.boda.Utility;
 import com.runningoutofbreadth.boda.db.Idiom;
 import com.runningoutofbreadth.boda.db.Syllable;
+import com.runningoutofbreadth.boda.db.Vocabulary;
+import com.runningoutofbreadth.boda.db.Word;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import me.grantland.widget.AutofitTextView;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -25,22 +29,23 @@ public class FlashcardActivity extends AppCompatActivity {
     private static final String LOG_TAG = FlashcardActivity.class.getSimpleName();
 
     private ImageView mImageView;
-    private TextView mHangeulView;
-    private TextView mRomanizationView;
+    private AutofitTextView mHangeulView;
+    private AutofitTextView mRomanizationView;
+    private AutofitTextView mTranslationView;
 
     public static final String CATEGORY = "Category";
     public static final String CATEGORY_ANIMALS = "Animal";
     public static final String CATEGORY_SYLLABLES = "Syllable";
     public static final String CATEGORY_NATIONS = "Nation";
     public static final String CATEGORY_IDIOMS = "Idiom";
-
-    private static final int WORDSELECTOR_HANGEUL = 0;
-    private static final int WORDSELECTOR_ROMANIZATION = 1;
-    private static final int WORDSELECTOR_IMAGEID = 2;
+    public static final String CATEGORY_VOCABULARY = "Vocabulary";
 
     private String mModelName;
     private Class mModel;
     float initialX;
+    Set mIdsRead;
+    private int mTableMax;
+//    private float mFontSize;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -71,39 +76,40 @@ public class FlashcardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_flashcard);
-
-        mImageView = (ImageView) findViewById(R.id.image);
-        mHangeulView = (TextView) findViewById(R.id.hangeul);
-        mRomanizationView = (TextView) findViewById(R.id.romanization);
-
         Intent intent = getIntent();
         mModelName = intent.getStringExtra(CATEGORY);
-        if (intent.getStringExtra(CATEGORY).equals(CATEGORY_SYLLABLES)
-                || intent.getStringExtra(CATEGORY).equals(CATEGORY_IDIOMS)) {
-            // hide image, make syllables/words bigger
-            mImageView.setVisibility(View.INVISIBLE);
-            mHangeulView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                    getResources().getDimension(R.dimen.standalone_syllable_size));
-        } else {
 
+        if (mModelName.equals(CATEGORY_SYLLABLES)
+                || mModelName.equals(CATEGORY_IDIOMS)
+                || mModelName.equals(CATEGORY_VOCABULARY)) {
+            if (mModelName.equals(CATEGORY_SYLLABLES)) {
+                setContentView(R.layout.activity_flashcard_syllables);
+            } else {
+                setContentView(R.layout.activity_flashcard_idioms);
+            }
+        } else {
+            setContentView(R.layout.activity_flashcard);
+            mImageView = (ImageView) findViewById(R.id.image);
         }
 
+        mHangeulView = (AutofitTextView) findViewById(R.id.hangeul);
+        mRomanizationView = (AutofitTextView) findViewById(R.id.romanization);
+        mTranslationView = (AutofitTextView) findViewById(R.id.translation);
+
+//        mHangeulView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
         try {
+            // create reference list for bulk setToRead
+            mIdsRead = new HashSet();
+
             // create reference to category
-            // param becomes String "com.runningoutofbreadth.boda.db.DBMODEL"
+            // param becomes String "com.runningoutofbreadth.boda.db.CATEGORY(aka MODEL)"
             mModel = Class.forName(getPackageName() + ".db." + mModelName);
 
-            Log.v(LOG_TAG, mModel.toString());
-            // get size of db table
-            int randPosMax = (int) SQLite.selectCountOf().from(mModel).count();
-            String[] wordItem = Utility.wordSelector(Utility.randInt(0, randPosMax), mModel);
+            // set one master reference for max size of table
+            mTableMax = (int) SQLite.selectCountOf().from(mModel).count();
 
-//            Log.v(LOG_TAG, wordItem[WORDSELECTOR_HANGEUL] + " " + wordItem[WORDSELECTOR_ROMANIZATION]);
-            mHangeulView.setText(wordItem[WORDSELECTOR_HANGEUL]);
-            mRomanizationView.setText(wordItem[WORDSELECTOR_ROMANIZATION]);
-            int resId = getResources().getIdentifier(wordItem[WORDSELECTOR_IMAGEID], "drawable", getPackageName());
-            Utility.glideLoadImage(this, resId, mImageView);
+            changeWord(mModel);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,17 +122,19 @@ public class FlashcardActivity extends AppCompatActivity {
     }
 
     public void changeWord(Class model) {
-        int newRandPosMax = (int) SQLite.selectCountOf().from(model).count();
-        String[] newWordItem = Utility.wordSelector(Utility.randInt(0, newRandPosMax), model);
-        mHangeulView.setText(newWordItem[WORDSELECTOR_HANGEUL]);
-        mRomanizationView.setText(newWordItem[WORDSELECTOR_ROMANIZATION]);
-        if (model != Syllable.class && model != Idiom.class) {
-            int resId = getResources().getIdentifier(newWordItem[WORDSELECTOR_IMAGEID], "drawable", getPackageName());
+        Word newWord = Utility.wordSelector(Utility.randInt(0, mTableMax), model);
+        mHangeulView.setText(newWord.getHangeul());
+        // TODO: 8/1/2016 create string resource using %d placeholder and parens
+        mRomanizationView.setText(String.format(getString(R.string.romanization), newWord.getRomanization()));
+        if (model != Syllable.class && model != Idiom.class && model != Vocabulary.class) {
+            int resId = getResources().getIdentifier(newWord.getImageId(), "drawable", getPackageName());
             Glide.with(this)
                     .load(resId).error(android.R.drawable.picture_frame)
                     .fitCenter()
                     .into(mImageView);
         }
+        mTranslationView.setText(newWord.getTranslation().replace(";", "\n"));
+        mIdsRead.add(newWord.getsId());
     }
 
 }

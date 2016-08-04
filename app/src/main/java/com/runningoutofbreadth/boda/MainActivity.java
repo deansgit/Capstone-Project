@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String DB_UPDATE_STATUS = "DB_UPDATE_STATUS";
     private static final String DB_VERSION_NUMBER = "DB_VERSION_NUMBER";
 
+    // holds all of the categories to be passed into each fragment (predom. for gridview population)
+    private ArrayList<String> mCategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
 
+        mCategories = new ArrayList<>();
+        for (int i = 0; i < ASSET_REFERENCES.length; i++) {
+            mCategories.add(ASSET_REFERENCES[i][CATEGORY_INDEX]);
+        }
+
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -92,7 +99,13 @@ public class MainActivity extends AppCompatActivity {
 
         // load database for the first time
         SharedPreferences settings = getSharedPreferences(PREFS_FILENAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
         mDBUpdated = settings.getBoolean(DB_UPDATE_STATUS, false);
+        if (!settings.contains(DB_VERSION_NUMBER) || settings.getInt(DB_VERSION_NUMBER, 0) != BodaDatabase.VERSION) {
+            Log.v(LOG_TAG, Integer.toString(settings.getInt(DB_VERSION_NUMBER, 0)));
+            editor.putInt(DB_VERSION_NUMBER, BodaDatabase.VERSION);
+            mDBUpdated = false;
+        }
         Log.d(LOG_TAG, Boolean.toString(mDBUpdated));
         if (!mDBUpdated) {
             DatabaseDefinition databaseDefinition = FlowManager.getDatabase(BodaDatabase.class);
@@ -125,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
 //        Log.v(LOG_TAG, SQLite.select().from(Animal.class).where(Animal_Table.sId.eq(5)).querySingle().getTranslation() + " new");
 //        Log.v(LOG_TAG, SQLite.select().from(Nation.class).where(Nation_Table.sId.eq(5)).querySingle().getTranslation() + " new");
 //        Log.v(LOG_TAG, SQLite.select().from(Idiom.class).where(Idiom_Table.sId.eq(5)).querySingle().getTranslation() + " new");
+//        Log.v(LOG_TAG, SQLite.select().from(Vocabulary.class).where(Vocabulary_Table.sId.eq(5)).querySingle().getTranslation() + " new");
     }
 
     @Override
@@ -148,68 +162,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-//    /**
-//     * A placeholder fragment containing a simple view.
-//     */
-//    public static class PlaceholderFragment extends Fragment {
-//        /**
-//         * The fragment argument representing the section number for this
-//         * fragment.
-//         */
-//        private static final String ARG_SECTION_NUMBER = "section_number";
-//
-//        public PlaceholderFragment() {
-//        }
-//
-//        /**
-//         * Returns a new instance of this fragment for the given section
-//         * number.
-//         */
-//        public static PlaceholderFragment newInstance(int sectionNumber) {
-//            PlaceholderFragment fragment = new PlaceholderFragment();
-//            Bundle args = new Bundle();
-//            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-//            fragment.setArguments(args);
-//            return fragment;
-//        }
-//
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                                 Bundle savedInstanceState) {
-//            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-//            Typeface darae = Typeface
-//                    .createFromAsset(getActivity().getAssets(), "fonts/darae_handwritten.ttf");
-//            final TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-//            textView.setTypeface(darae);
-//            textView.setTextSize(30);
-//            textView.setText("다래");
-//
-//            try {
-//                //db items should have format ==> [sId, unicode_name, hex, romanization]
-//                textView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Class model = Syllable.class;
-//                        int randPos = (int) SQLite.selectCountOf().from(model).count();
-//                        textView.setText(Utility.wordSelector(Utility.randInt(0, randPos), model)[0]);
-//                    }
-//                });
-//            } catch (Exception e) {
-//                Log.e(LOG_TAG, "string is broken");
-//            }
-//            return rootView;
-//        }
-//
-//        @Override
-//        public void onStop() {
-//            super.onStop();
-//            SharedPreferences settings = getActivity().getSharedPreferences(PREFS_FILENAME, 0);
-//            SharedPreferences.Editor editor = settings.edit();
-//            editor.putBoolean(DB_UPDATE_STATUS, mDBUpdated);
-//            editor.commit();
-//        }
-//    }
 
     @Override
     protected void onStop() {
@@ -237,7 +189,6 @@ public class MainActivity extends AppCompatActivity {
         private static final int QUIZ = 1;
         private static final int SPEEDREAD = 2;
         private static final int PROFILE = 3;
-        private ArrayList<String> mCategories;
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -250,19 +201,15 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment;
             switch (position) {
                 case FLASHCARDS:
-                    fragment = FlashcardFragment.newInstance("test1", "test2");
+                    fragment = FlashcardFragment.newInstance(mCategories, "test2");
                     break;
                 case QUIZ:
-                    fragment = QuizFragment.newInstance("test1", "test2");
+                    fragment = QuizFragment.newInstance(mCategories, "test2");
                     break;
                 case SPEEDREAD:
                     fragment = SpeedReaderFragment.newInstance("test1", "test2");
                     break;
                 case PROFILE:
-                    mCategories = new ArrayList<>();
-                    for(int i = 0; i < ASSET_REFERENCES.length; i++){
-                        mCategories.add(ASSET_REFERENCES[i][CATEGORY_INDEX]);
-                    }
                     fragment = ProfileFragment.newInstance(mCategories, "test2");
                     break;
                 default:

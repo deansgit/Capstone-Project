@@ -5,9 +5,6 @@
     android:background="#0099cc"
     tools:context="com.runningoutofbreadth.boda.sectionactivities.SpeedReaderActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
     <TextView
         android:id="@+id/hangeul"
         android:layout_width="match_parent"
@@ -16,7 +13,19 @@
         android:keepScreenOn="true"
         android:text="@string/dummy_content"
         android:textColor="#33b5e5"
-        android:textSize="50sp"
+        android:textSize="@dimen/standalone_syllable_size"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:keepScreenOn="true"
+        android:text="@string/dummy_content"
+        android:textColor="#33b5e5"
+        android:textSize="@dimen/romanization_font_size"
+        android:textStyle="bold" />
+
 
 </FrameLayout>

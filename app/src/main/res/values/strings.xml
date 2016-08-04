@@ -3,16 +3,24 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="animals">animals</string>
-    <string name="syllables">syllables</string>
-    <string name="nations">nations</string>
-    <string name="idioms">idioms</string>
+    <string name="category_animals">Animal</string>
+    <string name="category_syllables">Syllable</string>
+    <string name="category_nations">Nation</string>
+    <string name="category_idioms">Idiom</string>
+    <string name="category_vocabulary">Vocabulary</string>
 
     <string name="title_activity_flashcard">FlashcardActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
+    <!-- for encapsulating romanization in parentheses -->
+    <string name="romanization">(%s)</string>
+
+    <!-- Strings for Speed Reader -->
     <string name="title_activity_speed_reader">SpeedReaderActivity</string>
+    <string name="speedreader_hint">#</string>
+    <string name="slow">Slow</string>
+    <string name="medium">Medium</string>
+    <string name="fast">Fast</string>
+    <string name="ludicrous">Ludicrous</string>
 </resources>

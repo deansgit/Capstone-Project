@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
+    android:gravity="center"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
     tools:context="com.runningoutofbreadth.boda.sections.SpeedReaderFragment">
 
@@ -11,35 +12,48 @@
 
     <!--todo: add input or "wheel" to select number of syllables-->
 
-    <TextView
+    <EditText
+        android:id="@+id/syllable_count_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/hello_blank_fragment" />
+        android:hint="@string/speedreader_hint"
+        android:textStyle="bold"
+        android:inputType="number"
+        android:maxLength="3"
+        android:textSize="@dimen/speed_reader_input_textsize" />
 
     <Button
         android:id="@+id/slow"
+        style="@style/SpeedButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onClick"/>
+        android:onClick="onClick"
+        android:text="@string/slow" />
 
     <Button
         android:id="@+id/normal"
+        style="@style/SpeedButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onClick"/>
+        android:onClick="onClick"
+        android:text="@string/medium" />
 
     <Button
         android:id="@+id/fast"
+        style="@style/SpeedButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onClick"/>
+        android:onClick="onClick"
+        android:text="@string/fast" />
 
     <Button
         android:id="@+id/ludicrous"
+        style="@style/SpeedButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onClick"/>
+        android:onClick="onClick"
+        android:text="@string/ludicrous" />
 
 </LinearLayout>
 

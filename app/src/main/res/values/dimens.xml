@@ -8,14 +8,23 @@
 
     <!-- Flashcard standard font sizes. -->
     <dimen name="hangeul_font_size">48sp</dimen>
-    <dimen name="romanization_font_size">28sp</dimen>
+    <dimen name="romanization_font_size">16sp</dimen>
     <dimen name="standalone_syllable_size">100sp</dimen>
 
     <!-- Image sizes-->
     <dimen name="max_image_height">200dp</dimen>
     <dimen name="max_image_width">300dp</dimen>
     <dimen name="quiz_choice_font_size">26sp</dimen>
-    <dimen name="category_button_padding">8dp</dimen>
-
+    <dimen name="category_button_padding">4dp</dimen>
+    <dimen name="badge_min_height">48dp</dimen>
+    <dimen name="badge_description_textsize">24sp</dimen>
+    <dimen name="category_button_margin">4dp</dimen>
+    <dimen name="left_keyline">8dp</dimen>
+    <dimen name="min_image_width">300dp</dimen>
+    <dimen name="text_top_keyline">400dp</dimen>
+    <dimen name="text_padding">4dp</dimen>
+    <dimen name="standalone_idiom_size">60sp</dimen>
+    <dimen name="translation_font_size">28sp</dimen>
+    <dimen name="speed_reader_input_textsize">80sp</dimen>
 
 </resources>

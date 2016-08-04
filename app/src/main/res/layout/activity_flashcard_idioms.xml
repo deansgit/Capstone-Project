@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme.NoActionBar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
+    android:weightSum="3"
+    tools:context="com.runningoutofbreadth.boda.sectionactivities.FlashcardActivity">
+
+    <FrameLayout
+        android:id="@+id/flashcard_top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:padding="@dimen/text_padding">
+
+        <me.grantland.widget.AutofitTextView
+            android:id="@+id/hangeul"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:ellipsize="none"
+            android:gravity="center"
+            android:paddingEnd="@dimen/left_keyline"
+            android:paddingLeft="@dimen/left_keyline"
+            android:paddingRight="@dimen/left_keyline"
+            android:paddingStart="@dimen/left_keyline"
+            android:maxLines="2"
+            android:text="@string/dummy_content"
+            android:textSize="@dimen/standalone_idiom_size"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        layout="@layout/word_definition" />
+
+
+</LinearLayout>

@@ -32,8 +32,6 @@ public class Utility {
     private static final String LOG_TAG = Utility.class.getSimpleName();
 
     public static final String[] FONT_MAP = {
-            "fonts/210sulamjuui_bold_handwritten.ttf",
-            "fonts/210sulamjuui_light_handwritten.ttf",
             "fonts/210sulamjuui_reg_handwritten.ttf",
             "fonts/cuteshinminsang_handwritten.ttf",
             "fonts/darae_handwritten.ttf",
@@ -49,7 +47,7 @@ public class Utility {
 
     // TODO: 7/17/2016 end the loop if it sucks
     public static void insertDatabaseObjects(DatabaseWrapper databaseWrapper,
-                                             AssetManager assetManager, String assetPath, Class model) {
+                                             AssetManager assetManager, String assetPath, Class category) {
         try {
             InputStream dictionary = assetManager.open(assetPath);
             ArrayList<String> mList = dictReader(dictionary);
@@ -58,11 +56,12 @@ public class Utility {
             for (int i = 0; i < mList.size(); i++) {
                 tokens = mList.get(i).split(",");
                 try {
-                    dbObject = WordFactory.build(model);
+                    dbObject = WordFactory.build(category);
                     dbObject.setsId(i);
                     dbObject.setTranslation(tokens[0]);
                     dbObject.setHangeul(tokens[1]);
                     dbObject.setRomanization(tokens[2]);
+                    dbObject.setRead(false);
                     if (tokens.length > 3) {
                         dbObject.setImageId(tokens[3]);
                     }
@@ -112,56 +111,73 @@ public class Utility {
     }
 
     /**
-     * Dynamically select a database item based on the type of data (model) requested
+     * Dynamically select a database item based on the category (category) requested
      */
-    public static String[] wordSelector(final int position, Class model) {
+    public static Word wordSelector(final int position, Class category) {
+        Word newWord;
+
         // final String output for test
-        String word = "";
+        String translation = "";
+        String hangeul = "";
         String romanization = "";
-        String imageId = "";
-        // return generic model class (Animal, Syllable, Nation, etc.)
+        String imageId;
+        boolean read = true;
+        // return generic category class (Animal, Syllable, Nation, etc.)
         Model wordItem = null;
+        Method getTranslation = null;
         Method getHangeul = null;
         Method getRomanization = null;
         Method getImageId = null;
+        Method isRead;
         try {
             // Create a 'Condition' for DBFlow to use in the SQLite query's WHERE clause
-
+            newWord = (Word) category.newInstance();
             NameAlias alias = NameAlias.builder("sId").build();
             Condition randomIdCondition = Condition.column(alias).eq(position);
             try {
                 // get string: format should be hex values with spaces e.g. "XXXX XXXX XXXX"
                 wordItem = SQLite.select()
-                        .from(model)
+                        .from(category)
                         .where(randomIdCondition)
                         .querySingle();
                 if (wordItem != null) {
+                    getTranslation = wordItem.getClass().getMethod("getTranslation");
                     getHangeul = wordItem.getClass().getMethod("getHangeul");
                     getRomanization = wordItem.getClass().getMethod("getRomanization");
                     getImageId = wordItem.getClass().getMethod("getImageId");
+                    isRead = wordItem.getClass().getMethod("isRead");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-//            Log.v(LOG_TAG, getHangeul.invoke(wordItem, null).toString() + " invokemethod");
-//            Log.v(LOG_TAG, getRomanization.invoke(wordItem, null).toString() + " versus " + position);
-//            Log.v(LOG_TAG, getImageId.invoke(wordItem, null).toString() + " versus " + position);
-            if (getHangeul != null && getRomanization != null) {
-                String[] elements = getHangeul.invoke(wordItem).toString().split(" ");
-                for (String s : elements) {
-                    word = word + String.valueOf((char) Integer.parseInt(s, 16));
+
+            if (getTranslation != null && getHangeul != null && getRomanization != null) {
+                String[] unicode = getHangeul.invoke(wordItem).toString().split(" ");
+                for (String s : unicode) {
+                    hangeul = hangeul + String.valueOf((char) Integer.parseInt(s, 16));
                 }
+                translation = getTranslation.invoke(wordItem).toString();
                 romanization = getRomanization.invoke(wordItem).toString();
             }
             if (getImageId != null){
                 imageId = (String) getImageId.invoke(wordItem);
+                newWord.setImageId(imageId);
             }
+            newWord.setsId(position);
+            newWord.setTranslation(translation);
+            newWord.setHangeul(hangeul);
+            newWord.setRomanization(romanization);
+            newWord.setRead(true);
+
+            return newWord;
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         }
-        return (new String[]{word, romanization, imageId});
+        return null;
     }
 
     /**
@@ -176,9 +192,9 @@ public class Utility {
     /**
      * Generate a random syllable
      **/
-    public static String randomSyllable() {
+    public static Word randomSyllable() {
         int randPosMax = (int) SQLite.selectCountOf().from(Syllable.class).count();
-        return Utility.wordSelector(Utility.randInt(0, randPosMax), Syllable.class)[WORDSELECTOR_HANGEUL];
+        return Utility.wordSelector(Utility.randInt(0, randPosMax), Syllable.class);
     }
 
     /**
