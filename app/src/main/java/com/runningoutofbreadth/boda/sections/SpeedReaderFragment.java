@@ -4,7 +4,6 @@ package com.runningoutofbreadth.boda.sections;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import com.runningoutofbreadth.boda.sectionactivities.SpeedReaderActivity;
  * Use the {@link SpeedReaderFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SpeedReaderFragment extends Fragment implements View.OnClickListener{
+public class SpeedReaderFragment extends Fragment implements View.OnClickListener {
     private static final String LOG_TAG = SpeedReaderFragment.class.getSimpleName();
 
 
@@ -96,11 +95,14 @@ public class SpeedReaderFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        int id  = v.getId();
-        Log.v(LOG_TAG, Integer.toString(v.getId()));
+        int id = v.getId();
         Intent intent = new Intent(getActivity(), SpeedReaderActivity.class);
-        intent.putExtra(SpeedReaderActivity.SYLLABLE_COUNT, mSyllableCount.getText());
-        switch (id){
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        int numOfSyl = !mSyllableCount.getText().toString().equals("")
+                ? Integer.decode(mSyllableCount.getText().toString()) : 10;
+        intent.putExtra(SpeedReaderActivity.SYLLABLE_COUNT,
+                numOfSyl);
+        switch (id) {
             case R.id.slow:
                 intent.putExtra(SpeedReaderActivity.DIFFICULTY, DELAY_SLOW);
                 break;

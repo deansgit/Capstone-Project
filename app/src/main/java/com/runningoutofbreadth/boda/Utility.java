@@ -22,6 +22,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
 /**
@@ -198,6 +199,13 @@ public class Utility {
     }
 
     /**
+     * Generate a specific syllable by id
+     **/
+    public static Word queryWordById(int id, Class category) {
+        return Utility.wordSelector(id, category);
+    }
+
+    /**
      * Helper image loader
      **/
     public static void glideLoadImage(Context context, int resId, ImageView imageView) {
@@ -205,6 +213,19 @@ public class Utility {
                 .load(resId).error(android.R.drawable.picture_frame)
                 .fitCenter()
                 .into(imageView);
+    }
+
+    /**
+     * Generates list of n random non-repeating ids in range
+     **/
+    public static HashSet<Integer> generateListOfIds(Class category, int counter){
+        HashSet<Integer> set = new HashSet<>();
+        int randPosMax = (int) SQLite.selectCountOf().from(category).count();
+
+        while (set.size() < counter){
+            set.add(randInt(0, randPosMax));
+        }
+        return set;
     }
 
 }

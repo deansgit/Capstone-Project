@@ -23,4 +23,6 @@
     <string name="medium">Medium</string>
     <string name="fast">Fast</string>
     <string name="ludicrous">Ludicrous</string>
+    <string name="counter">%1$d/%2$d</string>
+    <string name="results">Final Results:</string>
 </resources>

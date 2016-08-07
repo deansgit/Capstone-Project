@@ -136,7 +136,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     private String tweakAnswer(String answer) {
         String[] syllables = answer.split("");
-        syllables[syllables.length - 1] = Utility.randomSyllable();
+        syllables[syllables.length - 1] = Utility.randomSyllable().getHangeul();
         StringBuilder builder = new StringBuilder();
         for (String s : syllables) {
             builder.append(s);
