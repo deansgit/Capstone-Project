@@ -4,8 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="#0099cc"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.runningoutofbreadth.boda.sectionactivities.SpeedReaderActivity">
+
+    <LinearLayout
+        android:id="@+id/counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/layout_counter_margin"
+        android:orientation="horizontal"
+        android:transitionName="@string/counter_transition_name">
+
+        <TextView
+            android:id="@+id/speedreader_number_correct"
+            style="@style/GeneralBigTextView"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/speedreader_slash"
+            style="@style/GeneralBigTextView"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/counter_separator" />
+
+        <TextView
+            android:id="@+id/speedreader_total"
+            style="@style/GeneralBigTextView"
+            android:layout_gravity="center_horizontal"
+            android:transitionName="@string/syllable_count_transition_name" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/hangeul"
@@ -18,10 +46,5 @@
         android:textColor="#33b5e5"
         android:textSize="@dimen/standalone_syllable_size"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/counter"
-        android:transitionName="@string/counter_transition_name"
-        style="@style/GeneralBigTextView" />
 
 </FrameLayout>

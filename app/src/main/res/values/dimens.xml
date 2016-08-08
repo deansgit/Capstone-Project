@@ -26,5 +26,6 @@
     <dimen name="standalone_idiom_size">60sp</dimen>
     <dimen name="translation_font_size">28sp</dimen>
     <dimen name="speed_reader_input_textsize">80sp</dimen>
+    <dimen name="layout_counter_margin">4dp</dimen>
 
 </resources>

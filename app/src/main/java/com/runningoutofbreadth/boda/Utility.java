@@ -3,6 +3,7 @@ package com.runningoutofbreadth.boda;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -80,8 +81,9 @@ public class Utility {
 
     /**
      * Helper method for iterating through each line in a file.
+     * Only used with InsertDatabaseObjects.
      */
-    public static ArrayList<String> dictReader(InputStream inputStream) {
+    private static ArrayList<String> dictReader(InputStream inputStream) {
         ArrayList<String> stringArray = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
@@ -226,6 +228,18 @@ public class Utility {
             set.add(randInt(0, randPosMax));
         }
         return set;
+    }
+
+    /**
+     * Simple convenience method to slowly fade-in View
+     **/
+    public static void slowFadeIn(View view){
+        view.setVisibility(View.VISIBLE);
+        view.setAlpha(0f);
+        view.animate()
+                .alpha(1f)
+                .setDuration(2000)
+                .setListener(null);
     }
 
 }

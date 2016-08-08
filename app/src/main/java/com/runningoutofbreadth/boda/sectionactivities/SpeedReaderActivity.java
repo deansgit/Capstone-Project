@@ -1,28 +1,24 @@
 package com.runningoutofbreadth.boda.sectionactivities;
 
+import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.transition.Scene;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -39,12 +35,14 @@ import java.util.List;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class SpeedReaderActivity extends AppCompatActivity implements View.OnClickListener {
+public class SpeedReaderActivity extends AppCompatActivity implements View.OnClickListener, AnswerDialogFragment.AnswerDialogListener {
 
     private static final String LOG_TAG = SpeedReaderActivity.class.getSimpleName();
-    ViewGroup mRootContainer;
+
     private TextView mHangeulView;
-    private TextView mCounterView;
+    private TextView mCorrectView;
+    private TextView mSlashView;
+    private TextView mTotalView;
 
     public static final String SYLLABLE_COUNT = "Count";
     public static final String DIFFICULTY = "Difficulty";
@@ -58,50 +56,60 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
     Handler mHandler;
     Word mAnswer;
     int mCurrentPos;
-    int mCounter;
+    int mTotal;
     int mCorrect;
     private HashSet<Integer> mIdList;
     List<Word> mWordList;
 
-    Scene mSceneOne;
-    Scene mSceneTwo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_speed_reader);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setContentView(R.layout.activity_speed_reader);
-            mRootContainer = (FrameLayout) findViewById(R.id.speed_read_root_container);
-            if (mRootContainer != null) {
-                mRootContainer.setOnClickListener(this);
-            }
-            mSceneTwo = Scene.getSceneForLayout(mRootContainer,
-                    R.layout.activity_speed_reader_end_scene, this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(null);
+            getWindow().setEnterTransition(null);
+            supportPostponeEnterTransition();
+            final View decor = getWindow().getDecorView();
+            decor.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public boolean onPreDraw() {
+                    decor.getViewTreeObserver().removeOnPreDrawListener(this);
+                    supportStartPostponedEnterTransition();
+                    return true;
+                }
+            });
         }
+        setContentView(R.layout.activity_speed_reader);
+
 
         // TODO: 8/4/2016 save user-set syllable count in settings
         // get all values from intent and assign to member variables
         Intent intent = getIntent();
         mDifficulty = intent.getLongExtra(DIFFICULTY, 3000);
-        mCounter = intent.getIntExtra(SYLLABLE_COUNT, 10);
-        mIdList = Utility.generateListOfIds(Syllable.class, mCounter);
+        mTotal = intent.getIntExtra(SYLLABLE_COUNT, 10);
+        mIdList = Utility.generateListOfIds(Syllable.class, mTotal);
         mWordList = generateWordList(mIdList, Syllable.class);
         mCurrentPos = 0;
         mAnswer = selectWordFromList(mWordList, mCurrentPos);
 
+        FrameLayout mRootContainer = (FrameLayout) findViewById(R.id.speed_read_root_container);
+        assert mRootContainer != null;
+        mRootContainer.setOnClickListener(this);
         // get references to textviews
         mHangeulView = (TextView) findViewById(R.id.hangeul);
-        mCounterView = (TextView) findViewById(R.id.counter);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (mCounterView != null) {
-                mCounterView.setTransitionName("COUNTER");
-            }
-        }
+        mCorrectView = (TextView) findViewById(R.id.speedreader_number_correct);
+        mSlashView = (TextView) findViewById(R.id.speedreader_slash);
+        mTotalView = (TextView) findViewById(R.id.speedreader_total);
+
+        Utility.slowFadeIn(mCorrectView);
+        Utility.slowFadeIn(mSlashView);
 
         updateTextView(mHangeulView, mAnswer);
 
-        mCounterView.addTextChangedListener(new TextWatcher() {
+        mTotalView.setText(String.valueOf(mTotal));
+        mCorrectView.setText(String.valueOf(mCorrect));
+        mCorrectView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -113,12 +121,11 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (mCurrentPos == mCounter) {
+                if (mCurrentPos == mTotal) {
                     transitionToEndScene();
                 }
             }
         });
-        mCounterView.setText(String.format(getString(R.string.counter), mCorrect, mCounter));
         hideTextViewDelayed(mHangeulView);
 //        printInputLanguages();
     }
@@ -140,70 +147,51 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
 //        int viewId = v.getId();
 //        Log.v(LOG_TAG, Integer.toString(viewId));
-        if (mCurrentPos <= mCounter - 1 && mAnswer != null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Answer");
-
-            final EditText input = new EditText(this);
-            input.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL);
-            builder.setView(input);
-
-            builder.setNeutralButton("Answer", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (input.getText().toString().equals(mAnswer.getHangeul())
-                            || input.getText().toString().equals(mAnswer.getRomanization())) {
-                        mCorrect++;
-                        mCounterView.setText(String.format(getString(R.string.counter), mCorrect, mCounter));
-                    }
-                    mCurrentPos++;
-                    if (mCurrentPos == mCounter) {
-                        transitionToEndScene();
-                    } else {
-                        Log.v(LOG_TAG, Integer.toString(mCurrentPos) + " vs " + Integer.toString(mCounter));
-                        mAnswer = selectWordFromList(mWordList, mCurrentPos);
-                        if (mAnswer != null) {
-                            Log.v(LOG_TAG, mAnswer.getHangeul());
-                            updateTextView(mHangeulView, mAnswer);
-                            Log.v(LOG_TAG, mAnswer.getRomanization());
-                            hideTextViewDelayed(mHangeulView);
-                        }
-                    }
-                }
-            });
-            builder.show();
+        if (mCurrentPos <= mTotal - 1 && mAnswer != null) {
+            showAnswerDialog();
         }
+    }
 
+    @Override
+    public void onDialogAnswerClick(AnswerDialogFragment dialog, String answer) {
+        if (answer.equals(mAnswer.getHangeul()) || answer.equals(mAnswer.getRomanization())) {
+            mCorrect++;
+            mCorrectView.setText(String.valueOf(mCorrect));
+        }
+        mCurrentPos++;
+        if (mCurrentPos == mTotal) {
+            transitionToEndScene();
+        } else {
+            Log.v(LOG_TAG, Integer.toString(mCurrentPos) + " vs " + Integer.toString(mTotal));
+            mAnswer = selectWordFromList(mWordList, mCurrentPos);
+            if (mAnswer != null) {
+                updateTextView(mHangeulView, mAnswer);
+                hideTextViewDelayed(mHangeulView);
+            }
+        }
+    }
 
+    public void showAnswerDialog() {
+        AnswerDialogFragment dialog = new AnswerDialogFragment();
+        dialog.show(getSupportFragmentManager(), "AnswerDialogFragment");
     }
 
     private void animateCorrectCounter() {
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.grow);
         animation.setDuration(1000);
-        mCounterView.startAnimation(animation);
+        mTotalView.startAnimation(animation);
     }
 
     private void transitionToEndScene() {
         Log.v(LOG_TAG, "END SCENE!");
-
         Intent intent = new Intent(this, ResultsActivity.class);
-        intent.putExtra(ResultsActivity.RESULTS,
-                String.format(getString(R.string.counter), mCorrect, mCounter));
-//        intent.addFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(ResultsActivity.RESULT_CORRECT,
+                String.valueOf(mCorrect));
+        intent.putExtra(ResultsActivity.RESULT_TOTAL,
+                String.valueOf(mTotal));
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                 findViewById(R.id.counter), getString(R.string.counter_transition_name));
         ActivityCompat.startActivity(this, intent, optionsCompat.toBundle());
-//        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            Transition presentScoreTrans = TransitionInflater.from(this)
-//                    .inflateTransition(android.R.transition.fade);
-//            presentScoreTrans.setDuration(1000);
-//            TransitionManager.go(mSceneTwo, presentScoreTrans);
-//        } else {
-//            mCounterView.setVisibility(View.GONE);
-//            mHangeulView.setText(String.format(getString(R.string.counter), mCorrect, mCounter));
-//            mHangeulView.setVisibility(View.VISIBLE);
-//        }
     }
 
     /**

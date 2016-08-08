@@ -37,11 +37,11 @@ dependencies {
     // kotlin extensions
     compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}"
 
+
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:percent:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-
     compile 'me.grantland:autofittextview:0.2.+'
 }

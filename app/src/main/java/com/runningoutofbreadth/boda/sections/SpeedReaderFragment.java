@@ -2,7 +2,10 @@ package com.runningoutofbreadth.boda.sections;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,6 +81,14 @@ public class SpeedReaderFragment extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_speed_reader, container, false);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //help stop the blinking?
+            getActivity().getWindow().setExitTransition(null);
+            getActivity().getWindow().setEnterTransition(null);
+            getActivity().getWindow().setReenterTransition(null);
+            getActivity().getWindow().setReturnTransition(null);
+        }
+
         mSyllableCount = (EditText) rootView.findViewById(R.id.syllable_count_input);
 
         mSlowButton = (Button) rootView.findViewById(R.id.slow);
@@ -100,8 +111,10 @@ public class SpeedReaderFragment extends Fragment implements View.OnClickListene
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         int numOfSyl = !mSyllableCount.getText().toString().equals("")
                 ? Integer.decode(mSyllableCount.getText().toString()) : 10;
-        intent.putExtra(SpeedReaderActivity.SYLLABLE_COUNT,
-                numOfSyl);
+        intent.putExtra(SpeedReaderActivity.SYLLABLE_COUNT, numOfSyl);
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                v.getRootView().findViewById(R.id.syllable_count_input), getString(R.string.syllable_count_transition_name));
+
         switch (id) {
             case R.id.slow:
                 intent.putExtra(SpeedReaderActivity.DIFFICULTY, DELAY_SLOW);
@@ -116,7 +129,7 @@ public class SpeedReaderFragment extends Fragment implements View.OnClickListene
                 intent.putExtra(SpeedReaderActivity.DIFFICULTY, DELAY_LUDICROUS);
                 break;
         }
-        startActivity(intent);
+        ActivityCompat.startActivity(getActivity(), intent, optionsCompat.toBundle());
     }
 
 }

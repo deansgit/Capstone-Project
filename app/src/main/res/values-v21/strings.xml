@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="syllable_count_transition_name">syllable_count</string>
     <string name="counter_transition_name">counter_transition_name</string>
 </resources>

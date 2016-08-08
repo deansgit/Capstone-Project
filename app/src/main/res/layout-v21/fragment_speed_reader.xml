@@ -16,10 +16,9 @@
         style="@style/GeneralBigTextView"
         android:layout_gravity="center"
         android:hint="@string/speedreader_hint"
-        android:text="@string/default_syllable_count"
         android:inputType="number"
         android:maxLength="3"
-        android:textSize="@dimen/speed_reader_input_textsize" />
+        android:transitionName="@string/syllable_count_transition_name" />
 
     <Button
         android:id="@+id/slow"

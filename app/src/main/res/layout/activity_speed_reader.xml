@@ -4,23 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="#0099cc"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.runningoutofbreadth.boda.sectionactivities.SpeedReaderActivity">
 
     <TextView
         android:id="@+id/hangeul"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/GeneralBigTextView"
         android:layout_gravity="center"
-        android:gravity="center"
         android:keepScreenOn="true"
         android:text="@string/dummy_content"
-        android:textColor="#33b5e5"
-        android:textSize="@dimen/standalone_syllable_size"
-        android:textStyle="bold" />
+        android:textSize="@dimen/standalone_syllable_size" />
 
     <TextView
         android:id="@+id/counter"
-        style="@style/GeneralBigTextView" />
+        style="@style/GeneralBigTextView"
+        android:layout_gravity="center_horizontal" />
 
 </FrameLayout>
