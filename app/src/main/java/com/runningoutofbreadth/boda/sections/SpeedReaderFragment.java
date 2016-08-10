@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class SpeedReaderFragment extends Fragment implements View.OnClickListene
     public static final long DELAY_NORMAL = 2000;
     public static final long DELAY_FAST = 1000;
     public static final long DELAY_LUDICROUS = 500;
-    private EditText mSyllableCount;
+    private EditText mSyllableCountEditText;
 
     public SpeedReaderFragment() {
         // Required empty public constructor
@@ -89,7 +90,21 @@ public class SpeedReaderFragment extends Fragment implements View.OnClickListene
             getActivity().getWindow().setReturnTransition(null);
         }
 
-        mSyllableCount = (EditText) rootView.findViewById(R.id.syllable_count_input);
+        mSyllableCountEditText = (EditText) rootView.findViewById(R.id.syllable_count_input);
+        mSyllableCountEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    Log.v(LOG_TAG, Boolean.toString(v.getId() == mSyllableCountEditText.getId())
+                            + ", edittext not focused");
+                    mSyllableCountEditText.setCursorVisible(false);
+                } else {
+                    Log.v(LOG_TAG, Boolean.toString(v.getId() == mSyllableCountEditText.getId())
+                            + ", edittext focused");
+                    mSyllableCountEditText.setCursorVisible(true);
+                }
+            }
+        });
 
         mSlowButton = (Button) rootView.findViewById(R.id.slow);
         mNormalButton = (Button) rootView.findViewById(R.id.normal);
@@ -108,13 +123,12 @@ public class SpeedReaderFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         int id = v.getId();
         Intent intent = new Intent(getActivity(), SpeedReaderActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        int numOfSyl = !mSyllableCount.getText().toString().equals("")
-                ? Integer.decode(mSyllableCount.getText().toString()) : 10;
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); //allows back button on next activity to go home
+        int numOfSyl = !mSyllableCountEditText.getText().toString().equals("")
+                ? Integer.decode(mSyllableCountEditText.getText().toString()) : 10;
         intent.putExtra(SpeedReaderActivity.SYLLABLE_COUNT, numOfSyl);
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                 v.getRootView().findViewById(R.id.syllable_count_input), getString(R.string.syllable_count_transition_name));
-
         switch (id) {
             case R.id.slow:
                 intent.putExtra(SpeedReaderActivity.DIFFICULTY, DELAY_SLOW);
@@ -132,4 +146,11 @@ public class SpeedReaderFragment extends Fragment implements View.OnClickListene
         ActivityCompat.startActivity(getActivity(), intent, optionsCompat.toBundle());
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mSyllableCountEditText != null && mSyllableCountEditText.hasFocus()){
+            mSyllableCountEditText.clearFocus();
+        }
+    }
 }

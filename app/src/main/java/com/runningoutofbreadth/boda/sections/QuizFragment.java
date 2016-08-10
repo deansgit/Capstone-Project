@@ -89,6 +89,7 @@ public class QuizFragment extends Fragment implements AdapterView.OnItemClickLis
         Log.v(LOG_TAG, category);
         Intent intent = new Intent(getActivity(), QuizActivity.class);
         intent.putExtra(QuizActivity.CATEGORY, category);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); //allows back button on next activity to go home
         startActivity(intent);
     }
 }

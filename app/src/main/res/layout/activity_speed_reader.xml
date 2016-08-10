@@ -5,7 +5,12 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="@color/colorPrimaryDark"
+    android:clipChildren="false"
     tools:context="com.runningoutofbreadth.boda.sectionactivities.SpeedReaderActivity">
+
+    <include
+        android:id="@+id/counter"
+        layout="@layout/counter_layout" />
 
     <TextView
         android:id="@+id/hangeul"
@@ -14,10 +19,4 @@
         android:keepScreenOn="true"
         android:text="@string/dummy_content"
         android:textSize="@dimen/standalone_syllable_size" />
-
-    <TextView
-        android:id="@+id/counter"
-        style="@style/GeneralBigTextView"
-        android:layout_gravity="center_horizontal" />
-
 </FrameLayout>

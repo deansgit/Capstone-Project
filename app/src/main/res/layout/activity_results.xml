@@ -22,18 +22,18 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/speedreader_number_correct"
+            android:id="@+id/counter_number_correct"
             style="@style/GeneralBigTextView"
             android:layout_gravity="center_horizontal" />
 
         <TextView
-            android:id="@+id/speedreader_slash"
+            android:id="@+id/counter_slash"
             style="@style/GeneralBigTextView"
             android:layout_gravity="center_horizontal"
             android:text="@string/counter_separator" />
 
         <TextView
-            android:id="@+id/speedreader_total"
+            android:id="@+id/counter_total"
             style="@style/GeneralBigTextView"
             android:layout_gravity="center_horizontal" />
 

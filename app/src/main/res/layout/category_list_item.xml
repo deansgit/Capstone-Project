@@ -24,6 +24,7 @@
             android:id="@+id/category_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/flashcard_main_text_color"
             android:layout_gravity="center_horizontal|bottom"
             android:textSize="@dimen/badge_description_textsize" />
     </LinearLayout>

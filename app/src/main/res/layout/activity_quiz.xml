@@ -1,34 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="@color/colorPrimaryDark"
+    android:gravity="center"
     android:orientation="vertical"
-    android:baselineAligned="false"
+    android:weightSum="5"
     tools:context="com.runningoutofbreadth.boda.sectionactivities.QuizActivity">
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="match_parent"
+    <include
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/counter"
+        layout="@layout/counter_layout" />
+
+    <ImageView
+        android:layout_weight="2"
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_margin="@dimen/left_keyline"
+        android:padding="@dimen/left_keyline"
+        android:minWidth="@dimen/min_image_width"
         android:maxHeight="@dimen/max_image_height"
         android:maxWidth="@dimen/max_image_width"
         android:scaleType="fitCenter"
+        android:background="@color/flashcard_main_text_color"
         android:src="@android:drawable/btn_star" />
 
     <GridLayout
-        android:id="@+id/text"
+        android:id="@+id/choices"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="vertical"
-        android:rowCount="2"
         android:columnCount="2"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
+        android:orientation="vertical"
+        android:rowCount="2">
 
         <TextView
             android:id="@+id/choice_one"
@@ -47,4 +56,4 @@
             style="@style/QuizButtonStyle" />
 
     </GridLayout>
-</RelativeLayout>
+</LinearLayout>

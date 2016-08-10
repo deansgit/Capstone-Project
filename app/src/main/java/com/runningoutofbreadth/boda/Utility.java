@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -231,6 +234,18 @@ public class Utility {
     }
 
     /**
+     * Convenience method for iterating through the Set of table IDs
+     * to retrieve the Word items.
+     */
+    public static List<Word> generateWordList(HashSet<Integer> idList, Class category) {
+        List<Word> wordList = new ArrayList<>();
+        for (int id : idList) {
+            wordList.add(Utility.queryWordById(id, category));
+        }
+        return wordList;
+    }
+
+    /**
      * Simple convenience method to slowly fade-in View
      **/
     public static void slowFadeIn(View view){
@@ -240,6 +255,15 @@ public class Utility {
                 .alpha(1f)
                 .setDuration(2000)
                 .setListener(null);
+    }
+
+    /**
+     * Makes a view grow momentarily. Mainly used to alert user something significant has changed.
+     **/
+    public static void animatePulse(Context context, View view) {
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.grow);
+        animation.setDuration(1000);
+        view.startAnimation(animation);
     }
 
 }

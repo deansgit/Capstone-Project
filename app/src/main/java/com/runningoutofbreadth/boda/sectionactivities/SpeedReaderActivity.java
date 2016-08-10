@@ -14,8 +14,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
@@ -27,7 +25,6 @@ import com.runningoutofbreadth.boda.Utility;
 import com.runningoutofbreadth.boda.db.Syllable;
 import com.runningoutofbreadth.boda.db.Word;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -46,19 +43,13 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
 
     public static final String SYLLABLE_COUNT = "Count";
     public static final String DIFFICULTY = "Difficulty";
-//    public static final String DIFFICULTY_SLOW = "Slow";
-//    public static final String DIFFICULTY_NORMAL = "Normal";
-//    public static final String DIFFICULTY_FAST = "FAST";
-//    public static final String DIFFICULTY_LUDICROUS = "Ludicrous";
-
 
     private long mDifficulty;
     Handler mHandler;
     Word mAnswer;
     int mCurrentPos;
-    int mTotal;
-    int mCorrect;
-    private HashSet<Integer> mIdList;
+    int mTotalCount;
+    int mCorrectCount;
     List<Word> mWordList;
 
     @Override
@@ -87,10 +78,10 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
         // get all values from intent and assign to member variables
         Intent intent = getIntent();
         mDifficulty = intent.getLongExtra(DIFFICULTY, 3000);
-        mTotal = intent.getIntExtra(SYLLABLE_COUNT, 10);
-        mIdList = Utility.generateListOfIds(Syllable.class, mTotal);
-        mWordList = generateWordList(mIdList, Syllable.class);
-        mCurrentPos = 0;
+        mTotalCount = intent.getIntExtra(SYLLABLE_COUNT, 10);
+
+        HashSet<Integer> mIdList = Utility.generateListOfIds(Syllable.class, mTotalCount);
+        mWordList = Utility.generateWordList(mIdList, Syllable.class);
         mAnswer = selectWordFromList(mWordList, mCurrentPos);
 
         FrameLayout mRootContainer = (FrameLayout) findViewById(R.id.speed_read_root_container);
@@ -98,17 +89,17 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
         mRootContainer.setOnClickListener(this);
         // get references to textviews
         mHangeulView = (TextView) findViewById(R.id.hangeul);
-        mCorrectView = (TextView) findViewById(R.id.speedreader_number_correct);
-        mSlashView = (TextView) findViewById(R.id.speedreader_slash);
-        mTotalView = (TextView) findViewById(R.id.speedreader_total);
+        mCorrectView = (TextView) findViewById(R.id.counter_number_correct);
+        mSlashView = (TextView) findViewById(R.id.counter_slash);
+        mTotalView = (TextView) findViewById(R.id.counter_total);
 
         Utility.slowFadeIn(mCorrectView);
         Utility.slowFadeIn(mSlashView);
 
         updateTextView(mHangeulView, mAnswer);
 
-        mTotalView.setText(String.valueOf(mTotal));
-        mCorrectView.setText(String.valueOf(mCorrect));
+        mTotalView.setText(String.valueOf(mTotalCount));
+        mCorrectView.setText(String.valueOf(mCorrectCount));
         mCorrectView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -116,14 +107,11 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                animateCorrectCounter();
+                Utility.animatePulse(getApplicationContext(), mCorrectView);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (mCurrentPos == mTotal) {
-                    transitionToEndScene();
-                }
             }
         });
         hideTextViewDelayed(mHangeulView);
@@ -147,7 +135,7 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
 //        int viewId = v.getId();
 //        Log.v(LOG_TAG, Integer.toString(viewId));
-        if (mCurrentPos <= mTotal - 1 && mAnswer != null) {
+        if (mCurrentPos <= mTotalCount - 1 && mAnswer != null) {
             showAnswerDialog();
         }
     }
@@ -155,14 +143,13 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onDialogAnswerClick(AnswerDialogFragment dialog, String answer) {
         if (answer.equals(mAnswer.getHangeul()) || answer.equals(mAnswer.getRomanization())) {
-            mCorrect++;
-            mCorrectView.setText(String.valueOf(mCorrect));
+            mCorrectCount++;
+            mCorrectView.setText(String.valueOf(mCorrectCount));
         }
         mCurrentPos++;
-        if (mCurrentPos == mTotal) {
-            transitionToEndScene();
+        if (mCurrentPos == mTotalCount) {
+            showResults();
         } else {
-            Log.v(LOG_TAG, Integer.toString(mCurrentPos) + " vs " + Integer.toString(mTotal));
             mAnswer = selectWordFromList(mWordList, mCurrentPos);
             if (mAnswer != null) {
                 updateTextView(mHangeulView, mAnswer);
@@ -176,19 +163,12 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
         dialog.show(getSupportFragmentManager(), "AnswerDialogFragment");
     }
 
-    private void animateCorrectCounter() {
-        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.grow);
-        animation.setDuration(1000);
-        mTotalView.startAnimation(animation);
-    }
-
-    private void transitionToEndScene() {
-        Log.v(LOG_TAG, "END SCENE!");
+    private void showResults() {
         Intent intent = new Intent(this, ResultsActivity.class);
         intent.putExtra(ResultsActivity.RESULT_CORRECT,
-                String.valueOf(mCorrect));
+                String.valueOf(mCorrectCount));
         intent.putExtra(ResultsActivity.RESULT_TOTAL,
-                String.valueOf(mTotal));
+                String.valueOf(mTotalCount));
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                 findViewById(R.id.counter), getString(R.string.counter_transition_name));
         ActivityCompat.startActivity(this, intent, optionsCompat.toBundle());
@@ -217,17 +197,6 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
         return null;
     }
 
-    /**
-     * Convenience method for iterating through the Set of table IDs
-     * to retrieve the Word items.
-     */
-    private List<Word> generateWordList(HashSet<Integer> idList, Class category) {
-        List<Word> wordList = new ArrayList<>();
-        for (int id : idList) {
-            wordList.add(Utility.queryWordById(id, category));
-        }
-        return wordList;
-    }
 
     /**
      * Convenience method for showing available languages on device

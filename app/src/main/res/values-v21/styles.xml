@@ -4,11 +4,11 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowActivityTransitions">true</item>
 
-        <!--<item name="android:fragmentExitTransition">@android:transition/fade</item>-->
+        <!--<item name="android:fragmentExitTransition">@transition/grow_and_center</item>-->
         <!--<item name="android:fragmentEnterTransition">@android:transition/fade</item>-->
-        <!--<item name="android:windowExitTransition">@android:transition/fade</item>-->
+        <!--<item name="android:windowExitTransition">@transition/grow_and_center</item>-->
         <!--<item name="android:windowEnterTransition">@android:transition/fade</item>-->
-        <item name="android:interpolator">@android:interpolator/fast_out_slow_in</item>
+        <!--<item name="android:interpolator">@android:interpolator/fast_out_slow_in</item>-->
     </style>
 
     <style name="AppTheme.NoActionBar">

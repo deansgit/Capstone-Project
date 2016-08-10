@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     android:gravity="center"
     android:orientation="vertical"
     tools:context="com.runningoutofbreadth.boda.sections.SpeedReaderFragment">
@@ -13,11 +15,8 @@
 
     <EditText
         android:id="@+id/syllable_count_input"
-        style="@style/GeneralBigTextView"
-        android:layout_gravity="center"
-        android:hint="@string/speedreader_hint"
-        android:inputType="number"
-        android:maxLength="3"
+        style="@style/SyllableCountEditText"
+        android:cursorVisible="false"
         android:transitionName="@string/syllable_count_transition_name" />
 
     <Button

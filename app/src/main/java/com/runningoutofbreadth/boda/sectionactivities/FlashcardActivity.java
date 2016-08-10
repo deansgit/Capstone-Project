@@ -79,6 +79,7 @@ public class FlashcardActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mModelName = intent.getStringExtra(CATEGORY);
 
+        // TODO: 8/9/2016 refactor models to have hasImage boolean
         if (mModelName.equals(CATEGORY_SYLLABLES)
                 || mModelName.equals(CATEGORY_IDIOMS)
                 || mModelName.equals(CATEGORY_VOCABULARY)) {

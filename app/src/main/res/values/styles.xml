@@ -40,7 +40,7 @@
         <item name="android:text">CHOICE</item>
         <item name="android:textSize">@dimen/quiz_choice_font_size</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/textColor</item>
         <item name="android:padding">@dimen/quiz_choice_padding</item>
         <item name="android:layout_margin">@dimen/quiz_choice_margin</item>
         <item name="android:clickable">true</item>
@@ -57,11 +57,29 @@
         <item name="android:layout_margin">@dimen/text_padding</item>
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/speed_reader_input_textsize</item>
+        <item name="android:textSize">@dimen/giant_textsize</item>
         <item name="android:textColor">@color/textColor</item>
     </style>
 
-    <dimen name="quiz_choice_padding">4dp</dimen>
-    <dimen name="quiz_choice_margin">8dp</dimen>
-    <color name="textColor">#FFFFFF</color>
+    <style name="SyllableCountEditText" parent="GeneralBigTextView">
+        <item name="android:textSize">@dimen/speed_reader_input_textsize</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:hint">@string/speedreader_hint</item>
+        <item name="android:imeOptions">actionDone</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">2</item>
+        <item name="android:text">@string/default_syllable_count</item>
+    </style>
+
+    <style name="CounterStyle">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:clipChildren">false</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/layout_counter_margin</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
 </resources>

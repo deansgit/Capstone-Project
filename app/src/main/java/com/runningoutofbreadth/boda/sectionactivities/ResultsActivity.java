@@ -27,8 +27,8 @@ public class ResultsActivity extends AppCompatActivity {
 
 //        mCounterView = (LinearLayout) findViewById(R.id.counter);
         TextView headerTextView = (TextView) findViewById(R.id.header);
-        TextView correctTextView = (TextView) findViewById(R.id.speedreader_number_correct);
-        TextView totalTextView = (TextView) findViewById(R.id.speedreader_total);
+        TextView correctTextView = (TextView) findViewById(R.id.counter_number_correct);
+        TextView totalTextView = (TextView) findViewById(R.id.counter_total);
 
         Intent intent = getIntent();
         String numberCorrectString = intent.getStringExtra(RESULT_CORRECT);

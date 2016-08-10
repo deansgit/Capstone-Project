@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AppTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    style="@style/AppTheme">
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/answer_edittext"
-        android:inputType="text"
+        style="@style/GeneralBigTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimary"
-        style="@style/GeneralBigTextView"/>
+        android:inputType="text"
+        android:textColor="@color/colorPrimary" />
+
+    <Button
+        android:id="@+id/answer_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:text="@string/answer_dialog_title" />
 
 </LinearLayout>
