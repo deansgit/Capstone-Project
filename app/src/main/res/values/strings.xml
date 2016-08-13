@@ -30,4 +30,7 @@
     <string name="results">Final Results:</string>
     <string name="answer_dialog_title">Answer</string>
     <string name="quiz_image_content_description">quiz image</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
 </resources>
