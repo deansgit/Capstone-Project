@@ -35,4 +35,9 @@
     <dimen name="text_padding">4dp</dimen>
     <dimen name="layout_counter_margin">4dp</dimen>
 
+    <!-- Results Text Sizes -->
+    <dimen name="results_header_textsize">40sp</dimen>
+    <dimen name="results_items_textsize">24sp</dimen>
+    <dimen name="category_grid_spacing">10dp</dimen>
+
 </resources>

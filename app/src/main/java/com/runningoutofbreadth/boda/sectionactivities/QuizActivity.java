@@ -18,6 +18,7 @@ import com.runningoutofbreadth.boda.db.Animal;
 import com.runningoutofbreadth.boda.db.Nation;
 import com.runningoutofbreadth.boda.db.Word;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -46,6 +47,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     int mCorrectCount;
 
     List<Word> mWordList;
+    ArrayList<ColoredResult> mResultsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,22 +103,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             mWordList = Utility.generateWordList(mIdList, mModel);
             mAnswer = selectWordFromList(mWordList, mCurrentPos);
             changeWord(mAnswer);
-//            Log.v(LOG_TAG, mModel.toString());
-            // get size of db table
-//            int randPosMax = (int) SQLite.selectCountOf().from(mModel).count();
-//            Word newWord = Utility.wordSelector(Utility.randInt(0, randPosMax), mModel);
-//
-////            Log.v(LOG_TAG, newWord[WORDSELECTOR_HANGEUL] + " " + newWord[WORDSELECTOR_ROMANIZATION]);
-//            if (newWord != null) {
-//                mAnswer = newWord;
-//                String[] choices = createChoices(mAnswer.getHangeul());
-//                updateViewsForMultipleChoice(choices);
-//                int resId = getResources().getIdentifier(newWord.getImageId(), "drawable", getPackageName());
-//                Glide.with(this)
-//                        .load(resId).error(android.R.drawable.picture_frame)
-//                        .fitCenter()
-//                        .into(mImageView);
-//            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -138,11 +125,13 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 //        Log.v(LOG_TAG, v.getClass().toString());
         if (mCurrentPos <= mTotalCount) {
             if (v.getClass() == TextView.class || v.getClass() == AppCompatTextView.class) {
-                if (((TextView) v).getText().equals(mAnswer.getHangeul())) {
+                boolean isCorrect = ((TextView) v).getText().equals(mAnswer.getHangeul());
+                if (isCorrect) {
                     // TODO: 8/7/2016 update views to show/hide checks or x's and counter
                     mCorrectCount++;
                     mCorrectView.setText(String.valueOf(mCorrectCount));
                 }
+                mResultsList.add(mCurrentPos, new ColoredResult(mAnswer, resultColor(isCorrect)));
                 mCurrentPos++;
                 if (mCurrentPos == mTotalCount) {
                     showResults();
@@ -156,12 +145,17 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private int resultColor(boolean isCorrect) {
+        return isCorrect ? R.color.color_correct : R.color.color_incorrect;
+    }
+
     private void showResults() {
         Intent intent = new Intent(this, ResultsActivity.class);
         intent.putExtra(ResultsActivity.RESULT_CORRECT,
                 String.valueOf(mCorrectCount));
         intent.putExtra(ResultsActivity.RESULT_TOTAL,
                 String.valueOf(mTotalCount));
+        intent.putExtra(ResultsActivity.RESULT_COLORS, mResultsList);
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                 findViewById(R.id.counter), getString(R.string.counter_transition_name));
         ActivityCompat.startActivity(this, intent, optionsCompat.toBundle());

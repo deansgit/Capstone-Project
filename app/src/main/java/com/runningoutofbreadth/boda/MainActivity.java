@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String DB_UPDATE_STATUS = "DB_UPDATE_STATUS";
     private static final String DB_VERSION_NUMBER = "DB_VERSION_NUMBER";
 
-    // holds all of the categories to be passed into each fragment (predom. for gridview population)
+    // holds all of the categories to be passed into each fragment (predom. for listview population)
     private ArrayList<String> mCategories;
 
     @Override

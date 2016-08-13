@@ -17,4 +17,11 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
     </style>
+
+    <style name="SpeedButtonStyle" parent="QuizButtonStyle">
+        <item name="android:padding">8dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+
 </resources>

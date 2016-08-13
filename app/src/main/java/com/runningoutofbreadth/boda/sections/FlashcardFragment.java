@@ -4,11 +4,11 @@ package com.runningoutofbreadth.boda.sections;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.runningoutofbreadth.boda.R;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * Use the {@link FlashcardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FlashcardFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class FlashcardFragment extends Fragment implements RecyclerView.OnClickListener {
     private static final String LOG_TAG = FlashcardFragment.class.getSimpleName();
 
     // TODO: Rename parameter arguments, choose names that match
@@ -72,19 +72,22 @@ public class FlashcardFragment extends Fragment implements AdapterView.OnItemCli
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_flashcard, container, false);
 
-        CategoryArrayAdapter categoryArrayAdapter = new CategoryArrayAdapter(getContext(),
-                R.layout.category_list_item, mCategoryArray);
+        RecyclerView catRecView = (RecyclerView) rootView.findViewById(R.id.category_badges_gridview);
+        catRecView.setHasFixedSize(true);
 
-        GridView categoryGridView = (GridView) rootView.findViewById(R.id.category_badges_gridview);
-        categoryGridView.setAdapter(categoryArrayAdapter);
-        categoryGridView.setOnItemClickListener(this);
+        RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        catRecView.setLayoutManager(gridLayoutManager);
+
+        CategoryArrayAdapter catArrAdapter = new CategoryArrayAdapter(getActivity(),
+                mCategoryArray, R.layout.category_list_item, FlashcardActivity.class);
+        catRecView.setAdapter(catArrAdapter);
 
         return rootView;
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        TextView referenceView = (TextView) view.findViewById(R.id.category_textview);
+    public void onClick(View v) {
+        TextView referenceView = (TextView) v.findViewById(R.id.category_textview);
         String category = referenceView.getText().toString();
         Intent intent = new Intent(getActivity(), FlashcardActivity.class);
         intent.putExtra(FlashcardActivity.CATEGORY, category);

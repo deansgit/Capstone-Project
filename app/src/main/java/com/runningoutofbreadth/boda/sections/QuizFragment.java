@@ -4,12 +4,12 @@ package com.runningoutofbreadth.boda.sections;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.runningoutofbreadth.boda.R;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Use the {@link QuizFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class QuizFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class QuizFragment extends Fragment implements RecyclerView.OnClickListener {
     private static final String LOG_TAG = QuizFragment.class.getSimpleName();
 
     // TODO: Rename parameter arguments, choose names that match
@@ -72,21 +72,25 @@ public class QuizFragment extends Fragment implements AdapterView.OnItemClickLis
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_quiz, container, false);
 
-        CategoryArrayAdapter categoryArrayAdapter = new CategoryArrayAdapter(getContext(),
-                R.layout.category_list_item, mCategoryArray);
+        RecyclerView catRecView = (RecyclerView) rootView.findViewById(R.id.category_badges_gridview);
+        catRecView.setHasFixedSize(true);
 
-        GridView categoryGridView = (GridView) rootView.findViewById(R.id.category_badges_gridview);
-        categoryGridView.setAdapter(categoryArrayAdapter);
-        categoryGridView.setOnItemClickListener(this);
+        RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        catRecView.setLayoutManager(gridLayoutManager);
+
+        CategoryArrayAdapter catArrAdapter = new CategoryArrayAdapter(getActivity(),
+                mCategoryArray, R.layout.category_list_item, QuizActivity.class);
+        catRecView.setAdapter(catArrAdapter);
+        catRecView.setOnClickListener(this);
 
         return rootView;
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        TextView referenceView = (TextView) view.findViewById(R.id.category_textview);
+    public void onClick(View v) {
+        Log.v(LOG_TAG, Integer.toString(v.getId()));
+        TextView referenceView = (TextView) v.findViewById(R.id.category_textview);
         String category = referenceView.getText().toString();
-        Log.v(LOG_TAG, category);
         Intent intent = new Intent(getActivity(), QuizActivity.class);
         intent.putExtra(QuizActivity.CATEGORY, category);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); //allows back button on next activity to go home

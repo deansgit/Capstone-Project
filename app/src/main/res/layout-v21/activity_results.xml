@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,35 +10,15 @@
 
     <TextView
         android:id="@+id/header"
-        style="@style/GeneralBigTextView"
+        style="@style/ResultsHeaderTextView"
         android:text="@string/results" />
 
-    <LinearLayout
-        android:id="@+id/counter"
-        android:layout_width="wrap_content"
+    <include layout="@layout/counter_layout" />
+
+    <ListView
+        android:id="@+id/results_listview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/layout_counter_margin"
-        android:orientation="horizontal"
-        android:transitionName="@string/counter_transition_name">
-
-        <TextView
-            android:id="@+id/counter_number_correct"
-            style="@style/GeneralBigTextView"
-            android:layout_gravity="center_horizontal" />
-
-        <TextView
-            android:id="@+id/counter_slash"
-            style="@style/GeneralBigTextView"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/counter_separator" />
-
-        <TextView
-            android:id="@+id/counter_total"
-            style="@style/GeneralBigTextView"
-            android:layout_gravity="center_horizontal"
-            android:transitionName="@string/syllable_count_transition_name" />
-
-    </LinearLayout>
+        android:background="@color/colorPrimaryDark" />
 
 </LinearLayout>

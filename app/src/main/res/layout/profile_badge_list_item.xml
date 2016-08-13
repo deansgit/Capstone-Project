@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginBottom="@dimen/category_button_margin"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
 
-    <LinearLayout
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/category_button_margin"
-        android:background="@color/colorPrimaryDark"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/category_badge_imageview"
@@ -20,20 +21,23 @@
             android:minHeight="@dimen/badge_min_height"
             android:padding="@dimen/category_button_padding" />
 
-        <TextView
-            android:id="@+id/category_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|bottom"
-            android:textSize="@dimen/badge_description_textsize" />
-    </LinearLayout>
+        <View
+            android:id="@+id/overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.9"
+            android:background="@color/colorPrimaryDark"
+            android:paddingBottom="@dimen/category_button_margin" />
 
-    <View
-        android:id="@+id/overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.5"
-        android:background="@color/colorPrimaryDark"
-        android:paddingBottom="@dimen/category_button_margin" />
+    </FrameLayout>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/category_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:textColor="@color/flashcard_main_text_color"
+        android:textSize="@dimen/badge_description_textsize" />
+
+
+</LinearLayout>

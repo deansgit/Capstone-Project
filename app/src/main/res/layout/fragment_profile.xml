@@ -3,14 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.runningoutofbreadth.boda.sections.ProfileFragment">
 
-    <GridView
-        android:id="@+id/category_badges_gridview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="auto_fit"
-        android:background="@color/colorPrimaryDark">
-    </GridView>
+    <include layout="@layout/category_grid_recycler_view" />
 
 </FrameLayout>

@@ -49,6 +49,7 @@
 
     <style name="SpeedButtonStyle" parent="QuizButtonStyle">
         <item name="android:padding">8dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
     <style name="GeneralBigTextView">
@@ -58,6 +59,16 @@
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/giant_textsize</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="ResultsHeaderTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/text_padding</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/results_header_textsize</item>
         <item name="android:textColor">@color/textColor</item>
     </style>
 

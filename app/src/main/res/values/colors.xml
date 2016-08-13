@@ -6,4 +6,6 @@
 
     <color name="black_overlay">#66000000</color>
     <color name="flashcard_main_text_color">#33b5e5</color>
+    <color name="color_correct">#00E676</color>
+    <color name="color_incorrect">#FF1744</color>
 </resources>

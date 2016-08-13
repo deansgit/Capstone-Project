@@ -1,6 +1,7 @@
 package com.runningoutofbreadth.boda;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.view.View;
@@ -138,8 +139,8 @@ public class Utility {
         try {
             // Create a 'Condition' for DBFlow to use in the SQLite query's WHERE clause
             newWord = (Word) category.newInstance();
-            NameAlias alias = NameAlias.builder("sId").build();
-            Condition randomIdCondition = Condition.column(alias).eq(position);
+            NameAlias sIDAlias = NameAlias.builder("sId").build();
+            Condition randomIdCondition = Condition.column(sIDAlias).eq(position);
             try {
                 // get string: format should be hex values with spaces e.g. "XXXX XXXX XXXX"
                 wordItem = SQLite.select()
@@ -152,6 +153,15 @@ public class Utility {
                     getRomanization = wordItem.getClass().getMethod("getRomanization");
                     getImageId = wordItem.getClass().getMethod("getImageId");
                     isRead = wordItem.getClass().getMethod("isRead");
+
+                    NameAlias readAlias = NameAlias.builder("read").build();
+                    Condition readCondition = Condition.column(readAlias).eq(true);
+
+                    SQLite.update(category)
+                            .set(readCondition)
+                            .where(randomIdCondition)
+                            .async()
+                            .execute();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -165,7 +175,7 @@ public class Utility {
                 translation = getTranslation.invoke(wordItem).toString();
                 romanization = getRomanization.invoke(wordItem).toString();
             }
-            if (getImageId != null){
+            if (getImageId != null) {
                 imageId = (String) getImageId.invoke(wordItem);
                 newWord.setImageId(imageId);
             }
@@ -190,7 +200,7 @@ public class Utility {
      * Returns a different typeface from the assets folder.
      */
     //// TODO: 7/16/2016 make sure it returns a different number from previous
-    public static Typeface diffFont(Context context){
+    public static Typeface diffFont(Context context) {
         int fontIndex = randInt(0, FONT_MAP.length - 1); // index always off by one from array length
         return Typeface.createFromAsset(context.getAssets(), FONT_MAP[fontIndex]);
     }
@@ -223,11 +233,11 @@ public class Utility {
     /**
      * Generates list of n random non-repeating ids in range
      **/
-    public static HashSet<Integer> generateListOfIds(Class category, int counter){
+    public static HashSet<Integer> generateListOfIds(Class category, int counter) {
         HashSet<Integer> set = new HashSet<>();
         int randPosMax = (int) SQLite.selectCountOf().from(category).count();
 
-        while (set.size() < counter){
+        while (set.size() < counter) {
             set.add(randInt(0, randPosMax));
         }
         return set;
@@ -248,7 +258,7 @@ public class Utility {
     /**
      * Simple convenience method to slowly fade-in View
      **/
-    public static void slowFadeIn(View view){
+    public static void slowFadeIn(View view) {
         view.setVisibility(View.VISIBLE);
         view.setAlpha(0f);
         view.animate()
@@ -264,6 +274,33 @@ public class Utility {
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.grow);
         animation.setDuration(1000);
         view.startAnimation(animation);
+    }
+
+    /**
+     * Persistent read/unread counter
+     **/
+    public static void writeProgressToPrefs(SharedPreferences.Editor editor, Class category) {
+        NameAlias alias = NameAlias.builder("read").build();
+        Condition readCondition = Condition.column(alias).eq(true);
+        try {
+            long totalCount = SQLite.selectCountOf().from(category)
+                    .count();
+            long readCount = SQLite.selectCountOf().from(category)
+                    .where(readCondition)
+                    .count();
+            double percentageRead = readCount * 1.0 / totalCount;
+//            Log.v(LOG_TAG, Long.toString(totalCount) + " is the total");
+//            Log.v(LOG_TAG, Long.toString(readCount) + " is the number read (true)");
+//            Log.v(LOG_TAG, Double.toString(percentageRead) + " is the percentage");
+//            Log.v(LOG_TAG, category.getSimpleName().toUpperCase() + "_READ_COUNT => "
+//                    + Double.doubleToRawLongBits(percentageRead));
+//            Log.v(LOG_TAG, category.getSimpleName().toUpperCase() + "_READ_COUNT => "
+//                    + Double.longBitsToDouble(Double.doubleToRawLongBits(percentageRead)));
+            editor.putLong(category.getSimpleName().toUpperCase() + "_READ_COUNT",
+                    Double.doubleToRawLongBits(percentageRead));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

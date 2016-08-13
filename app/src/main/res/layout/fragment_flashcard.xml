@@ -5,17 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.runningoutofbreadth.boda.sections.FlashcardFragment">
 
     <!--todo: background image with giant lightning. colored bg-->
 
-    <GridView
-        android:id="@+id/category_badges_gridview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="@color/colorPrimaryDark"
-        android:gravity="center"
-        android:numColumns="auto_fit" />
+    <include layout="@layout/category_grid_recycler_view" />
 
 </FrameLayout>

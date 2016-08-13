@@ -4,16 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.runningoutofbreadth.boda.sections.QuizFragment">
 
     <!--todo: background image with giant question mark. colored bg-->
 
-    <GridView
-        android:layout_gravity="center"
-        android:id="@+id/category_badges_gridview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark"
-        android:numColumns="auto_fit" />
+    <include layout="@layout/category_grid_recycler_view" />
 
 </FrameLayout>

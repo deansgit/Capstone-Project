@@ -1,6 +1,7 @@
 package com.runningoutofbreadth.boda.sectionactivities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,6 +28,7 @@ import me.grantland.widget.AutofitTextView;
  */
 public class FlashcardActivity extends AppCompatActivity {
     private static final String LOG_TAG = FlashcardActivity.class.getSimpleName();
+    private static final String PREFS_FILENAME = "BodaPrefsFile";
 
     private ImageView mImageView;
     private AutofitTextView mHangeulView;
@@ -124,6 +126,7 @@ public class FlashcardActivity extends AppCompatActivity {
 
     public void changeWord(Class model) {
         Word newWord = Utility.wordSelector(Utility.randInt(0, mTableMax), model);
+        Log.v(LOG_TAG, newWord.isRead() + " isRead");
         mHangeulView.setText(newWord.getHangeul());
         // TODO: 8/1/2016 create string resource using %d placeholder and parens
         mRomanizationView.setText(String.format(getString(R.string.romanization), newWord.getRomanization()));
@@ -136,6 +139,22 @@ public class FlashcardActivity extends AppCompatActivity {
         }
         mTranslationView.setText(newWord.getTranslation().replace(";", "\n"));
         mIdsRead.add(newWord.getsId());
+        SharedPreferences.Editor editor = getSharedPreferences(PREFS_FILENAME, 0).edit();
+        Utility.writeProgressToPrefs(editor, mModel);
+        editor.apply();
     }
 
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        Runnable runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                SharedPreferences.Editor editor = getSharedPreferences(PREFS_FILENAME, 0).edit();
+//                Utility.writeProgressToPrefs(editor, mModel);
+//                editor.apply();
+//            }
+//        };
+//        runnable.run();
+//    }
 }
