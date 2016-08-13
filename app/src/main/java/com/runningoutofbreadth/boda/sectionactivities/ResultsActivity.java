@@ -72,4 +72,6 @@ public class ResultsActivity extends AppCompatActivity {
         }
     }
 
+    // TODO: 8/13/2016 If correct, mark as read in db. If incorrect, mark as unread.
+
 }

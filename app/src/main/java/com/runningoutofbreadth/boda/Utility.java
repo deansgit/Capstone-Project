@@ -31,7 +31,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Created by SandD on 7/1/2016.
+ * Collection of useful methods for parsing strings, retrieving data from tables, and some basic
+ * algorithms and calculations.
  */
 public class Utility {
 
@@ -47,11 +48,6 @@ public class Utility {
             "fonts/oseunghaneum_bold_typed.ttf"
     };
 
-    private static final int WORDSELECTOR_HANGEUL = 0;
-    private static final int WORDSELECTOR_ROMANIZATION = 1;
-    private static final int WORDSELECTOR_IMAGEID = 2;
-
-    // TODO: 7/17/2016 end the loop if it sucks
     public static void insertDatabaseObjects(DatabaseWrapper databaseWrapper,
                                              AssetManager assetManager, String assetPath, Class category) {
         try {
@@ -135,7 +131,6 @@ public class Utility {
         Method getHangeul = null;
         Method getRomanization = null;
         Method getImageId = null;
-        Method isRead;
         try {
             // Create a 'Condition' for DBFlow to use in the SQLite query's WHERE clause
             newWord = (Word) category.newInstance();
@@ -152,7 +147,6 @@ public class Utility {
                     getHangeul = wordItem.getClass().getMethod("getHangeul");
                     getRomanization = wordItem.getClass().getMethod("getRomanization");
                     getImageId = wordItem.getClass().getMethod("getImageId");
-                    isRead = wordItem.getClass().getMethod("isRead");
 
                     NameAlias readAlias = NameAlias.builder("read").build();
                     Condition readCondition = Condition.column(readAlias).eq(true);
@@ -283,24 +277,41 @@ public class Utility {
         NameAlias alias = NameAlias.builder("read").build();
         Condition readCondition = Condition.column(alias).eq(true);
         try {
-            long totalCount = SQLite.selectCountOf().from(category)
-                    .count();
-            long readCount = SQLite.selectCountOf().from(category)
-                    .where(readCondition)
-                    .count();
+            // total number of rows in table for CATEGORY_TABLE
+            long totalCount = SQLite.selectCountOf().from(category).count();
+            // total number of items already marked as "read/true"
+            long readCount = SQLite.selectCountOf().from(category).where(readCondition).count();
+            // percent progress to be used to modify size of alpha-overlay on profile badge
             double percentageRead = readCount * 1.0 / totalCount;
-//            Log.v(LOG_TAG, Long.toString(totalCount) + " is the total");
-//            Log.v(LOG_TAG, Long.toString(readCount) + " is the number read (true)");
-//            Log.v(LOG_TAG, Double.toString(percentageRead) + " is the percentage");
-//            Log.v(LOG_TAG, category.getSimpleName().toUpperCase() + "_READ_COUNT => "
-//                    + Double.doubleToRawLongBits(percentageRead));
-//            Log.v(LOG_TAG, category.getSimpleName().toUpperCase() + "_READ_COUNT => "
-//                    + Double.longBitsToDouble(Double.doubleToRawLongBits(percentageRead)));
+            // save to prefs
             editor.putLong(category.getSimpleName().toUpperCase() + "_READ_COUNT",
                     Double.doubleToRawLongBits(percentageRead));
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Convenience method for changing the read/unread database value for a word
+     **/
+    public static void markAsRead(Word word, boolean isRead) {
+        // get ref to a Class/Model object for DBFlow
+        Class category = word.getClass();
+
+        // create reference to each column in db Table
+        NameAlias sIDAlias = NameAlias.builder("sId").build();
+        NameAlias readAlias = NameAlias.builder("read").build();
+
+        // create 'WHERE' modifiers
+        Condition randomIdCondition = Condition.column(sIDAlias).eq(word.getsId());
+        Condition readCondition = Condition.column(readAlias).eq(isRead);
+
+        // change "read (true/false)" value of db row that matches with current word's id
+        SQLite.update(category)
+                .set(readCondition)
+                .where(randomIdCondition)
+                .async()
+                .execute();
     }
 
 }

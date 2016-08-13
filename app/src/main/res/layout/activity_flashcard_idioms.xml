@@ -22,11 +22,11 @@
             android:layout_gravity="center"
             android:ellipsize="none"
             android:gravity="center"
+            android:maxLines="3"
             android:paddingEnd="@dimen/left_keyline"
             android:paddingLeft="@dimen/left_keyline"
             android:paddingRight="@dimen/left_keyline"
             android:paddingStart="@dimen/left_keyline"
-            android:maxLines="2"
             android:text="@string/dummy_content"
             android:textSize="@dimen/standalone_idiom_size"
             android:textStyle="bold" />
@@ -34,10 +34,10 @@
     </FrameLayout>
 
     <include
+        layout="@layout/word_definition"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        layout="@layout/word_definition" />
+        android:layout_weight="1" />
 
 
 </LinearLayout>

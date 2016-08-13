@@ -25,6 +25,7 @@ import com.runningoutofbreadth.boda.Utility;
 import com.runningoutofbreadth.boda.db.Syllable;
 import com.runningoutofbreadth.boda.db.Word;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
     int mTotalCount;
     int mCorrectCount;
     List<Word> mWordList;
+    private ArrayList<ColoredResult> mResultsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +75,6 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
         }
         setContentView(R.layout.activity_speed_reader);
 
-
-        // TODO: 8/4/2016 save user-set syllable count in settings
         // get all values from intent and assign to member variables
         Intent intent = getIntent();
         mDifficulty = intent.getLongExtra(DIFFICULTY, 3000);
@@ -142,10 +142,12 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onDialogAnswerClick(AnswerDialogFragment dialog, String answer) {
-        if (answer.equals(mAnswer.getHangeul()) || answer.equals(mAnswer.getRomanization())) {
+        boolean isCorrect = answer.equals(mAnswer.getHangeul()) || answer.equals(mAnswer.getRomanization());
+        if (isCorrect) {
             mCorrectCount++;
             mCorrectView.setText(String.valueOf(mCorrectCount));
         }
+        mResultsList.add(mCurrentPos, new ColoredResult(mAnswer, resultColor(isCorrect)));
         mCurrentPos++;
         if (mCurrentPos == mTotalCount) {
             showResults();
@@ -156,6 +158,11 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
                 hideTextViewDelayed(mHangeulView);
             }
         }
+
+    }
+
+    private int resultColor(boolean isCorrect) {
+        return isCorrect ? R.color.color_correct : R.color.color_incorrect;
     }
 
     public void showAnswerDialog() {
@@ -165,10 +172,9 @@ public class SpeedReaderActivity extends AppCompatActivity implements View.OnCli
 
     private void showResults() {
         Intent intent = new Intent(this, ResultsActivity.class);
-        intent.putExtra(ResultsActivity.RESULT_CORRECT,
-                String.valueOf(mCorrectCount));
-        intent.putExtra(ResultsActivity.RESULT_TOTAL,
-                String.valueOf(mTotalCount));
+        intent.putExtra(ResultsActivity.RESULT_CORRECT, String.valueOf(mCorrectCount));
+        intent.putExtra(ResultsActivity.RESULT_TOTAL, String.valueOf(mTotalCount));
+        intent.putExtra(ResultsActivity.RESULT_COLORS, mResultsList);
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                 findViewById(R.id.counter), getString(R.string.counter_transition_name));
         ActivityCompat.startActivity(this, intent, optionsCompat.toBundle());

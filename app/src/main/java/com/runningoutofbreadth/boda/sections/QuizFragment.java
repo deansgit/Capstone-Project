@@ -3,6 +3,7 @@ package com.runningoutofbreadth.boda.sections;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -94,6 +95,7 @@ public class QuizFragment extends Fragment implements RecyclerView.OnClickListen
         Intent intent = new Intent(getActivity(), QuizActivity.class);
         intent.putExtra(QuizActivity.CATEGORY, category);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); //allows back button on next activity to go home
-        startActivity(intent);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        ActivityCompat.startActivity(getActivity(), intent, null);
     }
 }

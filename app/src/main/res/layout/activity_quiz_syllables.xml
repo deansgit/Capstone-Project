@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme.NoActionBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    android:gravity="center"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context="com.runningoutofbreadth.boda.sectionactivities.QuizActivity">
 
     <include
@@ -14,29 +15,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/left_keyline"
-        android:layout_weight="3"
-        android:background="@color/flashcard_main_text_color"
-        android:maxHeight="@dimen/max_image_height"
-        android:maxWidth="@dimen/max_image_width"
-        android:minWidth="@dimen/min_image_width"
-        android:padding="@dimen/left_keyline"
-        android:scaleType="fitCenter"
-        android:src="@android:drawable/btn_star"
-        android:contentDescription="@string/quiz_image_content_description" />
-
-    <TextView
+    <me.grantland.widget.AutofitTextView
         android:id="@+id/translation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="3"
         android:layout_gravity="center"
+        android:ellipsize="none"
         android:gravity="center"
-        android:textSize="@dimen/quiz_choice_font_size" />
+        android:maxLines="2"
+        android:text="@string/dummy_content"
+        android:textSize="@dimen/standalone_syllable_size"
+        android:textStyle="bold" />
+
 
     <LinearLayout
         android:id="@+id/choices"
@@ -65,4 +56,3 @@
     </LinearLayout>
 
 </LinearLayout>
-

@@ -45,7 +45,7 @@ public class FlashcardActivity extends AppCompatActivity {
     private String mModelName;
     private Class mModel;
     float initialX;
-    Set mIdsRead;
+    Set<Integer> mIdsRead;
     private int mTableMax;
 //    private float mFontSize;
 
@@ -99,8 +99,6 @@ public class FlashcardActivity extends AppCompatActivity {
         mRomanizationView = (AutofitTextView) findViewById(R.id.romanization);
         mTranslationView = (AutofitTextView) findViewById(R.id.translation);
 
-//        mHangeulView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
         try {
             // create reference list for bulk setToRead
             mIdsRead = new HashSet();
@@ -126,35 +124,25 @@ public class FlashcardActivity extends AppCompatActivity {
 
     public void changeWord(Class model) {
         Word newWord = Utility.wordSelector(Utility.randInt(0, mTableMax), model);
-        Log.v(LOG_TAG, newWord.isRead() + " isRead");
-        mHangeulView.setText(newWord.getHangeul());
-        // TODO: 8/1/2016 create string resource using %d placeholder and parens
-        mRomanizationView.setText(String.format(getString(R.string.romanization), newWord.getRomanization()));
-        if (model != Syllable.class && model != Idiom.class && model != Vocabulary.class) {
-            int resId = getResources().getIdentifier(newWord.getImageId(), "drawable", getPackageName());
-            Glide.with(this)
-                    .load(resId).error(android.R.drawable.picture_frame)
-                    .fitCenter()
-                    .into(mImageView);
+        if (newWord != null) {
+            mHangeulView.setText(newWord.getHangeul());
+            mRomanizationView.setText(String.format(getString(R.string.romanization), newWord.getRomanization()));
+            if (model != Syllable.class && model != Idiom.class && model != Vocabulary.class) {
+                int resId = getResources().getIdentifier(newWord.getImageId(), "drawable", getPackageName());
+                Glide.with(this)
+                        .load(resId).error(android.R.drawable.picture_frame)
+                        .fitCenter()
+                        .into(mImageView);
+            }
+            mTranslationView.setText(newWord.getTranslation().replace(";", "\n"));
+            mIdsRead.add(newWord.getsId());
         }
-        mTranslationView.setText(newWord.getTranslation().replace(";", "\n"));
-        mIdsRead.add(newWord.getsId());
+
+
+
         SharedPreferences.Editor editor = getSharedPreferences(PREFS_FILENAME, 0).edit();
         Utility.writeProgressToPrefs(editor, mModel);
         editor.apply();
     }
 
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        Runnable runnable = new Runnable() {
-//            @Override
-//            public void run() {
-//                SharedPreferences.Editor editor = getSharedPreferences(PREFS_FILENAME, 0).edit();
-//                Utility.writeProgressToPrefs(editor, mModel);
-//                editor.apply();
-//            }
-//        };
-//        runnable.run();
-//    }
 }

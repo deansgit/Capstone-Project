@@ -2,6 +2,7 @@ package com.runningoutofbreadth.boda.sections;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -24,12 +25,13 @@ import com.runningoutofbreadth.boda.sectionactivities.SpeedReaderActivity;
  */
 public class SpeedReaderFragment extends Fragment implements View.OnClickListener {
     private static final String LOG_TAG = SpeedReaderFragment.class.getSimpleName();
-
+    private static final String PREFS_FILENAME = "BodaPrefsFile";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String SYLLABLE_COUNT = "COUNT";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -45,6 +47,8 @@ public class SpeedReaderFragment extends Fragment implements View.OnClickListene
     public static final long DELAY_FAST = 1000;
     public static final long DELAY_LUDICROUS = 500;
     private EditText mSyllableCountEditText;
+
+    int mTotalCount;
 
     public SpeedReaderFragment() {
         // Required empty public constructor
@@ -106,6 +110,10 @@ public class SpeedReaderFragment extends Fragment implements View.OnClickListene
             }
         });
 
+        SharedPreferences settings = getActivity().getSharedPreferences(PREFS_FILENAME, 0);
+
+        mSyllableCountEditText.setText(String.valueOf(settings.getInt(SYLLABLE_COUNT, 10)));
+
         mSlowButton = (Button) rootView.findViewById(R.id.slow);
         mNormalButton = (Button) rootView.findViewById(R.id.normal);
         mFastButton = (Button) rootView.findViewById(R.id.fast);
@@ -124,11 +132,17 @@ public class SpeedReaderFragment extends Fragment implements View.OnClickListene
         int id = v.getId();
         Intent intent = new Intent(getActivity(), SpeedReaderActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); //allows back button on next activity to go home
-        int numOfSyl = !mSyllableCountEditText.getText().toString().equals("")
+        mTotalCount = !mSyllableCountEditText.getText().toString().equals("")
                 ? Integer.decode(mSyllableCountEditText.getText().toString()) : 10;
-        intent.putExtra(SpeedReaderActivity.SYLLABLE_COUNT, numOfSyl);
+        intent.putExtra(SpeedReaderActivity.SYLLABLE_COUNT, mTotalCount);
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                 v.getRootView().findViewById(R.id.syllable_count_input), getString(R.string.syllable_count_transition_name));
+
+        SharedPreferences settings = getActivity().getSharedPreferences(PREFS_FILENAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(SYLLABLE_COUNT, mTotalCount);
+        editor.apply();
+
         switch (id) {
             case R.id.slow:
                 intent.putExtra(SpeedReaderActivity.DIFFICULTY, DELAY_SLOW);
@@ -149,7 +163,7 @@ public class SpeedReaderFragment extends Fragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        if (mSyllableCountEditText != null && mSyllableCountEditText.hasFocus()){
+        if (mSyllableCountEditText != null && mSyllableCountEditText.hasFocus()) {
             mSyllableCountEditText.clearFocus();
         }
     }

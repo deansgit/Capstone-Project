@@ -37,24 +37,5 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <!--<FrameLayout-->
-    <!--android:id="@+id/flashcard_bottom"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="0dp"-->
-    <!--android:layout_weight="1">-->
-
-    <!--<me.grantland.widget.AutofitTextView-->
-    <!--android:id="@+id/romanization"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:maxLines="1"-->
-    <!--android:gravity="center"-->
-    <!--android:textColor="#33b5e5"-->
-    <!--android:textSize="@dimen/romanization_font_size"-->
-    <!--android:textStyle="bold" />-->
-
-    <!--</FrameLayout>-->
-
 
 </LinearLayout>

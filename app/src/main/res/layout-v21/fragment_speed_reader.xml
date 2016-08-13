@@ -11,8 +11,6 @@
 
     <!--todo: background image with giant clock. colored bg-->
 
-    <!--todo: add input or "wheel" to select number of syllables-->
-
     <EditText
         android:id="@+id/syllable_count_input"
         style="@style/SyllableCountEditText"
