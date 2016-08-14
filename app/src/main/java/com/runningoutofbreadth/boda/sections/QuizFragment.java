@@ -29,7 +29,6 @@ public class QuizFragment extends Fragment implements RecyclerView.OnClickListen
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String CATEGORIES = "CATEGORIES";
-    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private ArrayList<String> mCategoryArray;
@@ -45,15 +44,13 @@ public class QuizFragment extends Fragment implements RecyclerView.OnClickListen
      * this fragment using the provided parameters.
      *
      * @param categoryArray Parameter 1.
-     * @param param2        Parameter 2.
      * @return A new instance of fragment QuizFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static QuizFragment newInstance(ArrayList<String> categoryArray, String param2) {
+    public static QuizFragment newInstance(ArrayList<String> categoryArray) {
         QuizFragment fragment = new QuizFragment();
         Bundle args = new Bundle();
         args.putStringArrayList(CATEGORIES, categoryArray);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,7 +60,6 @@ public class QuizFragment extends Fragment implements RecyclerView.OnClickListen
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mCategoryArray = getArguments().getStringArrayList(CATEGORIES);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 

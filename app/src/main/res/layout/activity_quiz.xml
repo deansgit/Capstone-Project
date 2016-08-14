@@ -14,21 +14,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <ImageView
-        android:id="@+id/image"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/left_keyline"
-        android:layout_weight="3"
         android:background="@color/flashcard_main_text_color"
-        android:maxHeight="@dimen/max_image_height"
-        android:maxWidth="@dimen/max_image_width"
-        android:minWidth="@dimen/min_image_width"
-        android:padding="@dimen/left_keyline"
-        android:scaleType="fitCenter"
-        android:src="@android:drawable/btn_star"
-        android:contentDescription="@string/quiz_image_content_description" />
+        android:layout_weight="5"
+        android:padding="@dimen/quiz_choice_margin">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/left_keyline"
+            android:contentDescription="@string/quiz_image_content_description"
+            android:maxWidth="@dimen/max_image_width"
+            android:minWidth="@dimen/min_image_width"
+            android:padding="@dimen/left_keyline"
+            android:scaleType="fitCenter"
+            android:src="@android:drawable/btn_star" />
+    </FrameLayout>
+
 
     <TextView
         android:id="@+id/translation"

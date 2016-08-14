@@ -1,16 +1,28 @@
 package com.runningoutofbreadth.boda.db;
 
+import android.net.Uri;
+
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.raizlabs.android.dbflow.annotation.provider.ContentUri;
+import com.raizlabs.android.dbflow.annotation.provider.TableEndpoint;
 import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
+import com.raizlabs.android.dbflow.structure.provider.BaseProviderModel;
+import com.raizlabs.android.dbflow.structure.provider.ContentUtils;
 
 /**
  * Nation model of db object
  */
-@Table(database = BodaDatabase.class)
-public class Nation extends BaseModel implements Word {
+@TableEndpoint(name = Nation.NAME, contentProvider = BodaDatabase.class)
+@Table(database = BodaDatabase.class, name = Nation.NAME)
+public class Nation extends BaseProviderModel<Nation> implements Word {
+
+    public static final String NAME = "Nation";
+
+    @ContentUri(path = NAME, type = ContentUri.ContentType.VND_MULTIPLE + NAME)
+    public static final Uri CONTENT_URI = ContentUtils.buildUriWithAuthority(BodaDatabase.AUTHORITY);
+
 
     // identifier int within the db
     @PrimaryKey
@@ -102,5 +114,25 @@ public class Nation extends BaseModel implements Word {
     @Override
     public void save(DatabaseWrapper databaseWrapper) {
         getModelAdapter().save(this, databaseWrapper);
+    }
+
+    @Override
+    public Uri getDeleteUri() {
+        return CONTENT_URI;
+    }
+
+    @Override
+    public Uri getInsertUri() {
+        return CONTENT_URI;
+    }
+
+    @Override
+    public Uri getUpdateUri() {
+        return CONTENT_URI;
+    }
+
+    @Override
+    public Uri getQueryUri() {
+        return CONTENT_URI;
     }
 }

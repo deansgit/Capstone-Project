@@ -16,21 +16,21 @@
     <dimen name="speed_reader_input_textsize">@dimen/giant_textsize</dimen>
     <dimen name="counter_textsize">@dimen/translation_font_size</dimen>
 
-    <dimen name="quiz_choice_padding">4dp</dimen>
+    <dimen name="quiz_choice_padding">2dp</dimen>
     <dimen name="quiz_choice_margin">8dp</dimen>
     <color name="textColor">#FFFFFF</color>
 
     <!-- Image sizes-->
     <dimen name="max_image_height">200dp</dimen>
-    <dimen name="max_image_width">100dp</dimen>
-    <dimen name="quiz_choice_font_size">26sp</dimen>
+    <dimen name="max_image_width">300dp</dimen>
+    <dimen name="quiz_choice_font_size">22sp</dimen>
     <dimen name="category_button_padding">4dp</dimen>
     <dimen name="badge_min_height">48dp</dimen>
     <dimen name="badge_description_textsize">24sp</dimen>
     <dimen name="category_button_margin">4dp</dimen>
 
     <dimen name="left_keyline">8dp</dimen>
-    <dimen name="min_image_width">100dp</dimen>
+    <dimen name="min_image_width">200dp</dimen>
     <dimen name="text_top_keyline">400dp</dimen>
     <dimen name="text_padding">4dp</dimen>
     <dimen name="layout_counter_margin">4dp</dimen>

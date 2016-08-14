@@ -57,6 +57,12 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:authorities="com.runningoutofbreadth.boda.provider"
+            android:exported="false"
+            android:name=".db.BodaDatabase_Provider" />
+
     </application>
 
 </manifest>

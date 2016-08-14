@@ -93,15 +93,6 @@ public class MainActivity extends AppCompatActivity {
             mCategories.add(ASSET_REFERENCES[i][CATEGORY_INDEX]);
         }
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
         // load database for the first time
         SharedPreferences settings = getSharedPreferences(PREFS_FILENAME, 0);
         SharedPreferences.Editor editor = settings.edit();
@@ -206,16 +197,16 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment;
             switch (position) {
                 case FLASHCARDS:
-                    fragment = FlashcardFragment.newInstance(mCategories, "test2");
+                    fragment = FlashcardFragment.newInstance(mCategories);
                     break;
                 case QUIZ:
-                    fragment = QuizFragment.newInstance(mCategories, "test2");
+                    fragment = QuizFragment.newInstance(mCategories);
                     break;
                 case SPEEDREAD:
-                    fragment = SpeedReaderFragment.newInstance("test1", "test2");
+                    fragment = SpeedReaderFragment.newInstance();
                     break;
                 case PROFILE:
-                    fragment = ProfileFragment.newInstance(mCategories, "test2");
+                    fragment = ProfileFragment.newInstance(mCategories);
                     break;
                 default:
                     throw new RuntimeException("Can't create fragment. Number doesn't exist.");
