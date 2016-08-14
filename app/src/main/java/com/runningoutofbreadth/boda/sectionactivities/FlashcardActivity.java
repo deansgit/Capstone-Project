@@ -47,7 +47,6 @@ public class FlashcardActivity extends AppCompatActivity {
     float initialX;
     Set<Integer> mIdsRead;
     private int mTableMax;
-//    private float mFontSize;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -137,8 +136,6 @@ public class FlashcardActivity extends AppCompatActivity {
             mTranslationView.setText(newWord.getTranslation().replace(";", "\n"));
             mIdsRead.add(newWord.getsId());
         }
-
-
 
         SharedPreferences.Editor editor = getSharedPreferences(PREFS_FILENAME, 0).edit();
         Utility.writeProgressToPrefs(editor, mModel);

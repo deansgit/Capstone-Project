@@ -31,7 +31,6 @@ public class FlashcardFragment extends Fragment implements RecyclerView.OnClickL
 
     // TODO: Rename and change types of parameters
     private ArrayList<String> mCategoryArray;
-    private String mParam2;
 
 
     public FlashcardFragment() {
@@ -43,15 +42,13 @@ public class FlashcardFragment extends Fragment implements RecyclerView.OnClickL
      * this fragment using the provided parameters.
      *
      * @param categoryArray Parameter 1.
-     * @param param2        Parameter 2.
      * @return A new instance of fragment FlashcardFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FlashcardFragment newInstance(ArrayList<String> categoryArray, String param2) {
+    public static FlashcardFragment newInstance(ArrayList<String> categoryArray) {
         FlashcardFragment fragment = new FlashcardFragment();
         Bundle args = new Bundle();
         args.putStringArrayList(CATEGORIES, categoryArray);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,7 +58,6 @@ public class FlashcardFragment extends Fragment implements RecyclerView.OnClickL
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mCategoryArray = getArguments().getStringArrayList(CATEGORIES);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
     }
