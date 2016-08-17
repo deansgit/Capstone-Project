@@ -101,7 +101,6 @@ public class CategoryArrayAdapter extends RecyclerView.Adapter<CategoryArrayAdap
                 } else {
                     overlayViewTreeObserver.removeGlobalOnLayoutListener(this);
                 }
-
             }
         }
     }

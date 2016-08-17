@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<!-- generates ids using the resource id of an item -->
+<resources>
+    <item name="word_loader_id" type="id" />
+    <item name="choice_loader_id" type="id" />
+
+</resources>

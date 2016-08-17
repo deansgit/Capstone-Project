@@ -17,8 +17,8 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:background="@color/flashcard_main_text_color"
         android:layout_weight="5"
+        android:background="@color/flashcard_main_text_color"
         android:padding="@dimen/quiz_choice_margin">
 
         <ImageView
@@ -35,7 +35,6 @@
             android:src="@android:drawable/btn_star" />
     </FrameLayout>
 
-
     <TextView
         android:id="@+id/translation"
         android:layout_width="match_parent"
@@ -44,31 +43,12 @@
         android:gravity="center"
         android:textSize="@dimen/quiz_choice_font_size" />
 
-    <LinearLayout
-        android:id="@+id/choices"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/choice_one"
-            style="@style/QuizButtonStyle" />
-
-        <TextView
-            android:id="@+id/choice_two"
-            style="@style/QuizButtonStyle" />
-
-        <TextView
-            android:id="@+id/choice_three"
-            style="@style/QuizButtonStyle" />
-
-        <TextView
-            android:id="@+id/choice_four"
-            style="@style/QuizButtonStyle" />
-
-    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/choices_listview"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:nestedScrollingEnabled="false" />
 
 </LinearLayout>
 

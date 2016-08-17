@@ -89,4 +89,5 @@ public class FlashcardFragment extends Fragment implements RecyclerView.OnClickL
         intent.putExtra(FlashcardActivity.CATEGORY, category);
         startActivity(intent);
     }
+
 }

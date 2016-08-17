@@ -235,7 +235,4 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
-
-    // TODO: 8/16/2016 init a Loader to async pull data in each activity/frag
-
 }

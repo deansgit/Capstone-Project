@@ -23,7 +23,10 @@ public class ResultsActivity extends AppCompatActivity {
     public static final String RESULT_COLORS = "RESULT_COLORS";
     private static final String LOG_TAG = ResultsActivity.class.getSimpleName();
 
-//    LinearLayout mCounterView;
+    ResultsAdapter mResultsAdapter;
+    ArrayList<ColoredResult> resultsList;
+    String mCorrectString;
+    String mTotalString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +40,12 @@ public class ResultsActivity extends AppCompatActivity {
         ListView resultsView = (ListView) findViewById(R.id.results_listview);
 
         Intent intent = getIntent();
-        String numberCorrectString = intent.getStringExtra(RESULT_CORRECT);
-        String numberTotalString = intent.getStringExtra(RESULT_TOTAL);
-        ArrayList<ColoredResult> resultsList;
+
+        mCorrectString = intent.getStringExtra(RESULT_CORRECT);
+        mTotalString = intent.getStringExtra(RESULT_TOTAL);
         resultsList = intent.getParcelableArrayListExtra(RESULT_COLORS);
-        ResultsAdapter resultsAdapter = new ResultsAdapter(getApplicationContext(),
+
+        mResultsAdapter = new ResultsAdapter(getApplicationContext(),
                 R.layout.results_list_item, resultsList);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -63,15 +67,13 @@ public class ResultsActivity extends AppCompatActivity {
         assert headerTextView != null;
         Utility.slowFadeIn(headerTextView);
         assert correctTextView != null;
-        correctTextView.setText(numberCorrectString);
+        correctTextView.setText(mCorrectString);
         assert totalTextView != null;
-        totalTextView.setText(numberTotalString);
+        totalTextView.setText(mTotalString);
         if (resultsView != null) {
-            resultsView.setAdapter(resultsAdapter);
+            resultsView.setAdapter(mResultsAdapter);
             Utility.slowFadeIn(resultsView);
         }
     }
-
-    // TODO: 8/13/2016 If correct, mark as read in db. If incorrect, mark as unread.
 
 }

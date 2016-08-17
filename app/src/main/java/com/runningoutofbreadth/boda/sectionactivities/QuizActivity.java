@@ -4,10 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,19 +22,16 @@ import com.runningoutofbreadth.boda.Utility;
 import com.runningoutofbreadth.boda.db.Word;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-public class QuizActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String LOG_TAG = QuizActivity.class.getSimpleName();
+public class QuizActivity extends AppCompatActivity {
+    private static final String TAG = QuizActivity.class.getSimpleName();
 
     private ImageView mImageView;
     private TextView mTranslationView;
-    private TextView mChoiceOne;
-    private TextView mChoiceTwo;
-    private TextView mChoiceThree;
-    private TextView mChoiceFour;
     private TextView mCorrectView;
     private TextView mSlashView;
     private TextView mTotalView;
@@ -40,7 +42,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     public static final String CATEGORY_NATIONS = "Nation";
     public static final String CATEGORY_IDIOMS = "Idiom";
     public static final String CATEGORY_VOCABULARY = "Vocabulary";
-
 
     private String mModelName;
     private Class mModel;
@@ -54,7 +55,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     List<Word> mWordList;
     ArrayList<ColoredResult> mResultsList = new ArrayList<>();
-
+    ChoiceLoaderAdapter choiceAdapter;
+    ChoiceLoaderAdapter.CheckAnswerListener mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,15 +88,58 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
         // get views for quiz parts
         mTranslationView = (TextView) findViewById(R.id.translation);
-        mChoiceOne = (TextView) findViewById(R.id.choice_one);
-        mChoiceTwo = (TextView) findViewById(R.id.choice_two);
-        mChoiceThree = (TextView) findViewById(R.id.choice_three);
-        mChoiceFour = (TextView) findViewById(R.id.choice_four);
 
-        mChoiceOne.setOnClickListener(this);
-        mChoiceTwo.setOnClickListener(this);
-        mChoiceThree.setOnClickListener(this);
-        mChoiceFour.setOnClickListener(this);
+        RecyclerView choicesListView = (RecyclerView) findViewById(R.id.choices_listview);
+        if (choicesListView != null) {
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(
+                    getApplicationContext(),
+                    LinearLayoutManager.VERTICAL,
+                    false);
+            try {
+                // create reference to category
+                // param becomes String "com.runningoutofbreadth.boda.db.DBMODEL"
+                mModel = Class.forName(getPackageName() + ".db." + mModelName);
+                HashSet<Integer> mIdList = Utility.generateListOfIds(mModel, mTotalCount);
+                mWordList = Utility.generateWordList(mIdList, mModel);
+                mAnswer = selectWordFromList(mWordList, mCurrentPos);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            choicesListView.setLayoutManager(layoutManager);
+            choiceAdapter = new ChoiceLoaderAdapter(getApplicationContext());
+
+            // instantiate CheckAnswerListener
+            mListener = new ChoiceLoaderAdapter.CheckAnswerListener() {
+                @Override
+                public void checkAnswer(View view) {
+                    if (mCurrentPos <= mTotalCount) {
+                        if (view.getClass() == TextView.class || view.getClass() == AppCompatTextView.class) {
+                            boolean isCorrect = ((TextView) view).getText().equals(mAnswer.getHangeul());
+                            if (isCorrect) {
+                                mCorrectCount++;
+                                mCorrectView.setText(String.valueOf(mCorrectCount));
+                            } else {
+                                Utility.markAsRead(mAnswer, false);
+                            }
+                            mResultsList.add(mCurrentPos, new ColoredResult(mAnswer, resultColor(isCorrect)));
+                            mCurrentPos++;
+                            if (mCurrentPos == mTotalCount) {
+                                showResults();
+                            } else {
+                                mAnswer = selectWordFromList(mWordList, mCurrentPos);
+                                if (mAnswer != null) {
+                                    changeWord(mAnswer, mHasImage);
+                                    getSupportLoaderManager().restartLoader(R.id.choice_loader_id, null, loaderCallbacks);
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            choiceAdapter.setOnCheckAnswerListener(mListener);
+            choicesListView.setAdapter(choiceAdapter);
+            getSupportLoaderManager().initLoader(R.id.choice_loader_id, null, loaderCallbacks);
+        }
 
         mCorrectView.setText(String.valueOf(mCorrectCount));
         mTotalView.setText(String.valueOf(mTotalCount));
@@ -113,46 +158,33 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             public void afterTextChanged(Editable s) {
             }
         });
-
-        try {
-            // create reference to category
-            // param becomes String "com.runningoutofbreadth.boda.db.DBMODEL"
-            mModel = Class.forName(getPackageName() + ".db." + mModelName);
-            HashSet<Integer> mIdList = Utility.generateListOfIds(mModel, mTotalCount);
-            mWordList = Utility.generateWordList(mIdList, mModel);
-            mAnswer = selectWordFromList(mWordList, mCurrentPos);
-            changeWord(mAnswer, mHasImage);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
-    @Override
-    public void onClick(View v) {
-//        Log.v(LOG_TAG, v.getClass().toString());
-        if (mCurrentPos <= mTotalCount) {
-            if (v.getClass() == TextView.class || v.getClass() == AppCompatTextView.class) {
-                boolean isCorrect = ((TextView) v).getText().equals(mAnswer.getHangeul());
-                if (isCorrect) {
-                    mCorrectCount++;
-                    mCorrectView.setText(String.valueOf(mCorrectCount));
-                } else {
-                    Utility.markAsRead(mAnswer, false);
-                }
-                mResultsList.add(mCurrentPos, new ColoredResult(mAnswer, resultColor(isCorrect)));
-                mCurrentPos++;
-                if (mCurrentPos == mTotalCount) {
-                    showResults();
-                } else {
-                    mAnswer = selectWordFromList(mWordList, mCurrentPos);
-                    if (mAnswer != null) {
-                        changeWord(mAnswer, mHasImage);
-                    }
-                }
-            }
-        }
-    }
+//    @Override
+//    public void onClick(View v) {
+////        Log.v(LOG_TAG, v.getClass().toString());
+//        if (mCurrentPos <= mTotalCount) {
+//            if (v.getClass() == TextView.class || v.getClass() == AppCompatTextView.class) {
+//                boolean isCorrect = ((TextView) v).getText().equals(mAnswer.getHangeul());
+//                if (isCorrect) {
+//                    mCorrectCount++;
+//                    mCorrectView.setText(String.valueOf(mCorrectCount));
+//                } else {
+//                    Utility.markAsRead(mAnswer, false);
+//                }
+//                mResultsList.add(mCurrentPos, new ColoredResult(mAnswer, resultColor(isCorrect)));
+//                mCurrentPos++;
+//                if (mCurrentPos == mTotalCount) {
+//                    showResults();
+//                } else {
+//                    mAnswer = selectWordFromList(mWordList, mCurrentPos);
+//                    if (mAnswer != null) {
+//                        changeWord(mAnswer, mHasImage);
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private int resultColor(boolean isCorrect) {
         return isCorrect ? R.color.color_correct : R.color.color_incorrect;
@@ -180,16 +212,16 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         finish();
     }
 
-    /**
-     * Takes the randomized choices and places them in view
-     **/
-    private void updateViewsForMultipleChoice(String[] choices) {
-        mTranslationView.setText(mAnswer.getTranslation().replace(";", "\n"));
-        mChoiceOne.setText(choices[0]);
-        mChoiceTwo.setText(choices[1]);
-        mChoiceThree.setText(choices[2]);
-        mChoiceFour.setText(choices[3]);
-    }
+//    /**
+//     * Takes the randomized choices and places them in view
+//     **/
+//    private void updateViewsForMultipleChoice(String[] choices) {
+//        mTranslationView.setText(mAnswer.getTranslation().replace(";", "\n"));
+//        mChoiceOne.setText(choices[0]);
+//        mChoiceTwo.setText(choices[1]);
+//        mChoiceThree.setText(choices[2]);
+//        mChoiceFour.setText(choices[3]);
+//    }
 
     /**
      * Generate variety of answers based on complexity of word
@@ -212,7 +244,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Generate an answer in which only one syllable is changed
      **/
-
     private String tweakAnswer(String answer) {
         String[] syllables = answer.split("");
         syllables[syllables.length - 1] = Utility.randomSyllable().getHangeul();
@@ -260,10 +291,32 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     // TODO: 8/9/2016 refactor models to have hasImage boolean
     public void changeWord(Word word, boolean hasImage) {
-        updateViewsForMultipleChoice(createChoices(word.getHangeul()));
+        mTranslationView.setText(word.getTranslation().replace(";", "\n"));
         if (hasImage && mImageView != null) {
             int resId = getResources().getIdentifier(word.getImageId(), "drawable", getPackageName());
             Utility.glideLoadImage(this, resId, mImageView);
         }
     }
+
+    // TODO: 8/16/2016 init a Loader to async pull data in each activity/frag
+    private LoaderManager.LoaderCallbacks<List<String>> loaderCallbacks = new LoaderManager.LoaderCallbacks<List<String>>() {
+
+        @Override
+        public Loader<List<String>> onCreateLoader(int id, Bundle args) {
+            return new ChoiceLoader(getApplicationContext(), mAnswer);
+        }
+
+        @Override
+        public void onLoadFinished(Loader<List<String>> loader, List<String> data) {
+            Log.d(TAG, "onLoadFinished: called");
+            changeWord(mAnswer, mHasImage);
+            choiceAdapter.loadNewChoices(data);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<List<String>> loader) {
+            choiceAdapter.loadNewChoices(Collections.EMPTY_LIST);
+        }
+    };
+
 }
