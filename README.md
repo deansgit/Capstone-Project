@@ -5,6 +5,8 @@ Boda - a Korean learning app for beginner to intermediate learners already famil
 
 NOTE:
 ------------------------
+Keystore and plain-text passwords in the build.gradle file are dummies. The existing file (in history) will only be used to facilitate Udacity's project review and won't be valid in any published packages. If you are forking, please make your own keystore, put passwords in gradle.properties (which will not be in version control), and then add references to these passwords in the build.gradle file.
+
 This app uses the Revised Romanization scheme for transliterating Hangeul. However, it also uses Unicode mapping for the syllable blocks, which names the blocks in a slightly modified convention from RR. The only time this will be an issue is when viewing the Unicode syllable **names** on the Flashcards and Quizzes.
 
 http://unicode.org/Public/MAPPINGS/VENDORS/MISC/KPS9566.TXT
