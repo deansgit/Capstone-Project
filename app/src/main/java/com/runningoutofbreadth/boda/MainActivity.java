@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
         );
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -86,6 +84,10 @@ public class MainActivity extends AppCompatActivity {
         // TODO: 7/29/2016 make profile tab smaller
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        for (int i = 0; i < tabLayout.getTabCount(); i++){
+            tabLayout.getTabAt(i).setIcon(mSectionsPagerAdapter.getDrawableId(i));
+        }
+
 
 
         mCategories = new ArrayList<>();
@@ -222,17 +224,28 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "FLASH CARDS";
-                case 1:
-                    return "QUIZ";
-                case 2:
-                    return "SPEED READ";
-                case 3:
-                    return "PROFILE";
-            }
+//            switch (position) {
+//                case 0:
+//                    return "FLASH CARDS";
+//                case 1:
+//                    return "QUIZ";
+//                case 2:
+//                    return "SPEED READ";
+//                case 3:
+//                    return "PROFILE";
+//            }
             return null;
+        }
+
+
+        public int getDrawableId(int position) {
+            int[] tabResIds = new int[]{
+                    R.drawable.ic_flashcards,
+                    R.drawable.ic_quiz,
+                    R.drawable.ic_speedreader,
+                    R.drawable.ic_profile
+            };
+            return tabResIds[position];
         }
     }
 }
